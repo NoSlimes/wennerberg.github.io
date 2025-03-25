@@ -50,7 +50,9 @@
         <div class="wrapper_inner">
           <div class="about_content flex flex_around">
             <figure class="about_figure text_center">
-              <img width="200px" height="200px" src="https://media.licdn.com/dms/image/v2/D4D03AQGmzPLP7o-26Q/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1678536663767?e=1748476800&v=beta&t=nBjW2cnwTJsy2fWcSlH1SF5J1h9XHmIrnMJWzVroR0k" alt="Developer" class="about_img" />
+              <img width="200px" height="200px"
+                src="https://media.licdn.com/dms/image/v2/D4D03AQGmzPLP7o-26Q/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1678536663767?e=1748476800&v=beta&t=nBjW2cnwTJsy2fWcSlH1SF5J1h9XHmIrnMJWzVroR0k"
+                alt="Developer" class="about_img" />
               <figcaption class="about_caption">Hey! That's me o.O</figcaption>
             </figure>
             <p class="h5">
@@ -66,10 +68,9 @@
           <h4 class="h5">
             -Something about work-
           </h4>
-          <h3>
-            I'm working on the hit game <a href="/projects/harald">HARALD</a>
-          </h3>
-          <div class="tenor-gif-embed" data-postid="26729195" data-share-method="host" data-aspect-ratio="1.77778" data-width="100%"><a href="https://tenor.com/view/harald-haralddance-harald-dance-friday-harald-party-harald-dancing-gif-26729195">Harald Haralddance GIF</a>from <a href="https://tenor.com/search/harald-gifs">Harald GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+          <main id="content-container">
+
+          </main>
           <ul role="list" class="work_logos flex flex_center">
             <!-- <li>
                 <img src="/assets/images/NSJC Mono INV.svg" alt="Acme Corp" />
@@ -111,7 +112,7 @@
 
         <script>
           document.getElementById('contactForm').addEventListener('submit', function (event) {
-            event.preventDefault(); 
+            event.preventDefault();
 
             const name = encodeURIComponent(document.getElementById('name').value);
             const email = encodeURIComponent(document.getElementById('email').value);
@@ -133,6 +134,7 @@
     <div id="footer-container"></div>
 
   </main>
+  <script src="portfolio_inject.js"></script>
   <script src="header_footer.js"></script>
 </body>
 

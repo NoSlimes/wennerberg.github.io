@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>--PROJECT--</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header class="site_header">
+        <nav id="nav-placeholder" class="site_header_nav"></nav>
+        <div class="wrapper text_center">
+            <h1 class="h1">--PROJECT--</h1>
+        </div>
+    </header>
+
+    <main class="wrapper">
+        <section id="about">
+            <div class="about_content">
+
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer">
+        <div id="foot-placeholder" class="wrapper"></div>
+    </footer>
+</body>
+</html>

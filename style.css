@@ -1,3 +1,13 @@
+:root {
+  --color-accent: #F06292; /* Pink */
+  --color-white: #FFFFFF; /* White */
+  --color-black: #000; /* Black */
+  --color-outline: #00ff19; /* Green */
+  --color-dark-gray: #2C2F33; /* Dark Gray */
+  --color-green: #43B581; /* Green */
+  --color-light-gray: #ccc; /* Light Gray */
+}
+
 *,
 *::before,
 *::after {
@@ -65,7 +75,7 @@ select {
 }
 
 :focus {
-  outline: 2px dashed #00ff19;
+  outline: 2px dashed var(--color-outline);
   outline-offset: 0.25rem;
 }
 
@@ -180,7 +190,7 @@ h5,
 /* Style the header */
 .site_header {
   padding: var(--space-s) 0;
-  background-color: #F06292;
+  background-color: var(--color-accent);
   position: fixed;
   top: 0;
   left: 0;
@@ -191,7 +201,7 @@ h5,
 
 .site_header_nav ul li a {
   text-decoration: none;
-  color: #FFFFFF;  
+  color: var(--color-white);
 }
 
 /* Hero section styling */
@@ -213,14 +223,14 @@ section {
 }
 
 section#hero {
-  background: linear-gradient(#F06292, #2C2F33),
+  background: linear-gradient(var(--color-accent), var(--color-dark-gray)),
     url("/assets/background_image.jpg");
   padding-bottom: 4px;
   background-size: cover;
   background-position: top;
   background-attachment: scroll;
-  color: #FFFFFF; /* White Text */
-  --color-accent: #FFFFFF;  /* White accent color for contrast */
+  color: var(--color-white);
+  --color-accent: var(--color-white); /* Local override for contrast */
 }
 
 /* About section */
@@ -238,7 +248,7 @@ section#hero {
 .about_figure {
   padding: var(--space-xl) 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-light-gray);
   display: inline-block;
   padding: 5px;
 }
@@ -254,9 +264,9 @@ section#hero {
 }
 
 section#about {
-  background-color: #2C2F33; 
-  color: #FFFFFF;
-  --color-accent: #F062921;  
+  background-color: var(--color-dark-gray);
+  color: var(--color-white);
+  --color-accent: var(--color-accent);
 }
 
 /* work section */
@@ -265,9 +275,9 @@ section#about {
 }
 
 section#work {
-  background-color: #43B581;
-  color: #FFFFFF;
-  --color-accent: #F062921; 
+  background-color: var(--color-green);
+  color: var(--color-white);
+  --color-accent: var(--color-accent);
 }
 
 /* contact section */
@@ -285,7 +295,7 @@ section#work {
 label {
   margin-bottom: 5px;
   font-weight: bold;
-  color: #FFFFFF; /* White Label */
+  color: var(--color-white);
 }
 
 input[type="text"],
@@ -293,11 +303,11 @@ input[type="email"],
 textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-light-gray);
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
-  color: #000;
+  color: var(--color-black);
 }
 
 textarea {
@@ -309,13 +319,13 @@ button[type="submit"] {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #F06292; 
-  color: white; 
+  background-color: var(--color-accent);
+  color: var(--color-white);
   cursor: pointer;
 }
 
 button[type="submit"]:hover {
-  background-color: #F06292; 
+  background-color: var(--color-accent);
 }
 
 /* footer section */

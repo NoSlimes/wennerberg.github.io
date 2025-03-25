@@ -1,5 +1,5 @@
 <main class="wrapper">
-    <section id="about">
+    <section id="{project_id}">
         <h2 class="h2">--PROJECT--</h2>
         <div class="about_content">
             <!-- Project-specific content goes here -->

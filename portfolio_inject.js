@@ -19,21 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 projectDiv.classList.add('project');
                 projectDiv.dataset.projectId = projectId;
 
-
-                //Dynamically set the section ID
-                const sectionId = projectId.replace(/[^a-zA-Z0-9]/g, ''); //Sanitize ID to be safe
+                const sectionId = projectId.replace(/[^a-zA-Z0-9]/g, ''); // Remove non-alphanumeric characters
                 projectDiv.innerHTML = `
-                  <main class="wrapper">
-                      <section id=${projectId}>
-                          <h2 class="h2">HARALD</h2>
-                          <div class="about_content">
-                              <!-- Project-specific content goes here -->
-                                ${html}
-                              <!--Content end-->
-                          </div>
-                      </section>
-                  </main>
-                `;
+                    <section id=${projectId}>
+                        <h2 class="h2">HARALD</h2>
+                        <div class="about_content">
+                            <!-- Project-specific content goes here -->
+                              ${html}
+                            <!--Content end-->
+                        </div>
+                    </section>
+                    `;
 
                 contentContainer.appendChild(projectDiv);
                 currentlyLoadedProjects.push(projectId);

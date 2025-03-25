@@ -224,13 +224,12 @@ section {
 
 section#hero {
   background: linear-gradient(var(--color-accent), var(--color-dark-gray)),
-    url("/assets/background_image.jpg");
+    url("some_cool_URL/URI");
   padding-bottom: 4px;
   background-size: cover;
   background-position: top;
   background-attachment: scroll;
   color: var(--color-white);
-  --color-accent: var(--color-white); /* Local override for contrast */
 }
 
 /* About section */

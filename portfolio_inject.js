@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     fetchProjectList();
+    window.initializeHeader.fetchProjectList(projectData,loadProject);
 
     window.addEventListener('scroll', () => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {

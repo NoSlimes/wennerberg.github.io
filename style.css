@@ -180,12 +180,18 @@ h5,
 /* Style the header */
 .site_header {
   padding: var(--space-s) 0;
-  background: linear-gradient(rgba(26, 26, 64, 0.9), rgba(26, 26, 64, 0.9));
+  background-color: #F06292;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .site_header_nav ul li a {
   text-decoration: none;
-  color: #fff;
+  color: #FFFFFF;  
 }
 
 /* Hero section styling */
@@ -207,14 +213,14 @@ section {
 }
 
 section#hero {
-  background: linear-gradient(rgba(26, 26, 64, 0.9), rgba(26, 26, 64, 0.9)),
+  background: linear-gradient(#F06292, #2C2F33),
     url("/assets/background_image.jpg");
   padding-bottom: 4px;
   background-size: cover;
   background-position: top;
   background-attachment: scroll;
-  color: #fafafa;
-  --color-accent: #8a2be2;
+  color: #FFFFFF; /* White Text */
+  --color-accent: #FFFFFF;  /* White accent color for contrast */
 }
 
 /* About section */
@@ -248,9 +254,9 @@ section#hero {
 }
 
 section#about {
-  background-color: #ffffff;
-  color: #333;
-  --color-accent: #ffd700;
+  background-color: #2C2F33; 
+  color: #FFFFFF;
+  --color-accent: #F062921;  
 }
 
 /* work section */
@@ -259,9 +265,9 @@ section#about {
 }
 
 section#work {
-  background-color: #87ceeb;
-  color: #0c0c0c;
-  --color-accent: #2e8b57;
+  background-color: #43B581;
+  color: #FFFFFF;
+  --color-accent: #F062921; 
 }
 
 /* contact section */
@@ -279,6 +285,7 @@ section#work {
 label {
   margin-bottom: 5px;
   font-weight: bold;
+  color: #FFFFFF; /* White Label */
 }
 
 input[type="text"],
@@ -290,6 +297,7 @@ textarea {
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
+  color: #000;
 }
 
 textarea {
@@ -301,29 +309,18 @@ button[type="submit"] {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
-  color: white;
+  background-color: #F06292; 
+  color: white; 
   cursor: pointer;
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #F06292; 
 }
 
 /* footer section */
 section#footer {
   padding: var(--space-l) var(--space-l);
-}
-
-.site_header {
-  position: fixed; /* Crucial: Fixes the element relative to the viewport */
-  top: 0;        /* Sticks it to the top */
-  left: 0;       /* Ensures it spans the full width */
-  width: 100%;    /*  ensures it spans the full width */
-  background-color: #fff; /*  Add a background color to make it visible above content */
-  z-index: 100;   /* Important: Ensures it's above other content. Adjust as needed.*/
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
-  /* Add any other styling you want for your header here:  padding, etc. */
 }
 
 /* OPTIONAL:  Add some padding to the body to avoid content being hidden under the header */

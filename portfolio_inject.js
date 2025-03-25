@@ -22,11 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sectionId = projectId.replace(/[^a-zA-Z0-9]/g, ''); // Remove non-alphanumeric characters
                 projectDiv.innerHTML = `
                     <section id=${projectId}>
-                        <h2 class="h2">HARALD</h2>
                         <div class="about_content">
-                            <!-- Project-specific content goes here -->
                               ${html}
-                            <!--Content end-->
                         </div>
                     </section>
                     `;

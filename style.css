@@ -314,3 +314,25 @@ button[type="submit"]:hover {
 section#footer {
   padding: var(--space-l) var(--space-l);
 }
+
+.site_header {
+  position: fixed; /* Crucial: Fixes the element relative to the viewport */
+  top: 0;        /* Sticks it to the top */
+  left: 0;       /* Ensures it spans the full width */
+  width: 100%;    /*  ensures it spans the full width */
+  background-color: #fff; /*  Add a background color to make it visible above content */
+  z-index: 100;   /* Important: Ensures it's above other content. Adjust as needed.*/
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  /* Add any other styling you want for your header here:  padding, etc. */
+}
+
+/* OPTIONAL:  Add some padding to the body to avoid content being hidden under the header */
+body {
+  padding-top: 60px; /* Adjust this value to match your header's height */
+}
+
+.wrapper_inner {
+   /* OPTIONAL: Adjust width and margins as needed to match your layout */
+  width: 90%;  /* or 'max-width: 1200px' */
+  margin: 0 auto;
+}

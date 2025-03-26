@@ -69,17 +69,15 @@
             -Something about work-
           </h4>
           <main id="content-container">
-
+            <ul role="list" class="work_logos flex flex_center">
+              <li>
+                <img src="/assets/images/NSJC Mono INV.svg" alt="NSJC Logo" />
+              </li>
           </main>
-          <ul role="list" class="work_logos flex flex_center">
-            <!-- <li>
-                <img src="/assets/images/NSJC Mono INV.svg" alt="Acme Corp" />
-              </li> -->
           </ul>
         </div>
       </div>
     </section>
-
     <section id="contact">
       <div class="wrapper">
         <div class="text_left">
@@ -88,7 +86,6 @@
             I'd love to hear from you.
           </p>
         </div>
-
         <div class="wrapper_inner">
           <h5 class="h3">Contact Me</h5>
           <form id="contactForm" class="contact_form">
@@ -109,7 +106,6 @@
             <button type="submit">SEND MESSAGE</button>
           </form>
         </div>
-
         <script>
           document.getElementById('contactForm').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -126,8 +122,6 @@
             window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
           });
         </script>
-
-
       </div>
     </section>
 
@@ -135,7 +129,6 @@
 
   </main>
   <script src="header_footer.js"></script>
-  <script src="header.js"></script>
   <script src="portfolio_inject.js"></script>
 </body>
 

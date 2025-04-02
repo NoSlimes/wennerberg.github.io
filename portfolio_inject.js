@@ -2,7 +2,7 @@
 
 // Function to fetch and inject project summaries
 async function injectProjectSummaries() {
-    const contentContainer = document.getElementById('content_container');
+    const contentContainer = document.getElementById('content-container');
     if (!contentContainer) {
         console.error('Content container not found!');
         return;

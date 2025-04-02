@@ -224,7 +224,7 @@ section {
 
 section#hero {
   background: linear-gradient(var(--color-accent), var(--color-dark-gray)),
-    url("some_cool_URL/URI");
+    url("some_cool_URL/URI"); /*This is for a background*/
   padding-bottom: 4px;
   background-size: cover;
   background-position: top;

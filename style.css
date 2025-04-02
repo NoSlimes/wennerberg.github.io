@@ -235,7 +235,7 @@ section#hero {
 /* About section */
 .about_content {
   padding: var(--space-xl) 0;
-  /* transform: skewX(-10deg); */
+  transform: skewX(-10deg);
 }
 
 @media (max-width: 468px) {

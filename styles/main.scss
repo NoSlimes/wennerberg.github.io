@@ -1,3 +1,6 @@
-@import "colors";
-@import "animations";
-@import "style";
+@use "./css/variables.scss";
+@use "./css/style.scss";
+@use "./css/components.scss";
+@use "./css/typography.scss";
+
+@use "./css/animations.scss";

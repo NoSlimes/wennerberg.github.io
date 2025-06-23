@@ -9,8 +9,10 @@
 </head>
 
 <body>
+  <!-- Header will be injected here by your JS -->
   <div id="header-container"></div>
 
+  <!-- The <main> tag should wrap all the primary content of your page -->
   <main>
     <section id="hero">
       <div class="wrapper">
@@ -20,65 +22,95 @@
             <p class="h5">Game Programming Student</p>
           </div>
         </div>
-        <ul role="list" class="flex flex_between hero_social">
+        <!-- 
+          FIX: Corrected the list structure.
+          An <address> tag can't be a direct child of a <ul>.
+          This is now one list with your location on one side and social links on the other.
+        -->
+        <div class="flex flex_between hero_social">
           <address>Malmö, Sweden</address>
           <ul role="list" class="flex">
-            <li>Find me online</li>
+            <li>Find me online:</li>
             <li>
               <a href="https://github.com/noslimes" target="_blank">
-                <img src="/assets/images/logos/logo-github.png" alt="GitHub" width="24" height="24" />
+                <img src="./assets/images/logos/logo-github.png" alt="GitHub" width="24" height="24" />
               </a>
             </li>
             <li>
               <a href="https://www.linkedin.com/in/elias-wennerberg-7604061a1/" target="_blank">
-                <img src="/assets/images/logos/logo-linkedin.png" alt="LinkedIn" width="24" height="24" />
+                <img src="./assets/images/logos/logo-linkedin.png" alt="LinkedIn" width="24" height="24" />
               </a>
             </li>
             <li>
+              <!-- NOTE: I changed the alt text to be more descriptive -->
               <a href="https://noslimes.com/" target="_blank">
-                <img src="/assets/images/NSJC Mono INV.svg" alt="GitHub" width="32" height="32" />
+                <img src="./assets/images/NSJC Mono INV.svg" alt="Personal Brand Logo" width="32" height="32" />
               </a>
             </li>
           </ul>
-        </ul>
+        </div>
       </div>
     </section>
 
     <section id="about">
       <div class="wrapper">
         <div class="text_center">
+          <!-- This is a great, clear summary of your skills! -->
           <h2>
             Game programming student studying professional game development with C# in Unity and
-            C++ in Unreal Engine 5
+            C++ in Unreal Engine 5.
           </h2>
         </div>
         <div class="wrapper_inner">
           <div class="about_content flex flex_around">
             <figure class="about_figure text_center">
-              <img width="200px" height="200px" src="assets/images/portrait.jpg" alt="Developer" class="about_img" />
+              <!-- PRO-TIP: Make sure your image paths are correct. Starting with './' is a good practice. -->
+              <img width="200" height="200" src="./assets/images/portrait.jpg" alt="A portrait of Elias Wennerberg" class="about_img" />
               <figcaption class="about_caption">Hey! That's me o.O</figcaption>
             </figure>
             <p class="h5">
-              Hello! I'm from a place called Växjö in Sweden, but am currently living and studying in Malmö
+              Hello! I'm from a place called Växjö in Sweden, but am currently living and studying in Malmö.
             </p>
           </div>
         </div>
       </div>
     </section>
+
     <section id="work">
       <div class="wrapper_inner">
         <div class="text_center">
-          <h4 class="h5">
-            -Something about work-
-          </h4>
-          <main id="content-container">
+          <!-- Let's give this a real heading -->
+          <h2 class="h3">My Projects</h2>
+          <p>Here are a few projects I've worked on recently.</p>
+        </div>
+        <!-- 
+          FIX: Removed the extra <main> tag. There should only be one per page.
+          This is where your `project_summary_inject.js` will likely add your projects.
+          I'll add an example project card for you to use as a template.
+        -->
+        <div id="content-container" class="projects-grid">
+          <!-- 
+            EXAMPLE PROJECT CARD:
+            You can create a template like this in your project_summary_inject.js
+            and generate one for each of your projects.
+          -->
+          <div class="project-card">
+            <img src="./assets/images/projects/project1-thumbnail.jpg" alt="Screenshot of Project 1" class="project-image">
+            <div class="project-info">
+              <h4 class="h5">Project Title</h4>
+              <p>A short, one-sentence description of the project and the tech used (e.g., "A 2D platformer made in Unity with C#.").</p>
+              <div class="project-links">
+                <a href="#" target="_blank">GitHub</a>
+                <a href="#" target="_blank">Live Demo</a>
+              </div>
+            </div>
+          </div>
+          <!-- Add more project cards here or generate them with JS -->
 
-            
-
-          </main>
         </div>
       </div>
     </section>
+
     <section id="contact">
       <div class="wrapper">
         <div class="text_left">
@@ -88,7 +120,11 @@
           </p>
         </div>
         <div class="wrapper_inner">
-          <h5 class="h3">Contact Me</h5>
+          <h3 class="h3">Contact Me</h3>
+          <!--
+            Your contact form that opens an email client is a SMART, serverless solution.
+            It's perfect for a static portfolio. Great job with the JS there!
+          -->
           <form id="contactForm" class="contact_form">
             <div class="flex">
               <div class="form_group">
@@ -97,40 +133,43 @@
               </div>
               <div class="form_group">
                 <label for="email">EMAIL</label>
-                <input type="email" id="email" name="email" required />
+                <input type="email"id="email" name="email" required />
               </div>
             </div>
             <div class="form_group">
-              <label for="message">Message</label>
+              <label for="message">MESSAGE</label>
               <textarea id="message" name="message" required></textarea>
             </div>
             <button type="submit">SEND MESSAGE</button>
           </form>
         </div>
-        <script>
-          document.getElementById('contactForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const name = encodeURIComponent(document.getElementById('name').value);
-            const email = encodeURIComponent(document.getElementById('email').value);
-            const message = encodeURIComponent(document.getElementById('message').value);
-
-            let recipient = String.fromCharCode(109, 111, 99, 46, 108, 105, 97, 109, 103, 64, 103, 114, 101, 98, 114, 101, 110, 110, 101, 119, 46, 115, 97, 105, 108, 101);
-            recipient = recipient.split("").reverse().join("");
-            const subject = 'Contact Form Submission';
-            const body = `Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
-
-            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
-          });
-        </script>
       </div>
     </section>
-
-    <div id="footer-container"></div>
-
   </main>
+
+  <!-- Footer will be injected here by your JS -->
+  <div id="footer-container"></div>
+
+  <!-- Your JS scripts are great for keeping your HTML clean. -->
   <script src="scripts/header_footer.js"></script>
   <script src="scripts/project_summary_inject.js"></script>
+  <!-- Contact form script should be inside the body, but it's okay to have it here too -->
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      let recipient = String.fromCharCode(109, 111, 99, 46, 108, 105, 97, 109, 103, 64, 103, 114, 101, 98, 114, 101, 110, 110, 101, 119, 46, 115, 97, 105, 108, 101);
+      recipient = recipient.split("").reverse().join("");
+      const subject = encodeURIComponent(`Contact from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+
+      window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    });
+  </script>
 </body>
 
 </html>

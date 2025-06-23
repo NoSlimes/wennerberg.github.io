@@ -1,6 +1,3 @@
-
-
-// Function to fetch and inject project summaries
 async function injectProjectSummaries() {
     const contentContainer = document.getElementById('content-container');
     if (!contentContainer) {
@@ -9,7 +6,6 @@ async function injectProjectSummaries() {
     }
 
     try {
-        // Fetch the projects.json file
         const response = await fetch('./projects.json');
         if (!response.ok) {
             throw new Error(`Failed to fetch projects.json: ${response.statusText}`);
@@ -17,32 +13,51 @@ async function injectProjectSummaries() {
 
         const projects = await response.json();
 
-        // Loop through each project and fetch its summary
-        for (const project of projects) {
-            const projectPath = `./projects/summaries/${project}.html`;
+        // Clear any existing content
+        contentContainer.innerHTML = ''; 
 
-            try {
-                const projectResponse = await fetch(projectPath);
-                if (!projectResponse.ok) {
-                    console.warn(`Failed to fetch ${projectPath}: ${projectResponse.statusText}`);
-                    continue;
-                }
+        // Loop through each project and build its HTML from your template
+        projects.forEach(project => {
+            // Create the main container div and add its classes
+            const projectDiv = document.createElement('div');
+            projectDiv.classList.add('hover_skew', 'summary_container');
 
-                const projectContent = await projectResponse.text();
+            // --- This is the template that matches your HTML structure ---
+            // It uses the data from the project object to fill in the blanks.
+            const projectHTML = `
+              <h2 class="h2">${project.title}</h2>
+              <div class="project_summary flex flex_around">
 
-                // Create a container for the project and append it to the content container
-                const projectDiv = document.createElement('div');
-                projectDiv.classList.add('project-summary');
-                projectDiv.innerHTML = projectContent;
-                contentContainer.appendChild(projectDiv);
-            } catch (err) {
-                console.error(`Error fetching project summary for ${project}:`, err);
-            }
-        }
+                  <figure class="project-card__figure">
+                      <img src="${project.imageSrc}" alt="${project.imageCaption}" class="project-card__image" />
+                      <figcaption class="project-card__caption">${project.imageCaption}</figcaption>
+                  </figure>
+
+                  <div>
+                      <p class="project-card__description">
+                          <strong>${project.projectType}</strong>
+                          <br><br>
+                          ${project.description}
+                      </p>
+
+                      <div class="project-links">
+                          ${project.links.github ? `<a href="${project.links.github}" target="_blank">View on GitHub</a>` : ''}
+                          ${project.links.demo ? `<a href="${project.links.demo}" target="_blank">Play Demo</a>` : ''}
+                      </div>
+                  </div>
+              </div>
+            `;
+            // --- End of template ---
+
+            projectDiv.innerHTML = projectHTML;
+            contentContainer.appendChild(projectDiv);
+        });
+
     } catch (err) {
         console.error('Error loading projects:', err);
+        contentContainer.innerHTML = '<p>Sorry, there was an error loading projects.</p>';
     }
 }
 
-// Call the function to inject project summaries
+// Call the function to run it all
 injectProjectSummaries();

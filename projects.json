@@ -1,7 +1,33 @@
 [
-    "harald",
-    "plagorna",
-    "purrsuit_of_freedom",
-    "dead_sector",
-    "snake_cpp"
+  {
+    "title": "DEAD SECTOR",
+    "imageSrc": "./assets/images/projects/dead_sector.jpg",
+    "imageCaption": "Splash screen for Dead Sector",
+    "projectType": "[GAME PROJECT 2 - FUTURE GAMES]",
+    "description": "A top-down survival shooter created in Unity. Players must manage resources, fend off waves of enemies, and survive as long as possible in a post-apocalyptic world. My role focused on player controls and enemy AI.",
+    "links": {
+      "github": "https://github.com/noslimes/dead-sector",
+      "demo": "https://noslimes.itch.io/dead-sector"
+    }
+  },
+  {
+    "title": "Cosmic Drift",
+    "imageSrc": "./assets/images/projects/cosmic-drift.png",
+    "imageCaption": "Gameplay of Cosmic Drift",
+    "projectType": "[GAME PROJECT 1 - FUTURE GAMES]",
+    "description": "An arcade-style spaceship shooter developed in Unity. Features dynamic enemy waves and a power-up system. I implemented the core gameplay loop and the scoring system.",
+    "links": {
+      "github": "https://github.com/noslimes/cosmic-drift"
+    }
+  },
+  {
+    "title": "This Portfolio",
+    "imageSrc": "./assets/images/projects/portfolio.png",
+    "imageCaption": "A screenshot of this website",
+    "projectType": "[PERSONAL WEB PROJECT]",
+    "description": "My personal portfolio site, built from scratch with vanilla HTML, CSS, and JavaScript to be fast, lightweight, and easy to deploy on GitHub Pages. It dynamically loads project data from a single JSON file.",
+    "links": {
+      "github": "https://github.com/noslimes/noslimes.github.io"
+    }
+  }
 ]

@@ -211,39 +211,93 @@ section#hero {
   color: var(--color-white);
 }
 
-/* About section */
-.about_content {
-  padding: var(--space-xl) 0;
-  transform: skewX(-10deg);
+/* ============================================= */
+/* == Project Card Component == */
+/* ============================================= */
+/* 
+  The main container for an entire project summary. 
+  We will add a subtle transition for the hover effect.
+*/
+.summary_container {
+  background-color: #fff; /* A slightly off-white or light gray can also work */
+  border-radius: 8px; /* Softer, rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* A more subtle shadow */
+  overflow: hidden; /* Ensures the image's corners are also rounded */
+  margin-bottom: var(--space-xl); /* Adds space between project cards */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions! */
 }
 
-@media (max-width: 468px) {
-  .about_content {
-    transform: skewX(0deg);
-  }
+/* The hover effect from your 'hover_skew' class will now be smooth */
+.summary_container:hover {
+  transform: translateY(-5px) skew(-2deg); /* Example skew effect */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Deeper shadow on hover */
 }
-.about_figure {
-  padding: var(--space-xl) 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 2px solid var(--color-light-gray);
+
+/* This is the flex container holding the image and the text */
+.project_summary {
+  padding: var(--space-l); /* Consistent padding all around */
+  gap: var(--space-l); /* Adds space between the image and the text */
+}
+
+/* --- Renamed and Refactored Classes --- */
+/* 
+  NEW NAME: .project-card__figure 
+  (Replaces .about_figure)
+  This is the container for the image and its caption.
+*/
+.project-card__figure {
+  flex-shrink: 0; /* Prevents the image container from shrinking */
+  margin: 0; /* Removes default figure margin */
+  /* Remove the old border/shadow here; it's on the main container now */
+}
+
+/* 
+  NEW NAME: .project-card__image
+  (Replaces .about_img)
+  The actual project image.
+*/
+.project-card__image {
+  width: 300px; /* You can keep this fixed or change to 100% for responsiveness */
+  height: 220px;
+  object-fit: cover; /* This is perfect, keep it! */
+  display: block; /* Removes any extra space below the image */
+  border-radius: 4px; /* Slightly rounded corners for the image itself */
+  border: 1px solid var(--color-light-gray);
+}
+
+/* 
+  NEW NAME: .project-card__caption
+  (Replaces .about_caption)
+  The text below the image.
+*/
+.project-card__caption {
+  font-size: var(--font-size-s);
+  color: var(--color-gray);
+  text-align: center;
+  margin-top: var(--space-xs);
+}
+
+/* Bonus: Styling for the project description text */
+.project-card__description {
+  font-size: 1.1rem; /* A more readable size than 1.5rem for body text */
+  line-height: 1.6;
+}
+
+/* Bonus: Styling for the links/buttons */
+.project-links a {
   display: inline-block;
-  padding: 5px;
+  background-color: var(--color-primary); /* Assuming you have a primary color variable */
+  color: white;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: var(--space-s);
+  transition: background-color 0.2s ease;
 }
 
-.about_img {
-  width: 300px;
-  height: 200px;
-  object-fit: cover;
-}
-
-.about_caption {
-  padding: var(--space-3xs) 0;
-}
-
-section#about {
-  background-color: var(--color-dark-gray);
-  color: var(--color-white);
-  --color-accent: var(--color-accent);
+.project-links a:hover {
+  background-color: var(--color-primary-dark); /* A darker shade for hover */
 }
 
 /* work section */

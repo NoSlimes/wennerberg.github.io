@@ -1,0 +1,30 @@
+// styles/scss/_utilities.scss
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+.flex_center {
+  justify-content: center;
+}
+.flex_around {
+  justify-content: space-around;
+}
+.flex_between {
+  justify-content: space-between;
+}
+.text_center {
+  text-align: center;
+}
+.text_right {
+  text-align: right;
+}
+
+// Responsive overrides for flex
+@media (max-width: 468px) {
+  .flex {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

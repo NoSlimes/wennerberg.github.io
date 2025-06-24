@@ -3,26 +3,43 @@ name: Compile Sass to CSS
 on:
   push:
     branches:
-      - main  # Change this if your GitHub Pages branch is different
+      - main  # Make sure this is your primary branch
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out your repository's code
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js to use npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Step 3: Install Sass
       - name: Install Sass
         run: npm install -g sass
 
-      - name: Compile SCSS
-        run: sass styles/main.scss styles/main.css
+      # Step 4: Compile the SCSS. This is the corrected command.
+      # INPUT:  styles/scss/main.scss
+      # OUTPUT: styles/main.css
+      - name: Compile SCSS to CSS
+        run: sass styles/main.scss styles/main.css --style=compressed
 
-      - name: Commit compiled CSS
+      # Step 5: Commit and push the compiled CSS file
+      - name: Commit and Push compiled CSS
         run: |
+          # Configure git with the bot's identity
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Add the compiled CSS file to the staging area
+          # This path now correctly points to the output file.
           git add styles/main.css
-          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-compile SCSS to CSS"
-          git push
+          
+          # Commit the changes only if there are any, then push.
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-compile SCSS" && git push)

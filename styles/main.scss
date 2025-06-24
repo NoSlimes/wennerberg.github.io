@@ -1,6 +1,16 @@
-@use "./css/variables.scss";
-@use "./css/style.scss";
-@use "./css/components.scss";
-@use "./css/typography.scss";
+// --- 1. SETTINGS & FOUNDATIONS ---
+@use 'scss/variables';
+@use 'scss/base';
+@use 'scss/typography';
+//@use 'scss/style';
 
-@use "./css/animations.scss";
+// --- 2. LAYOUT & HELPERS ---
+@use 'scss/layout';
+@use 'scss/utilities';
+
+// --- 3. COMPONENTS ---
+@use 'scss/components';
+@use 'scss/project_summary';
+
+// --- 4. ANIMATIONS ---
+@use 'scss/animations';

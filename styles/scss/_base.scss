@@ -1,0 +1,53 @@
+// styles/scss/_base.scss
+@use 'variables';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  letter-spacing: -0.01em;
+  font-family: sans-serif;
+  // Set default background and text colors for the whole site
+  background-color: variables.$color-background-dark;
+  color: variables.$color-text-inverted;
+}
+
+/* Remove list styles */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Focus styles */
+:focus {
+  outline: 2px dashed variables.$color-outline;
+  outline-offset: 0.25rem;
+}
+
+main:focus {
+  outline: none;
+}

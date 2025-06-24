@@ -1,0 +1,102 @@
+// styles/scss/_layout.scss
+@use 'variables';
+
+/* General section styling */
+section {
+  padding: var(--space-2xl) var(--space-l);
+}
+
+/* Wrappers */
+.wrapper {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.wrapper_inner {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header */
+.site_header {
+  background-color: variables.$color-accent;
+  color: variables.$color-text-primary;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: variables.$header-height;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(variables.$color-black, 0.2);
+
+  // This existing rule is perfect for the new 3-part layout!
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    /* Center nav horizontally */
+    align-items: center;
+    height: 100%;
+    padding: 0 var(--space-m);
+    position: relative;
+    /* Needed for absolute positioning */
+  }
+
+  // --- NEW STYLES for the header sections ---
+
+  // Your Name (Brand)
+  .header__brand {
+    position: absolute;
+    left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header__brand h3 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1.2;
+  }
+
+  .header__brand h5 {
+    margin: 0;
+    font-weight: normal;
+    font-size: 0.75rem;
+  }
+
+  .header__nav ul.flex {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header__nav a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 0 var(--space-s);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .wrapper nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Add padding to the body to avoid content being hidden under the fixed header */
+body {
+  padding-top: variables.$header-height;
+  /* Adjust if header height changes */
+}
+
+/* Footer section */
+section#footer {
+  padding: var(--space-l);
+}

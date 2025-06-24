@@ -18,54 +18,15 @@
   --space-3xl: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
 }
 
-:root {
-  /* Pink */
-  --color-accent: #F06292;
-  /* White */
-  --color-white: #FFFFFF;
-  /* Black */
-  --color-black: #000;
-  /* Green */
-  --color-outline: #00ff19;
-  /* Dark Gray */
-  --color-dark-gray: #2C2F33;
-  /* Green */
-  --color-green: #43B581;
-  /* Light Gray */
-  --color-light-gray: #ccc;
-}
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: sans-serif;
 }
 
 /* Remove default margin */
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-figure,
-blockquote,
-dl,
-dd {
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
   margin: 0;
-}
-
-/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role=list],
-ol[role=list] {
-  list-style: none;
-  padding: 0;
-}
-
-/* Set core root defaults */
-html:focus-within {
-  scroll-behavior: smooth;
 }
 
 /* Set core body defaults */
@@ -73,11 +34,16 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   letter-spacing: -0.01em;
+  font-family: sans-serif;
+  background-color: #170d0b;
+  color: #c8b6aa;
 }
 
-/* All elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
+/* Remove list styles */
+ul[role=list],
+ol[role=list] {
+  list-style: none;
+  padding: 0;
 }
 
 /* Make images easier to work with */
@@ -88,422 +54,18 @@ picture {
 }
 
 /* Inherit fonts for inputs and buttons */
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
   font: inherit;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html:focus-within {
-    scroll-behavior: auto;
-  }
-}
+/* Focus styles */
 :focus {
-  outline: 2px dashed var(--color-outline);
+  outline: 2px dashed #00ff19;
   outline-offset: 0.25rem;
 }
 
 main:focus {
   outline: none;
-}
-
-/* define some constants */
-.flex {
-  display: flex;
-  align-items: center;
-  gap: var(--space-s);
-}
-
-@media (max-width: 468px) {
-  .flex {
-    flex-wrap: wrap;
-  }
-}
-.flex_center {
-  justify-content: center;
-}
-
-.flex_around {
-  justify-content: space-around;
-}
-
-.flex_between {
-  justify-content: space-between;
-}
-
-@media (max-width: 468px) {
-  .flex_around {
-    justify-content: center;
-  }
-  .flex_between {
-    justify-content: center;
-  }
-}
-.text_center {
-  text-align: center;
-}
-
-.text_right {
-  text-align: right;
-}
-
-/* define spacing */
-.padding-top-3xs {
-  padding: var(--space-3xs);
-}
-
-/* create the wrappers */
-.wrapper {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-}
-
-.wrapper_inner {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* Style the header */
-.site_header {
-  padding: var(--space-s) 0;
-  background-color: var(--color-accent);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.site_header_nav ul li a {
-  text-decoration: none;
-  color: var(--color-white);
-}
-
-/* Hero section styling */
-.hero_content {
-  padding: var(--space-3xl) 0;
-}
-
-.hero_content h1 {
-  margin-bottom: var(--space-s);
-}
-
-.hero_social {
-  padding-top: var(--space-3xl);
-}
-
-/* General styling for the hero section */
-section {
-  padding: var(--space-2xl) var(--space-l);
-}
-
-section#hero {
-  background: linear-gradient(var(--color-accent), var(--color-dark-gray)), url("some_cool_URL/URI"); /*This is for a background*/
-  padding-bottom: 4px;
-  background-size: cover;
-  background-position: top;
-  background-attachment: scroll;
-  color: var(--color-white);
-}
-
-/* ============================================= */
-/* == Project Card Component == */
-/* ============================================= */
-/* 
-  The main container for an entire project summary. 
-  We will add a subtle transition for the hover effect.
-*/
-.summary_container {
-  background-color: #fff; /* A slightly off-white or light gray can also work */
-  border-radius: 8px; /* Softer, rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* A more subtle shadow */
-  overflow: hidden; /* Ensures the image's corners are also rounded */
-  margin-bottom: var(--space-xl); /* Adds space between project cards */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions! */
-}
-
-/* The hover effect from your 'hover_skew' class will now be smooth */
-.summary_container:hover {
-  transform: translateY(-5px) skew(-2deg); /* Example skew effect */
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Deeper shadow on hover */
-}
-
-/* This is the flex container holding the image and the text */
-.project_summary {
-  padding: var(--space-l); /* Consistent padding all around */
-  gap: var(--space-l); /* Adds space between the image and the text */
-}
-
-/* --- Renamed and Refactored Classes --- */
-/* 
-  NEW NAME: .project-card__figure 
-  (Replaces .about_figure)
-  This is the container for the image and its caption.
-*/
-.project-card__figure {
-  flex-shrink: 0; /* Prevents the image container from shrinking */
-  margin: 0; /* Removes default figure margin */
-  /* Remove the old border/shadow here; it's on the main container now */
-}
-
-/* 
-  NEW NAME: .project-card__image
-  (Replaces .about_img)
-  The actual project image.
-*/
-.project-card__image {
-  width: 300px; /* You can keep this fixed or change to 100% for responsiveness */
-  height: 220px;
-  object-fit: cover; /* This is perfect, keep it! */
-  display: block; /* Removes any extra space below the image */
-  border-radius: 4px; /* Slightly rounded corners for the image itself */
-  border: 1px solid var(--color-light-gray);
-}
-
-/* 
-  NEW NAME: .project-card__caption
-  (Replaces .about_caption)
-  The text below the image.
-*/
-.project-card__caption {
-  font-size: var(--font-size-s);
-  color: var(--color-gray);
-  text-align: center;
-  margin-top: var(--space-xs);
-}
-
-/* Bonus: Styling for the project description text */
-.project-card__description {
-  font-size: 1.1rem; /* A more readable size than 1.5rem for body text */
-  line-height: 1.6;
-}
-
-/* ============================================= */
-/* == About Section == */
-/* ============================================= */
-section#about {
-  background-color: var(--color-dark-gray);
-  color: var(--color-white);
-  padding: var(--space-xl) var(--space-m); /* Added horizontal padding for mobile */
-  position: relative;
-  overflow: hidden;
-}
-
-/* Optional: Decorative skewed background element */
-section#about::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -10%;
-  width: 120%;
-  height: 100%;
-  background-color: var(--color-accent); /* Make sure --color-accent is defined! */
-  opacity: 0.1; /* Made it more subtle so text is easier to read */
-  transform: skewX(-10deg);
-  z-index: 0;
-}
-
-/* Ensure content is above the decorative background */
-#about .wrapper {
-  position: relative;
-  z-index: 1;
-}
-
-/* The flex container for your portrait and text */
-.about-me__content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-xl);
-  margin-top: var(--space-l);
-  flex-wrap: wrap; /* Allows items to stack */
-}
-
-/* The container for the portrait image and its caption */
-.about-me__figure {
-  margin: 0;
-  flex-shrink: 0;
-}
-
-/* The circular portrait image */
-.about-me__image {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid var(--color-white);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  display: block;
-}
-
-/* The caption below the portrait */
-.about-me__caption {
-  text-align: center;
-  margin-top: var(--space-s);
-  font-style: italic;
-  font-size: var(--font-size-s);
-  color: var(--color-light-gray);
-}
-
-/* The text paragraph next to the portrait */
-.about-me__text {
-  max-width: 500px;
-  font-size: var(--font-size-l);
-  line-height: 1.7;
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-  /* On smaller screens, make the content stack nicely */
-  .about-me__content {
-    flex-direction: column;
-    text-align: center;
-  }
-  /* Remove the skew on mobile if it looks weird */
-  section#about::before {
-    transform: none;
-    left: 0;
-    width: 100%;
-  }
-}
-/* Bonus: Styling for the links/buttons */
-.project-links a {
-  display: inline-block;
-  background-color: var(--color-primary); /* Assuming you have a primary color variable */
-  color: white;
-  padding: var(--space-s) var(--space-m);
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-right: var(--space-s);
-  transition: background-color 0.2s ease;
-}
-
-.project-links a:hover {
-  background-color: var(--color-primary-dark); /* A darker shade for hover */
-}
-
-/* work section */
-.work_logos {
-  margin-top: var(--space-xl);
-}
-
-section#work {
-  background-color: var(--color-green);
-  color: var(--color-white);
-  --color-accent: var(--color-accent);
-}
-
-/* contact section */
-.contact_form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form_group {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: var(--color-white);
-}
-
-input[type=text],
-input[type=email],
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--color-light-gray);
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-  color: var(--color-black);
-}
-
-textarea {
-  resize: vertical;
-  height: 150px;
-}
-
-/* footer section */
-section#footer {
-  padding: var(--space-l) var(--space-l);
-}
-
-/* OPTIONAL:  Add some padding to the body to avoid content being hidden under the header */
-body {
-  padding-top: 60px; /* Adjust this value to match your header's height */
-}
-
-.wrapper_inner {
-  /* OPTIONAL: Adjust width and margins as needed to match your layout */
-  width: 90%; /* or 'max-width: 1200px' */
-  margin: 0 auto;
-}
-
-.summary_container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-s);
-  padding: var(--space-xl) 0;
-}
-
-/* Button Styles */
-button[type=submit] {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: var(--color-accent);
-  color: var(--color-white);
-  cursor: pointer;
-}
-
-button[type=submit]:hover {
-  background-color: var(--color-accent);
-}
-
-/* Dropdown Menu */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
-  background-color: var(--color-accent);
-  color: var(--color-white);
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
 }
 
 h1,
@@ -531,32 +93,380 @@ h5,
   font-size: var(--step-1);
 }
 
-/*Hover Skew Effect*/
-.hover_skew {
-  font-size: 2rem;
-  color: #ffffff;
+/* General section styling */
+section {
+  padding: var(--space-2xl) var(--space-l);
+}
+
+/* Wrappers */
+.wrapper {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.wrapper_inner {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header */
+.site_header {
+  background-color: #83c114;
+  color: #170d0b;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 70px;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(23, 13, 11, 0.2);
+}
+.site_header .wrapper {
+  display: flex;
+  justify-content: center;
+  /* Center nav horizontally */
+  align-items: center;
+  height: 100%;
+  padding: 0 var(--space-m);
+  position: relative;
+  /* Needed for absolute positioning */
+}
+.site_header .header__brand {
+  position: absolute;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.site_header .header__brand h3 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+.site_header .header__brand h5 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 0.75rem;
+}
+.site_header .header__nav ul.flex {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site_header .header__nav a {
+  text-decoration: none;
+  font-size: 1.5rem;
+  padding: 0 var(--space-s);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.site_header .wrapper nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Add padding to the body to avoid content being hidden under the fixed header */
+body {
+  padding-top: 70px;
+  /* Adjust if header height changes */
+}
+
+/* Footer section */
+section#footer {
+  padding: var(--space-l);
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.flex_center {
+  justify-content: center;
+}
+
+.flex_around {
+  justify-content: space-around;
+}
+
+.flex_between {
+  justify-content: space-between;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.text_right {
+  text-align: right;
+}
+
+@media (max-width: 468px) {
+  .flex {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+/* ============================================= */
+/* == Reusable Components == */
+/* ============================================= */
+/* 1. Unified Button Style */
+/* Apply the .button class to any <a>, <button>, or <input type="submit"> for a consistent look. */
+.button, .dropdown .dropbtn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.2s ease;
+  background-color: #6b4923;
+  color: #c8b6aa;
+}
+.button:hover, .dropdown .dropbtn:hover {
+  background-color: #583c1d;
+}
+.button--secondary {
+  background-color: #83c114;
+  color: #170d0b;
+}
+.button--secondary:hover {
+  background-color: #73aa12;
+}
+
+/* 2. Dropdown Menu Component */
+.dropdown {
   position: relative;
   display: inline-block;
-  transition: transform 0.2s ease-out;
+}
+.dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #6b4923;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(23, 13, 11, 0.2);
+  border-radius: 4px;
+  z-index: 10;
+  overflow: hidden;
+}
+.dropdown .dropdown-content a {
+  color: #170d0b;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown .dropdown-content a:hover {
+  background-color: #583c1d;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
-.hover_skew:hover {
-  transform: skewX(-10deg); /* Skew effect on hover */
+/* ============================================= */
+/* == Page-Specific Component Sections == */
+/* ============================================= */
+/* Hero Section */
+section#hero {
+  --hero-bg-image: url("/assets/images/portrait.jpg");
+  background: linear-gradient(rgba(93, 86, 57, 0.8), #170d0b), var(--hero-bg-image);
+  padding-bottom: 4px;
+  background-size: cover;
+  background-position: center;
+  color: #c8b6aa;
 }
 
-.hover_skew::after {
-  content: "";
-  transition: transform 0.2s ease-out;
+.hero_content {
+  padding: var(--space-3xl) 0;
+}
+.hero_content h1 {
+  margin-bottom: var(--space-s);
 }
 
-.hover_skew:hover::after {
-  transform: scaleX(1); /* Show underline on hover */
+.hero_social {
+  padding-top: var(--space-3xl);
+}
+
+section#about {
+  background-color: #170d0b;
+  color: #c8b6aa;
+}
+section#about .about-me__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  margin-top: var(--space-l);
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  section#about .about-me__content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+section#about .about-me__figure {
+  margin: 0;
+  flex-shrink: 0;
+}
+section#about .about-me__image {
+  width: 200px;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 10%;
+  border: 4px solid #c8b6aa;
+  box-shadow: 0 4px 10px rgba(23, 13, 11, 0.25);
+}
+section#about .about-me__caption {
+  color: #ccc;
+  margin-top: var(--space-s);
+  font-style: italic;
+}
+section#about .about-me__text {
+  max-width: 500px;
+}
+
+/* Work Section */
+section#work {
+  background-color: #170d0b;
+  color: #c8b6aa;
+}
+
+/* Contact Form */
+.contact_form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #c8b6aa;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(23, 13, 11, 0.1);
+  margin-bottom: 10px;
+  color: #170d0b;
+}
+
+/* ============================================= /
+/ == Project Summaries == /
+/ ============================================= */
+.summary_container {
+  max-width: 1600px;
+  width: auto;
+  margin-left: var(--space-l);
+  margin-right: var(--space-l);
+  margin-bottom: var(--space-m);
+  background-color: #c8b6aa;
+  color: #170d0b;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(23, 13, 11, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-blend-mode: overlay;
+}
+.summary_container:hover {
+  box-shadow: 0 10px 15px rgba(23, 13, 11, 0.1);
+}
+.summary_container h2 {
+  color: #170d0b;
+  padding: var(--space-l) var(--space-l) 0;
+}
+
+.project_summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-l);
+  padding: var(--space-l);
+}
+@media (max-width: 768px) {
+  .project_summary {
+    flex-direction: column;
+  }
+}
+
+.project-card__figure {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.project-card__image {
+  width: 350px;
+  height: 250px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+@media (max-width: 768px) {
+  .project-card__image {
+    width: 100%;
+    height: 220px;
+  }
+}
+
+.project-card__caption {
+  color: #4b2a24;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.project-card__description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.project-card__description strong {
+  display: block;
+  margin-bottom: 0rem;
+}
+
+.project-flair {
+  display: inline-block;
+  background-color: #170d0b;
+  color: #c8b6aa;
+  padding: 4px 8px;
+  margin: 0 5px 5px 0;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.project-flair:hover {
+  background-color: #83c114;
+  color: #170d0b;
+  cursor: pointer;
 }
 
 /* Hover underline effect */
 .hover_underline {
   font-size: 2rem;
-  color: #ffffff;
+  color: #170d0b;
   position: relative;
   display: inline-block;
 }
@@ -567,15 +477,19 @@ h5,
   position: absolute;
   width: 100%;
   height: 2px;
-  background: linear-gradient(to right, var(--color-dark-gray), var(--color-dark-gray));
   bottom: -5px;
   left: 0;
   transform: scaleX(0);
-  transform-origin: right;
   transition: transform 0.2s ease-out;
 }
 
+.hover_underline::after {
+  background: linear-gradient(to left, rgba(23, 13, 11, 0.5), #170d0b);
+  transform-origin: right;
+}
+
 .hover_underline::before {
+  background: linear-gradient(to right, rgba(23, 13, 11, 0.5), #170d0b);
   top: -5px;
   transform-origin: left;
 }
@@ -583,6 +497,4 @@ h5,
 .hover_underline:hover::after,
 .hover_underline:hover::before {
   transform: scaleX(1);
-}
-
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */

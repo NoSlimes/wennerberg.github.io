@@ -1,0 +1,192 @@
+// styles/scss/_components.scss
+@use 'variables';
+
+/* ============================================= */
+/* == Reusable Components == */
+/* ============================================= */
+
+/* 1. Unified Button Style */
+/* Apply the .button class to any <a>, <button>, or <input type="submit"> for a consistent look. */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.2s ease;
+
+  // Use the variables we defined in _variables.scss
+  background-color: variables.$color-background-light;
+  color: variables.$color-text-inverted;
+
+  &:hover {
+    background-color: darken(variables.$color-background-light, 5%);
+  }
+
+  &--secondary {
+    background-color: variables.$color-accent;
+    color: variables.$color-text-primary;
+
+    &:hover {
+      background-color: darken(variables.$color-accent, 5%);
+    }
+  }
+}
+
+/* 2. Dropdown Menu Component */
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  // The dropdown button uses the same styles as our main button!
+  .dropbtn {
+    @extend .button; // This SCSS feature reuses all the styles from .button
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: variables.$color-background-light;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(variables.$color-black, 0.2);
+    border-radius: 4px; // Add a radius to match the button
+    z-index: 10; // Ensure it's above other content
+    overflow: hidden; // Keep the corners rounded
+
+    a {
+      color: variables.$color-text-primary; // Use primary text color on light background
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+
+      &:hover {
+        background-color: darken(variables.$color-background-light, 5%);
+      }
+    }
+  }
+
+  // Show the dropdown on hover
+  &:hover .dropdown-content {
+    display: block;
+  }
+}
+
+
+/* ============================================= */
+/* == Page-Specific Component Sections == */
+/* ============================================= */
+
+/* Hero Section */
+section#hero {
+  --hero-bg-image: url("/assets/images/portrait.jpg");
+
+  background:
+    linear-gradient(rgba(variables.$color-background-medium-1, 0.8), rgba(variables.$color-background-dark, 1.0)),
+    var(--hero-bg-image);
+  padding-bottom: 4px;
+  background-size: cover;
+  background-position: center;
+  color: variables.$color-text-inverted;
+}
+
+
+.hero_content {
+  padding: var(--space-3xl) 0;
+
+  h1 {
+    margin-bottom: var(--space-s);
+  }
+}
+
+.hero_social {
+  padding-top: var(--space-3xl);
+}
+
+section#about {
+  background-color: variables.$color-background-dark;
+  color: variables.$color-text-inverted;
+
+  // --- THIS IS THE CRUCIAL LAYOUT FIX ---
+  // These styles control the positioning of the image and text inside the section.
+  .about-me__content {
+    display: flex; // THIS IS THE KEY: Makes children go side-by-side.
+    align-items: center; // Vertically aligns the image and text to their centers.
+    justify-content: center; // Horizontally centers the group on the page.
+    gap: var(--space-xl); // Adds space BETWEEN the image and text.
+    margin-top: var(--space-l);
+    flex-wrap: wrap; // Good practice for responsiveness.
+
+    // On smaller screens, stack them vertically.
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  // The container for the portrait image.
+  .about-me__figure {
+    margin: 0;
+    flex-shrink: 0; // Prevents the image from shrinking.
+  }
+
+  // The styles for the image itself.
+  .about-me__image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10%; // Makes it round!
+    border: 4px solid variables.$color-white;
+    box-shadow: 0 4px 10px rgba(variables.$color-black, 0.25);
+  }
+
+  // The caption below the image.
+  .about-me__caption {
+    color: variables.$color-light-gray;
+    margin-top: var(--space-s);
+    font-style: italic;
+  }
+
+  // The paragraph of text next to the image.
+  .about-me__text {
+    max-width: 500px; // Keeps text lines from getting too long.
+  }
+}
+
+/* Work Section */
+section#work {
+  background-color: variables.$color-background-dark;
+  color: variables.$color-text-inverted;
+
+}
+
+/* Contact Form */
+.contact_form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: variables.$color-text-inverted;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid variables.$color-light-gray;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(variables.$color-black, 0.1);
+  margin-bottom: 10px;
+  color: variables.$color-text-primary;
+}

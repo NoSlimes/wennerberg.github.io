@@ -31,40 +31,45 @@ section {
   z-index: 100;
   box-shadow: 0 2px 4px rgba(variables.$color-black, 0.2);
 
-  // This existing rule is perfect for the new 3-part layout!
   .wrapper {
     display: flex;
-    justify-content: center;
-    /* Center nav horizontally */
+    justify-content: space-between;
     align-items: center;
     height: 100%;
     padding: 0 var(--space-m);
     position: relative;
-    /* Needed for absolute positioning */
   }
 
-  // --- NEW STYLES for the header sections ---
-
-  // Your Name (Brand)
   .header__brand {
     position: absolute;
     left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    h3 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1.2;
+    }
+
+    h5 {
+      margin: 0;
+      font-weight: normal;
+      font-size: 0.75rem;
+    }
   }
 
-  .header__brand h3 {
-    margin: 0;
-    font-weight: bold;
-    font-size: 1.2rem;
-    line-height: 1.2;
+  .menu-toggle {
+    display: none;
   }
 
-  .header__brand h5 {
-    margin: 0;
-    font-weight: normal;
-    font-size: 0.75rem;
+  .wrapper nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding-left: 9rem; // Prevent overlap with brand
   }
 
   .header__nav ul.flex {
@@ -83,12 +88,61 @@ section {
     letter-spacing: 0.05em;
   }
 
-  .wrapper nav {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
+  // --- MOBILE STYLES ---
+  @media (max-width: 850px) {
+    .wrapper {
+      justify-content: space-between;
+      padding: 0 var(--space-s);
+    }
+
+    .header__brand {
+      position: static;
+    }
+
+    .wrapper nav {
+      order: 1;
+      /* before hamburger */
+      justify-content: flex-end;
+      padding-left: 0;
+      flex-grow: 1;
+    }
+
+    .menu-toggle {
+      order: 2;
+      /* Push to the right in flex container */
+      margin-left: auto;
+      display: block;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: inherit;
+      cursor: pointer;
+      z-index: 101;
+    }
+
+    .header__nav ul.flex {
+      display: none;
+      flex-direction: column;
+      background-color: variables.$color-accent;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 100%;
+      padding: var(--space-s);
+    }
+
+    .header__nav ul.flex.show {
+      display: flex;
+    }
+
+    .header__nav a {
+      font-size: 1.2rem;
+      padding: var(--space-s) 0;
+    }
   }
 }
+
+
 
 /* Add padding to the body to avoid content being hidden under the fixed header */
 body {

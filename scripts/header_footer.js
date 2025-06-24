@@ -13,10 +13,33 @@ async function loadHeaderFooter() {
     document.getElementById('header-container').innerHTML = headerHtml;
     document.getElementById('footer-container').innerHTML = footerHtml;
 
+    // Now that header is loaded, set up the menu toggle
+    setupMenuToggle();
+
   } catch (error) {
     console.error("Error loading header/footer:", error);
-    // Optionally display a fallback header/footer or an error message to the user.
   }
 }
 
-loadHeaderFooter(); // Call the function to load the header and footer.
+function setupMenuToggle() {
+  const toggle = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".header__nav ul.flex");
+  const navLinks = nav ? nav.querySelectorAll("a") : [];
+
+  if (toggle && nav) {
+    // Toggle menu open/close on burger button click
+    toggle.addEventListener("click", () => {
+      nav.classList.toggle("show");
+    });
+
+    // Close menu when any nav link is clicked
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("show");
+      });
+    });
+  }
+}
+
+
+loadHeaderFooter();

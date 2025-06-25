@@ -65,23 +65,25 @@
         "projectType": "GAME PROJECT 1 - FUTURE GAMES",
         "description": "Purrsuit of Freedom is a 2.5D isometric endless runner game where the player controls a cat being chased across the dinner table by its owner. The game features a global leader board which is synced to a centralized server written in Python. Developed in Unity, it showcases my skills in gameplay programming and character mechanics.",
         "links": {
-            "github": ""
+            "github": "",
+            "demo": ""
         }
     },
     {
-        "title": "Harald",
+        "title": "Slime Murderer",
         "flairs": [
             "Unity",
             "C#",
-            "Blender"
+            "Future Games"
         ],
-        "detailPageUrl": "./projects/harald.html",
+        "detailPageUrl": "./projects/slime-murderer.html",
         "imageSrc": "./assets/images/projects/harald/haraldold1.png",
         "imageCaption": "Harald",
-        "projectType": "PERSONAL PROJECT",
-        "description": "Harald is a personal project I started when i went to LBS in 2020. It is a first-person horror game set in the house of a confused alien old man. The game is made in Unity and is still in development. During the development progrees I've refactored the majority many times as I've grown in proficiency.",
+        "projectType": "C# UNITY COURSE - FUTURE GAMES",
+        "description": "\"Slime Murderer\" is a <a href=\"https://store.steampowered.com/app/1794680/Vampire_Survivors/\">Vampire Survivors</a> clone I made during my first course at Future Games, the C# course.",
         "links": {
-            "github": ""
+            "github": "",
+            "demo": "https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip"
         }
     }
 ]

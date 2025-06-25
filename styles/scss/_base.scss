@@ -42,11 +42,11 @@ input, button, textarea, select {
   font: inherit;
 }
 
-/* Focus styles */
-:focus {
-  outline: 2px dashed variables.$color-outline;
-  outline-offset: 0.25rem;
-}
+// /* Focus styles */
+// :focus {
+//   outline: 2px dashed variables.$color-outline;
+//   outline-offset: 0.25rem;
+// }
 
 main:focus {
   outline: none;

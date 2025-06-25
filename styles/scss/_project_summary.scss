@@ -4,17 +4,14 @@
 / == Project Summaries == /
 / ============================================= */
 .summary_container {
-  // --- LAYOUT CHANGE ---
-  // Make the card stretch wider with margins on the side.
-  // It will no longer be constrained by the narrow .wrapper_inner.
-  max-width: 1600px; // Give it a generous max-width
-  width: auto; // Let it be determined by the margins
-  margin-left: var(--space-l);
-  margin-right: var(--space-l);
-  margin-bottom: var(--space-m); // Increase space between cards
-  // --- STYLING (from before) ---
+  max-width: 1800px;
+  width: auto;
+  // margin-left: var(--space-l);
+  // margin-right: var(--space-l);
+  margin-bottom: var(--space-m); 
+
   background-color: variables.$color-white;
-  color: variables.$color-text-primary; // This will now work correctly!
+  color: variables.$color-text-primary; 
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(variables.$color-black, 0.05);
   overflow: hidden;
@@ -23,10 +20,10 @@
 
   &:hover {
     // transform: translateY(-5px); // Removed the skew for a cleaner look
+    transform: scale(1.02); // Slightly scale up on hover
     box-shadow: 0 10px 15px rgba(variables.$color-black, 0.1);
   }
 
-  // Ensure the h2 heading inside the card also has the correct color
   h2 {
     color: variables.$color-text-primary;
     padding: var(--space-l) var(--space-l) 0; // Add padding to the title
@@ -52,10 +49,11 @@
 }
 
 .project-card__image {
-  width: 350px; // Made it slightly larger
+  width: 350px;
   height: 250px;
-  object-fit: cover;
+  object-fit:scale-down;
   display: block;
+  aspect-ratio: 16/9;
   border-radius: 4px;
 
   // --- RESPONSIVE CHANGE ---

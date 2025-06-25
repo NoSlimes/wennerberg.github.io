@@ -3,34 +3,27 @@ name: Compile Sass to CSS
 on:
   push:
     branches:
-      - main  # Make sure this is your primary branch
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out your repository's code
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js to use npm
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # Step 3: Install Sass
       - name: Install Sass
         run: npm install -g sass
 
-      # Step 4: Compile the SCSS. This is the corrected command.
-      # INPUT:  styles/scss/main.scss
-      # OUTPUT: styles/main.css
       - name: Compile SCSS to CSS
         run: sass styles/main.scss styles/main.css --style=compressed
 
-      # Step 5: Commit and push the compiled CSS file
       - name: Commit and Push compiled CSS
         run: |
           # Configure git with the bot's identity

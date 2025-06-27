@@ -19,6 +19,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-blend-mode: overlay;
 
+  cursor: pointer;
 
   &:hover {
     // transform: translateY(-5px); // Removed the skew for a cleaner look
@@ -99,5 +100,5 @@
 .project-flair:hover {
   background-color: variables.$color-accent;
   color: variables.$color-text-primary;
-  cursor: pointer;
+  // cursor: pointer;
 }

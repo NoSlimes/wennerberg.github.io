@@ -1,6 +1,6 @@
 ﻿cat-survival-craft:
   pageTitle: Project - Cat Survival Craft
-  heroImage: 
+  heroImage: /assets/projects/cat-survival/cat-survival.png
   projectName: CAT SURVIVAL CRAFT [WORKING TITLE]
   projectType: "[PERSONAL PROJECT - NETWORKED GAMEPLAY]"
   flairs:
@@ -22,7 +22,9 @@
       body: |
         The primary goal is to build a secure, server-authoritative architecture. This means the server has the final say on all game state, preventing common cheats like flying or item duplication. All player inputs are sent to the server, which processes them and broadcasts the resulting state back to the clients. All item useage (for tools like pickaxes, axes, etc.) is ran solely on the server, and the clients only receive the results of the actions. The game is made using NGO (Netcode for GameObjects) and Unity Transport. 
   galleryImages:
-  videoURL: ""
+    - /assets/projects/cat-survival/cat-survival-inventory-00.png
+    - /assets/projects/cat-survival/cat-survival-inventory-01.png
+  videoURL: "/assets/projects/cat-survival/cat-survival.mp4"
 
 slaylien:
   pageTitle: Project - SLAYLIEN

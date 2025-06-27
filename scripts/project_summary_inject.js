@@ -13,20 +13,16 @@ async function injectProjectSummaries() {
 
         const projects = await response.json();
 
-        // Clear any existing content
         contentContainer.innerHTML = '';
 
-        // Loop through each project and build its HTML from your template
         projects.forEach(project => {
-            // Create the main container div and add its classes
             const projectDiv = document.createElement('div');
-            projectDiv.classList.add('summary_container');
+            projectDiv.classList.add('summary_container', 'clickable-card');
 
             const flairsHTML = project.flairs
                 .map(flair => `<span class="project-flair">${flair}</span>`)
                 .join(' ');
 
-            // --- Generated project template ---
             const projectHTML = `
     <h2 class="h2">${project.title}</h2>
     <div class="project_summary flex flex_around">
@@ -49,15 +45,22 @@ async function injectProjectSummaries() {
 </p>
             <div class="project-links" style="margin-top: 20px;">
                 <a href="${project.detailPageUrl}" class="button">Read More</a>
-                ${project.links.github ? `<a href="${project.links.github}" class="button button--secondary">GitHub</a>` : ''}
+                ${project.links.github ? `<a href="${project.links.github}" class="button button--secondary" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
+                ${project.links.trello ? `<a href="${project.links.trello}" class="button button--secondary" target="_blank" rel="noopener noreferrer">Trello</a>` : ''}
                 ${project.links.demo ? `<a href="${project.links.demo}" class="button button--secondary">Download Game</a>` : ''}
             </div>
         </div>
     </div>
 `;
-            // --- End of template ---
-
             projectDiv.innerHTML = projectHTML;
+
+            projectDiv.addEventListener('click', (e) => {
+                const isButtonOrLink = e.target.closest('a, button');
+                if (!isButtonOrLink) {
+                    window.location.href = project.detailPageUrl;
+                }
+            });
+
             contentContainer.appendChild(projectDiv);
         });
 
@@ -67,5 +70,4 @@ async function injectProjectSummaries() {
     }
 }
 
-// Call the function to run it all
 injectProjectSummaries();

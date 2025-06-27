@@ -6,6 +6,7 @@
   flex-wrap: wrap;
   gap: var(--space-s);
   width: fit-content;
+  height: fit-content;
   margin-inline: auto; // centers it in parent
 
   .project-flair {

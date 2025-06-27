@@ -144,6 +144,8 @@ h5,
   gap: var(--space-s);
   width: -moz-fit-content;
   width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin-inline: auto;
 }
 .skill-flairs .project-flair {
@@ -541,6 +543,8 @@ section#about .about-me__content {
 section#about .info-box {
   width: -moz-fit-content;
   width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin-inline: auto;
   max-width: 80vb;
 }
@@ -616,6 +620,7 @@ textarea {
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-blend-mode: overlay;
+  cursor: pointer;
 }
 .summary_container:hover {
   transform: scale(1.02);
@@ -692,7 +697,6 @@ textarea {
 .project-flair:hover {
   background-color: #83c114;
   color: #170d0b;
-  cursor: pointer;
 }
 
 .modal-overlay {

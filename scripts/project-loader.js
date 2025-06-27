@@ -1,9 +1,3 @@
-/**
- * Takes a standard video URL and returns the appropriate embed HTML.
- * Supports YouTube, Vimeo, and direct .mp4 links.
- * @param {string} url The full URL of the video.
- * @returns {string|null} The HTML string for the embed, or null if unsupported.
- */
 function getVideoEmbed(url) {
   let embedHtml = null;
   try {
@@ -21,32 +15,39 @@ function getVideoEmbed(url) {
     } else if (urlObj.pathname.endsWith('.mp4')) {
       embedHtml = `<div class="video-container"><video controls><source src="${url}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
     }
-  } catch (error) {
-    console.error("Could not parse video URL:", url, error);
-    return null;
-  }
+  } catch (error) { console.error("Could not parse video URL:", url, error); return null; }
   return embedHtml;
 }
 
 async function loadProject() {
   const mainContent = document.querySelector('.project-detail-page');
-  
   try {
+    const modal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image-content');
+    const closeModalBtn = modal.querySelector('.modal-close');
+
+    const closeModal = () => {
+      modal.classList.remove('show-modal');
+    };
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
     const response = await fetch('/data/projects.json');
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const projectsData = await response.json();
-
     const params = new URLSearchParams(window.location.search);
     const projectId = params.get('id');
     const project = projectsData[projectId];
 
     if (!project) {
-      mainContent.innerHTML = `<div class="wrapper" style="text-align: center; padding: 4rem 0;">
-                                <h1>Project Not Found</h1>
-                                <p>The project ID "${projectId}" does not exist. <a href="/">Return to homepage</a>.</p>
-                               </div>`;
-      document.title = "Project Not Found";
-      return;
+        mainContent.innerHTML = `<div class="wrapper" style="text-align: center; padding: 4rem 0;"><h1>Project Not Found</h1><p>The project ID "${projectId}" does not exist. <a href="/">Return to homepage</a>.</p></div>`;
+        document.title = "Project Not Found";
+        return;
     }
 
     document.title = project.pageTitle;
@@ -54,58 +55,74 @@ async function loadProject() {
     document.getElementById('project-type').textContent = project.projectType;
     document.getElementById('hero').style.setProperty('--hero-bg-image', `url('${project.heroImage}')`);
     document.getElementById('project-overview').textContent = project.overview;
-
+    
     const flairsContainer = document.getElementById('project-flairs');
     flairsContainer.innerHTML = '';
     project.flairs.forEach(flairText => {
-      const flairElement = document.createElement('span');
-      flairElement.className = 'project-flair';
-      flairElement.textContent = flairText;
-      flairsContainer.appendChild(flairElement);
+      const el = document.createElement('span');
+      el.className = 'project-flair';
+      el.textContent = flairText;
+      flairsContainer.appendChild(el);
     });
 
     const detailsContainer = document.getElementById('project-details-container');
     detailsContainer.innerHTML = '';
-    const createInfoBox = (title, dataObject) => {
-      if (!dataObject || Object.keys(dataObject).length === 0) return '';
+    const createInfoBox = (title, data) => {
+      if (!data) return ''; 
       let listItems = '';
-      for (const [key, value] of Object.entries(dataObject)) {
-        listItems += `<li><strong>${key}:</strong> ${value}</li>`;
+      if (Array.isArray(data)) {
+        listItems = data.map(item => `<li>${item}</li>`).join('');
+      } else if (typeof data === 'object' && Object.keys(data).length > 0) {
+        listItems = Object.entries(data).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('');
+      } else {
+        return ''; 
       }
       return `<div class="project-info__box"><h3>${title}</h3><ul>${listItems}</ul></div>`;
     };
-    detailsContainer.innerHTML = createInfoBox('Team Info', project.teamInfo) + createInfoBox('Tech Stack', project.techStack);
+    detailsContainer.innerHTML = createInfoBox('My Contributions', project.contributions) + createInfoBox('Project Info', project.projectInfo);
 
-    const contributionsList = document.getElementById('project-contributions');
-    contributionsList.innerHTML = '';
-    project.contributions.forEach(itemText => {
-      const listItem = document.createElement('li');
-      listItem.textContent = itemText;
-      contributionsList.appendChild(listItem);
-    });
-    
+    const detailedContainer = document.getElementById('project-detailed-sections');
+    detailedContainer.innerHTML = '';
+    if (project.detailedSections && project.detailedSections.length > 0) {
+      project.detailedSections.forEach(section => {
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'project-detailed-section';
+        sectionEl.innerHTML = `<h2>${section.heading}</h2>`;
+        if (Array.isArray(section.body)) {
+          const listEl = document.createElement('ul');
+          section.body.forEach(itemText => { listEl.innerHTML += `<li>${itemText}</li>`; });
+          sectionEl.appendChild(listEl);
+        } else {
+          sectionEl.innerHTML += `<p>${section.body}</p>`;
+        }
+        detailedContainer.appendChild(sectionEl);
+      });
+    }
+  
     const galleryContainer = document.getElementById('project-gallery-container');
     galleryContainer.innerHTML = '';
     if (project.galleryImages && project.galleryImages.length > 0) {
       project.galleryImages.forEach(imageUrl => {
-        const imgElement = document.createElement('img');
-        imgElement.src = imageUrl;
-        imgElement.alt = `${project.projectName} gallery image`;
-        const linkElement = document.createElement('a');
-        linkElement.href = imageUrl;
-        linkElement.target = '_blank';
-        linkElement.rel = 'noopener noreferrer';
-        linkElement.appendChild(imgElement);
-        galleryContainer.appendChild(linkElement);
+        const linkEl = document.createElement('a');
+        linkEl.href = imageUrl;
+        const imgEl = document.createElement('img');
+        imgEl.src = imageUrl;
+        imgEl.alt = `${project.projectName} gallery image`;
+        linkEl.appendChild(imgEl);
+
+        linkEl.addEventListener('click', (event) => {
+          event.preventDefault(); 
+          modalImage.src = linkEl.href; 
+          modal.classList.add('show-modal'); 
+        });
+
+        galleryContainer.appendChild(linkEl);
       });
     }
 
-    // Inject Video
     if (project.videoURL) {
       const videoHtml = getVideoEmbed(project.videoURL);
-      if (videoHtml) {
-        document.getElementById('video-container-wrapper').innerHTML = videoHtml;
-      }
+      if (videoHtml) { document.getElementById('video-container-wrapper').innerHTML = videoHtml; }
     }
 
   } catch (error) {

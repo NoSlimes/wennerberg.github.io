@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles/main.css" />
   <title>Project Page</title>
 </head>
+
 <body>
   <header id="header-container"></header>
 
@@ -15,7 +17,8 @@
         <div class="hero_content text_center">
           <h1 id="project-name" class="h2"></h1>
           <p id="project-type" class="h5"></p>
-          <div id="project-flairs" class="hero_flairs flex_center" style="gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;"></div>
+          <div id="project-flairs" class="hero_flairs flex_center"
+            style="gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;"></div>
         </div>
       </div>
     </section>
@@ -23,14 +26,12 @@
     <article class="wrapper project-article">
       <h2>Project Overview</h2>
       <p id="project-overview"></p>
-      
+
       <div id="project-details-container" class="project-info"></div>
 
-      <h2>My Contributions</h2>
-      <ul id="project-contributions"></ul>
+      <div id="project-detailed-sections"></div>
 
-      <div id="project-gallery-container" class="project-gallery">
-      </div>
+      <div id="project-gallery-container" class="project-gallery"></div>
 
       <div id="video-container-wrapper"></div>
     </article>
@@ -38,7 +39,16 @@
 
   <footer id="footer-container"></footer>
 
+  <div id="image-modal" class="modal-overlay">
+    <span class="modal-close">×</span>
+
+    <div class="modal-content">
+      <img id="modal-image-content" src="" alt="Full-size project image">
+    </div>
+  </div>
+
   <script src="/scripts/header_footer.js"></script>
   <script src="/scripts/project-loader.js"></script>
 </body>
+
 </html>

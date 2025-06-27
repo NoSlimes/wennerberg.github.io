@@ -5,7 +5,7 @@
 //@use 'scss/style';
 
 // --- 2. PAGES ---
-@use 'scss/pages/page_404';
+@use 'scss/pages/pages';
 
 // --- 3. LAYOUT & HELPERS ---
 @use 'scss/layout';
@@ -14,6 +14,7 @@
 // --- 4. COMPONENTS ---
 @use 'scss/components';
 @use 'scss/project_summary';
+@use 'scss/modal';
 
 // --- 5. ANIMATIONS ---
 @use 'scss/animations';

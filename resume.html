@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <title>Resume | Elias Wennerberg</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+  <header id="header-container"></header>
+
+  <main class="resume-page">
+    <section id="hero">
+      <div class="wrapper">
+        <div class="hero_content text_center">
+          <h1 class="h2">My Resume</h1>
+          <p class="h5" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
+            Feel free to view my resume below or download a copy for your records.
+          </p>
+          <a href="/assets/documents/resume-elias-wennerberg.pdf" class="button" download>
+            Download PDF
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="resume-viewer-container">
+      <div id="pdf-viewer" class="resume-viewer"></div>
+    </section>
+  </main>
+
+  <footer id="footer-container"></footer>
+  <script src="/scripts/header_footer.js"></script>
+
+  <script>
+    const pdfUrl = '/assets/documents/resume-elias-wennerberg.pdf';
+
+    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const viewer = document.getElementById('pdf-viewer');
+
+    pdfjsLib.getDocument(pdfUrl).promise.then(function (pdfDoc) {
+      for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+        pdfDoc.getPage(pageNum).then(function (page) {
+          const canvas = document.createElement('canvas');
+          canvas.style.display = 'block';
+          canvas.style.margin = '0 auto 1.5rem';
+          const context = canvas.getContext('2d');
+
+          const scale = 1.5;
+          const viewport = page.getViewport({ scale: scale });
+
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          const renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+          };
+
+          viewer.appendChild(canvas);
+          page.render(renderContext);
+        });
+      }
+    }).catch(function (err) {
+      viewer.innerHTML = `<p style="color: red;">Failed to load PDF: ${err.message}</p>`;
+    });
+  </script>
+
+</body>
+
+</html>

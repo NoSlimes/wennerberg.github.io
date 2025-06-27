@@ -4,14 +4,17 @@
 @use 'scss/typography';
 //@use 'scss/style';
 
-// --- 2. LAYOUT & HELPERS ---
+// --- 2. PAGES ---
+@use 'scss/pages/page_404';
+
+// --- 3. LAYOUT & HELPERS ---
 @use 'scss/layout';
 @use 'scss/utilities';
 
-// --- 3. COMPONENTS ---
+// --- 4. COMPONENTS ---
 @use 'scss/components';
 @use 'scss/project_summary';
 
-// --- 4. ANIMATIONS ---
+// --- 5. ANIMATIONS ---
 @use 'scss/animations';
 

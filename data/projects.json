@@ -1,0 +1,137 @@
+{
+  "cat-survival-craft": {
+    "pageTitle": "Project - Cat Survival Craft",
+    "heroImage": "https://picsum.photos/id/10/1200/400",
+    "projectName": "CAT SURVIVAL CRAFT [WORKING TITLE]",
+    "projectType": "[PERSONAL PROJECT - NETWORKED GAMEPLAY]",
+    "flairs": ["Unity", "C#", "Networking"],
+    "overview": "An in-development multiplayer survival game built in Unity. This project is a deep dive into networking architecture, featuring a fully server-authoritative design for both player movement and the inventory system to prevent cheating.",
+    "contributions": [
+      "Implemented client-side prediction and server reconciliation for smooth gameplay.",
+      "Designed and developed the fully server-authoritative inventory system."
+    ],
+    "teamInfo": {
+      "Role": "Solo Developer",
+      "Status": "In Development"
+    },
+    "techStack": {
+      "Engine": "Unity",
+      "Language": "C#",
+      "Networking": "Custom Server-Authoritative Model"
+    },
+    "galleryImages": [
+      "https://picsum.photos/id/20/600/400",
+      "https://picsum.photos/id/21/500/500"
+    ],
+    "videoURL": ""
+  },
+  "slaylien": {
+    "pageTitle": "Project - SLAYLIEN",
+    "heroImage": "/assets/images/projects/slaylien.png",
+    "projectName": "SLAYLIEN",
+    "projectType": "[GAME PROJECT 3 - FUTURE GAMES]",
+    "flairs": ["Unreal Engine 5", "Blueprints", "C++", "Group Project"],
+    "overview": "Slaylien is a third-person wave-defense game where players control a team of three characters to fend off hordes of insectoid aliens. Developed in Unreal Engine 5, it features a unique character switching mechanic where players can switch between characters in real-time to utilize their unique abilities.",
+    "contributions": [
+      "Designed and implemented the real-time character switching system.",
+      "Developed the enemy AI using Behavior Trees in Unreal Engine 5.",
+      "Programmed core gameplay mechanics such as the health and stats systems."
+    ],
+    "teamInfo": {
+      "Role": "Gameplay & AI Programmer",
+      "Team Size": "4"
+    },
+    "techStack": {
+      "Engine": "Unreal Engine 5",
+      "Language": "C++ & Blueprints",
+      "Key Features": "Behavior Trees, Character Switching"
+    },
+    "galleryImages": [
+      "https://picsum.photos/id/41/400/600",
+      "https://picsum.photos/id/42/600/400",
+      "https://picsum.photos/id/43/500/500"
+    ],
+    "videoURL": ""
+  },
+  "dead_sector": {
+    "pageTitle": "Project - DEAD SECTOR",
+    "heroImage": "https://picsum.photos/id/50/1200/400",
+    "projectName": "DEAD SECTOR",
+    "projectType": "[GAME PROJECT 2 - FUTURE GAMES]",
+    "flairs": ["Unity", "C#", "Group Project"],
+    "overview": "Dead Sector is a top-down sci-fi shooter where the player must find their way off their alien-infested space ship. Developed in Unity 6, the game features a unique weapon system that allows players to combine different weapon types to create powerful combinations.",
+    "contributions": [
+      "Led the UI programming, creating all menus and in-game HUD elements.",
+      "Designed and implemented the quest system to guide player progression.",
+      "Contributed to general gameplay programming and bug-fixing."
+    ],
+    "teamInfo": {
+      "Role": "UI & Quest Programmer",
+      "Team Size": "5"
+    },
+    "techStack": {
+      "Engine": "Unity",
+      "Language": "C#",
+      "Key Features": "Weapon Combination System, Quest System"
+    },
+    "galleryImages": [
+      "https://picsum.photos/id/61/600/400",
+      "https://picsum.photos/id/62/600/400"
+    ],
+    "videoURL": ""
+  },
+  "purrsuit_of_freedom": {
+    "pageTitle": "Project - Purrsuit of Freedom",
+    "heroImage": "https://picsum.photos/id/70/1200/400",
+    "projectName": "PURRSUIT OF FREEDOM",
+    "projectType": "[GAME PROJECT 1 - FUTURE GAMES]",
+    "flairs": ["Unity", "C#", "Group Project"],
+    "overview": "Purrsuit of Freedom is a 2.5D isometric endless runner game where the player controls a cat being chased across the dinner table by its owner. The game features a global leader board which is synced to a centralized server written in Python.",
+    "contributions": [
+      "Programmed the core character controller and movement mechanics.",
+      "Implemented the procedural generation of obstacles and collectibles.",
+      "Assisted in connecting the game to the Python-based leaderboard server."
+    ],
+    "teamInfo": {
+      "Role": "Gameplay Programmer",
+      "Team Size": "4"
+    },
+    "techStack": {
+      "Engine": "Unity",
+      "Language": "C#",
+      "Backend": "Python (for Leaderboard)"
+    },
+    "galleryImages": [
+      "https://picsum.photos/id/81/500/500",
+      "https://picsum.photos/id/82/600/400",
+      "https://picsum.photos/id/83/400/500",
+      "https://picsum.photos/id/84/600/600"
+    ],
+    "videoURL": ""
+  },
+  "slime-murderer": {
+    "pageTitle": "Project - Slime Murderer",
+    "heroImage": "https://picsum.photos/id/90/1200/400",
+    "projectName": "SLIME MURDERER",
+    "projectType": "[C# UNITY COURSE - FUTURE GAMES]",
+    "flairs": ["Unity", "C#"],
+    "overview": "A clone of the popular game Vampire Survivors, created as the main project during my first C# course at Future Games. The goal was to replicate the core gameplay loop of surviving endless waves of enemies with auto-attacking weapons and a robust power-up system.",
+    "contributions": [
+      "Developed the entire game from scratch as a solo project.",
+      "Programmed the enemy spawning system and AI movement.",
+      "Created the weapon and player upgrade systems."
+    ],
+    "teamInfo": {
+      "Role": "Solo Developer",
+      "Type": "Vampire Survivors Clone"
+    },
+    "techStack": {
+      "Engine": "Unity",
+      "Language": "C#"
+    },
+    "galleryImages": [
+      "https://picsum.photos/id/101/600/400"
+    ],
+    "videoURL": "https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip"
+  }
+}

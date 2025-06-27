@@ -6,9 +6,9 @@ async function injectProjectSummaries() {
     }
 
     try {
-        const response = await fetch('./projects.json');
+        const response = await fetch('/data/project-summaries.json');
         if (!response.ok) {
-            throw new Error(`Failed to fetch projects.json: ${response.statusText}`);
+            throw new Error(`Failed to fetch project-summaries.json: ${response.statusText}`);
         }
 
         const projects = await response.json();
@@ -47,10 +47,6 @@ async function injectProjectSummaries() {
 <p class="project-card__description">
   ${project.description}
 </p>
-
-
-
-
             <div class="project-links" style="margin-top: 20px;">
                 <a href="${project.detailPageUrl}" class="button">Read More</a>
                 ${project.links.github ? `<a href="${project.links.github}" class="button button--secondary">GitHub</a>` : ''}

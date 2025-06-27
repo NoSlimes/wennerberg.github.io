@@ -28,7 +28,7 @@ slaylien:
   pageTitle: Project - SLAYLIEN
   heroImage: https://picsum.photos/id/30/1200/400
   projectName: SLAYLIEN
-  projectType: "[GAME PROJECT 3 - FUTURE GAMES]"
+  projectType: "[GAME PROJECT 3 - FUTUREGAMES]"
   flairs:
     - Unreal Engine 5
     - Blueprints
@@ -66,7 +66,7 @@ dead_sector:
   pageTitle: Project - DEAD SECTOR
   heroImage: https://picsum.photos/id/50/1200/400
   projectName: DEAD SECTOR
-  projectType: "[GAME PROJECT 2 - FUTURE GAMES]"
+  projectType: "[GAME PROJECT 2 - FUTUREGAMES]"
   flairs:
     - Unity
     - C#
@@ -94,12 +94,12 @@ slime-murderer:
   pageTitle: Project - Slime Murderer
   heroImage: /assets/projects/slime-murderer/slime-murderer-oob.gif
   projectName: SLIME MURDERER
-  projectType: "[C# UNITY COURSE - FUTURE GAMES]"
+  projectType: "[C# UNITY COURSE - FUTUREGAMES]"
   flairs:
     - Unity
     - C#
   overview: |
-    A clone of the popular game Vampire Survivors, created as the main project during my first C# course at Future Games. The goal was to replicate the core gameplay loop of surviving endless waves of enemies with auto-attacking weapons and a robust power-up system.
+    A clone of the popular game Vampire Survivors, created as the main project during my first C# course at Futuregames. The goal was to replicate the core gameplay loop of surviving endless waves of enemies with auto-attacking weapons and a robust power-up system.
   projectInfo:
     Team Size: 1
     Engine: Unity

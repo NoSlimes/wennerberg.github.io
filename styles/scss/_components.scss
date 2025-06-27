@@ -117,6 +117,7 @@ section#about {
     justify-content: center; // Horizontally centers the group on the page.
     gap: var(--space-xl); // Adds space BETWEEN the image and text.
     margin-top: var(--space-l);
+    margin-bottom: var(--space-l);
     flex-wrap: wrap; // Good practice for responsiveness.
 
     // On smaller screens, stack them vertically.
@@ -124,6 +125,12 @@ section#about {
       flex-direction: column;
       text-align: center;
     }
+  }
+
+  .info-box {
+    width: fit-content;
+    margin-inline: auto;
+    max-width: 80vb;
   }
 
   // The container for the portrait image.

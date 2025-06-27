@@ -37,9 +37,13 @@ async function loadProject() {
       }
     });
 
-    const response = await fetch('/data/projects.json');
+    const response = await fetch('/data/projects.yml'); 
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const projectsData = await response.json();
+
+    const yamlText = await response.text();
+
+    const projectsData = jsyaml.load(yamlText);
+
     const params = new URLSearchParams(window.location.search);
     const projectId = params.get('id');
     const project = projectsData[projectId];

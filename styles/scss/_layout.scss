@@ -159,7 +159,18 @@ section#footer {
   padding: var(--space-l);
 }
 
+.project-overview {
+  font-size: 1.2rem;
+  width: 80%;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
 .project-article {
+  font-size: 1.2rem;
+  margin: 0 auto;
+  line-height: 1.6;
+
   .project-info {
     display: flex;
     flex-direction: row;
@@ -254,7 +265,7 @@ section#footer {
 }
 
 .info-box {
-  flex: 1 1 300px; 
+  flex: 1 1 300px;
 
   display: flex;
   flex-direction: column;

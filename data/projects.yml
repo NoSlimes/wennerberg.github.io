@@ -68,7 +68,7 @@ slaylien:
 
 dead_sector:
   pageTitle: Project - DEAD SECTOR
-  heroImage: https://picsum.photos/id/50/1200/400
+  heroImage: /assets/projects/dead_sector/dead_sector.jpg
   projectName: DEAD SECTOR
   projectType: "[GAME PROJECT 2 - FUTUREGAMES]"
   flairs:
@@ -90,7 +90,7 @@ dead_sector:
       body: |
         I built a scalable UI system using C# and Unity's UI Toolkit. It was designed to be easily managed by designers, with prefabs for common elements like buttons and health bars, ensuring a consistent look and feel across the entire game.
   galleryImages:
-    - https://picsum.photos/id/61/600/400
+    - /assets/projects/dead_sector/dead_sector.jpg
     - https://picsum.photos/id/62/600/400
   videoURL: ""
 
@@ -103,7 +103,7 @@ slime-murderer:
     - Unity
     - C#
   overview: |
-    A clone of the popular game Vampire Survivors, created as the main project during my first C# course at Futuregames. The goal was to replicate the core gameplay loop of surviving endless waves of enemies with auto-attacking weapons and a robust power-up system.
+    During my first C# course at Futuregames, we were tasked with making a clone of the game "Vampire Survivors". The goal was to replicate the core gameplay loop of surviving endless waves of enemies with auto-attacking weapons and a robust power-up system.
   projectInfo:
     Team Size: 1
     Engine: Unity
@@ -120,8 +120,14 @@ slime-murderer:
         The biggest challenge was capturing the 'feel' of Vampire Survivors. This involved fine-tuning the player's movement speed, the timing of auto-attacking weapons, and the wave progression to create a satisfying difficulty curve that feels challenging but fair.
     - heading: Custom Status Effects
       body: |
-        I implemented a custom status effect system that allows for various effects like slowing enemies, burning, and poison. This was done using a data-driven approach, where each status effect is defined in a scriptable object, making it easy to add new effects or modify existing ones without changing the core code.
+        I implemented a custom status effect system that supports various effects like burning and poison. This system uses inheritance, allowing a specific status effect class to be selected in the inspector for abilities, where its settings can also be adjusted.
+    - heading: Instructor Feedback
+      body:
+        - '"This project is overengineered compared to the expectations—thousands of lines of cohesively written, robust systems. I have nothing bad to say."'
+        - '"You worked very autonomously and put in a lot of effort in so many areas. The game is fun to play, I never once ran into an obvious bug or issue, and all features are there with extra polish."'
+        - '"Your coding skills are excellent. You''re at the stage where you can focus on overall system architecture and a specialization path—gameplay, tools, or engine development. I see you having no issue succeeding in any of them."'
   galleryImages:
     - /assets/projects/slime-murderer/slime-murderer-00.gif
     - /assets/projects/slime-murderer/slime-murderer-01.gif
   videoURL: ""
+

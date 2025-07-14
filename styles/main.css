@@ -299,6 +299,18 @@ section#footer {
   padding: var(--space-l);
 }
 
+.project-overview {
+  font-size: 1.2rem;
+  width: 80%;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.project-article {
+  font-size: 1.2rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
 .project-article .project-info {
   display: flex;
   flex-direction: row;

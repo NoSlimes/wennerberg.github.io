@@ -13,8 +13,7 @@
     "projectInfo": {
       "Status": "In Development",
       "Engine": "Unity",
-      "Language": "C#",
-      "Networking": "Custom Server-Authoritative Model"
+      "Language": "C#"
     },
     "contributions": [
       "Implemented client-side prediction and server reconciliation for smooth gameplay.",

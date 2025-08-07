@@ -13,7 +13,6 @@
     Status: In Development
     Engine: Unity
     Language: C#
-    Networking: Custom Server-Authoritative Model
   contributions:
     - Implemented client-side prediction and server reconciliation for smooth gameplay.
     - Designed and developed the fully server-authoritative inventory system.

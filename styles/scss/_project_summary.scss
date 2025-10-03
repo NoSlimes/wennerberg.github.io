@@ -1,4 +1,5 @@
-@use "variables";
+@use 'variables';
+@use 'sass:color';
 
 /* ============================================= /
 / == Enhanced Project Summaries == /
@@ -9,7 +10,7 @@
   margin: 0 auto;
   margin-bottom: var(--space-xl);
 
-  background: linear-gradient(135deg, variables.$color-white 0%, lighten(variables.$color-white, 3%) 100%);
+  background: linear-gradient(135deg, variables.$color-white 0%, color.adjust(variables.$color-white, $lightness: 3%) 100%);
   color: variables.$color-text-primary;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(variables.$color-black, 0.08);
@@ -104,7 +105,7 @@
 .project-flair {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(135deg, variables.$color-background-dark 0%, lighten(variables.$color-background-dark, 5%) 100%);
+  background: linear-gradient(135deg, variables.$color-background-dark 0%, color.adjust(variables.$color-background-dark, $lightness: 5%) 100%);
   color: variables.$color-text-inverted;
   padding: 6px 12px;
   margin: 0 6px 8px 0;

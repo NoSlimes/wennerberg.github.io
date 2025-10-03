@@ -1,5 +1,9 @@
 // styles/scss/_utilities.scss
 
+.hidden {
+  display: none !important;
+}
+
 .flex {
   display: flex;
   align-items: center;

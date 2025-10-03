@@ -68,3 +68,122 @@
     color: #bbb;
   }
 }
+
+// Code Modal Styles
+.code-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(variables.$color-black, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  padding: var(--space-l);
+
+  &.show-modal {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.code-modal-content {
+  background: variables.$color-background-dark;
+  border-radius: 12px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(variables.$color-black, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+
+  .code-modal-overlay.show-modal & {
+    transform: scale(1);
+  }
+}
+
+.code-modal-header {
+  background: variables.$color-accent;
+  padding: var(--space-m) var(--space-l);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(variables.$color-text-primary, 0.2);
+
+  h3 {
+    color: variables.$color-black;
+    margin: 0;
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+}
+
+.code-modal-close {
+  background: none;
+  border: none;
+  color: variables.$color-black;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(variables.$color-text-inverted, 0.1);
+  }
+}
+
+.code-modal-body {
+  flex: 1;
+  overflow: auto;
+  padding: 0;
+
+  pre {
+    margin: 0;
+    padding: var(--space-l);
+    background: variables.$color-background-dark;
+    color: variables.$color-text-inverted;
+    font-size: var(--step--1);
+    line-height: 1.5;
+    overflow: auto;
+    height: 100%;
+    max-height: calc(90vh - 80px);
+
+    code {
+      font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+    }
+  }
+}
+
+// Mobile responsiveness for code modal
+@media (max-width: 768px) {
+  .code-modal-overlay {
+    padding: var(--space-m);
+  }
+  
+  .code-modal-content {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+  
+  .code-modal-header {
+    padding: var(--space-s) var(--space-m);
+  }
+  
+  .code-modal-body pre {
+    padding: var(--space-m);
+    font-size: var(--step--2);
+  }
+}

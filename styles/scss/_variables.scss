@@ -3,21 +3,25 @@
 // (These exist only during compilation)
 // =============================================
 
+@use 'sass:color';
+
 // --- Typography ---
 $font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 // --- Refined Color Palette ---
 $color-accent: #83c114;
+$color-accent-primary: #83c114;
+$color-accent-hover: #a0d142;
 $color-accent-soft: #a0d142;
 $color-white: #c8b6aa;
 $color-foreground-light: #f8f8f8;
 $color-black: #170d0b;
-$color-outline: #00ff19;
-$color-dark-gray: #002a32;
-$color-green: #43B581;
+// $color-outline: #00ff19;  // Unused - bright green conflicts with theme
+// $color-dark-gray: #002a32;  // Unused
+// $color-green: #43B581;  // Unused - conflicts with accent
 $color-light-gray: #e5e5e5;
-$color-mid-gray: #888888;
+// $color-mid-gray: #888888;  // Unused
 
 $gradient-white-light: #ddd5ca;
 $gradient-white-dark: #c8b6aa;
@@ -37,11 +41,12 @@ $gradient-blue: linear-gradient(to bottom,
 
 // --- Add these new variables for buttons ---
 $color-primary: $color-accent;
-$color-primary-dark: darken($color-primary, 10%); // SCSS darkens the color for you!
+$color-primary-dark: color.adjust($color-primary, $lightness: -10%); // Modern SASS color function
 
 // Semantic SCSS Variables
 $color-text-primary: $color-black;
-$color-text-secondary: lighten($color-text-primary, 15%);
+$color-text-secondary: color.adjust($color-text-primary, $lightness: 15%);
+$color-mid-gray: #52525b;
 $color-text-inverted: $color-white;
 
 $color-background-light: #6b4923;
@@ -57,6 +62,7 @@ $header-height: 70px;
 // (These will exist in the final CSS file for the browser to use)
 // =============================================
 :root {
+    // Typography scale
     --step--2: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
     --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
     --step-0: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
@@ -65,7 +71,8 @@ $header-height: 70px;
     --step-3: clamp(1.944rem, 1.771rem + 0.8651vw, 2.4414rem);
     --step-4: clamp(2.3328rem, 2.0827rem + 1.2504vw, 3.0518rem);
     --step-5: clamp(2.7994rem, 2.4462rem + 1.7658vw, 3.8147rem);
-
+    
+    // Spacing scale
     --space-3xs: clamp(0.3125rem, 0.3125rem + 0vw, 0.3125rem);
     --space-2xs: clamp(0.5625rem, 0.5408rem + 0.1087vw, 0.625rem);
     --space-xs: clamp(0.875rem, 0.8533rem + 0.1087vw, 0.9375rem);
@@ -75,4 +82,80 @@ $header-height: 70px;
     --space-xl: clamp(3.375rem, 3.2446rem + 0.6522vw, 3.75rem);
     --space-2xl: clamp(4.5rem, 4.3261rem + 0.8696vw, 5rem);
     --space-3xl: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
+
+    // Theme Colors - Dark Mode (Default)
+    --theme-bg-primary: #170d0b;
+    --theme-bg-primary-rgb: 23, 13, 11;
+    --theme-bg-secondary: #584934;
+    --theme-bg-tertiary: #6b4923;
+    --theme-text-primary: #c8b6aa;
+    --theme-text-secondary: rgba(200, 182, 170, 0.7);
+    --theme-text-inverted: #170d0b;
+    --theme-accent: #83c114;
+    --theme-accent-hover: #a0d142;
+    --theme-accent-soft: #a0d142;
+    --theme-border: rgba(131, 193, 20, 0.2);
+    --theme-footer-bg: linear-gradient(135deg, #170d0b 0%, #1a0f0d 100%);
+    
+    // Hero overlay for dark mode (earlier fade works fine)
+    --theme-hero-overlay-start: rgba(93, 86, 57, 0.8); // variables.$color-background-medium-1 with opacity
+    --theme-hero-overlay-end: rgba(23, 13, 11, 1.0);
+    
+    // Hero text colors for dark mode
+    --theme-hero-text-primary: #c8b6aa; // Light text on dark hero
+    --theme-hero-text-primary-rgb: 200, 182, 170;
+    --theme-hero-text-gradient-start: #c8b6aa;
+    --theme-hero-text-gradient-end: #a0d142;
+    --theme-accent-rgb: 131, 193, 20;
+    
+    // Flair colors for dark mode
+    --theme-flair-bg: rgba(131, 193, 20, 0.15);
+    --theme-flair-border: rgba(131, 193, 20, 0.3);
+    --theme-flair-text: #83c114;
+    
+    // Social icon filter for dark mode (no inversion needed - icons are light)
+    --theme-social-icon-filter: none;
+    
+    // Theme toggle colors (what the button shows)
+    --theme-toggle-color: #f8f8f8; // Light color for button (opposite of current theme)
+    --theme-toggle-border: #170d0b; // Dark border for dark mode
+}
+
+// Light theme overrides
+[data-theme="light"] {
+    --theme-bg-primary: #ddd5ca; // Beige background
+    --theme-bg-primary-rgb: 221, 213, 202;
+    --theme-bg-secondary: #f8f8f8; // White for cards
+    --theme-bg-tertiary: #ffffff;
+    --theme-text-primary: #170d0b;
+    --theme-text-secondary: rgba(23, 13, 11, 0.7);
+    --theme-text-inverted: #170d0b;
+    --theme-accent: #83c114; // Keep same green color as dark mode
+    --theme-accent-hover: #a0d142;
+    --theme-accent-soft: #a0d142;
+    --theme-border: rgba(131, 193, 20, 0.2);
+    --theme-footer-bg: linear-gradient(135deg, #ddd5ca 0%, #d0c7bc 100%);
+    
+    // Hero overlay for light mode (later fade to prevent washout)
+    --theme-hero-overlay-start: rgba(23, 13, 11, 0.3); // Much lighter start overlay
+    --theme-hero-overlay-end: rgba(221, 213, 202, 0.9); // Fade to beige background
+    
+    // Hero text colors for light mode
+    --theme-hero-text-primary: #170d0b; // Dark text on light hero
+    --theme-hero-text-primary-rgb: 23, 13, 11;
+    --theme-hero-text-gradient-start: #170d0b;
+    --theme-hero-text-gradient-end: #83c114;
+    --theme-accent-rgb: 131, 193, 20;
+    
+    // Flair colors for light mode (darker for better contrast)
+    --theme-flair-bg: rgba(23, 13, 11, 0.1);
+    --theme-flair-border: rgba(23, 13, 11, 0.3);
+    --theme-flair-text: #170d0b;
+    
+    // Social icon filter for light mode (invert to make light icons dark)
+    --theme-social-icon-filter: invert(1) brightness(0.2);
+    
+    // Theme toggle shows dark color when in light mode
+    --theme-toggle-color: #170d0b;
+    --theme-toggle-border: #f8f8f8; // White border for light mode
 }

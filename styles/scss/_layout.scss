@@ -1,5 +1,6 @@
 // styles/scss/_layout.scss
 @use 'variables';
+@use 'sass:color';
 
 /* Enhanced section styling */
 section {
@@ -8,7 +9,7 @@ section {
 
   &#hero {
     padding-top: calc(var(--space-3xl) + variables.$header-height);
-    background: linear-gradient(135deg, variables.$color-background-dark 0%, lighten(variables.$color-background-dark, 3%) 100%);
+    background: linear-gradient(135deg, variables.$color-background-dark 0%, color.adjust(variables.$color-background-dark, $lightness: 3%) 100%);
     
     &::before {
       content: '';
@@ -24,13 +25,7 @@ section {
     }
   }
 
-  &#about {
-    background: linear-gradient(135deg, lighten(variables.$color-background-dark, 1%) 0%, variables.$color-background-dark 100%);
-  }
 
-  &#work {
-    background: variables.$color-background-dark;
-  }
 }
 
 body {
@@ -67,17 +62,17 @@ body {
 
 /* Enhanced Header */
 .site_header {
-  background: linear-gradient(135deg, variables.$color-accent 0%, variables.$color-accent-soft 100%);
-  color: variables.$color-text-primary;
+  background: linear-gradient(135deg, var(--theme-accent) 0%, var(--theme-accent-soft) 100%);
+  color: var(--theme-text-inverted);
   position: fixed;
   top: 0;
   left: 0;
   height: variables.$header-height;
   width: 100%;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(variables.$color-black, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(variables.$color-text-primary, 0.1);
+  border-bottom: 1px solid rgba(var(--theme-text-inverted), 0.1);
 
   .wrapper {
     display: flex;
@@ -225,6 +220,7 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
+    align-items: center; // Ensure proper alignment
   }
 
   .header__nav a {
@@ -234,9 +230,39 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
+  
+  // Theme Toggle Button
+  .theme-toggle-container {
+    margin-left: var(--space-s);
+    flex-shrink: 0; // Prevent container from shrinking
+    display: flex;
+    align-items: center;
+  }
+  
+  .theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--theme-toggle-border);
+    background: var(--theme-toggle-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0; // Prevent squishing in flex container
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px var(--theme-accent);
+    }
+    
+    .theme-toggle-indicator {
+      display: none; // Not needed anymore since button itself has the color
+    }
+  }
 
   // --- MOBILE STYLES ---
-  @media (max-width: 850px) {
+  @media (max-width: 900px  ) {
     .wrapper {
       justify-content: space-between;
       padding: 0 var(--space-s);
@@ -286,6 +312,8 @@ body {
       font-size: 1.2rem;
       padding: var(--space-s) 0;
     }
+
+
   }
 }
 
@@ -297,9 +325,9 @@ body {
 
 /* Enhanced Footer */
 section#footer {
-  background: linear-gradient(135deg, variables.$color-background-dark 0%, lighten(variables.$color-background-dark, 2%) 100%);
-  border-top: 1px solid rgba(variables.$color-accent, 0.2);
-  padding: var(--space-xl) var(--space-l);
+  background: var(--theme-footer-bg);
+  border-top: 1px solid var(--theme-border);
+  padding: var(--space-l) var(--space-l);
   margin-top: var(--space-2xl);
   position: relative;
   
@@ -310,7 +338,7 @@ section#footer {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, variables.$color-accent 0%, variables.$color-accent-soft 100%);
+    background: linear-gradient(90deg, var(--theme-accent) 0%, var(--theme-accent-soft) 100%);
     opacity: 0.6;
   }
   
@@ -328,7 +356,7 @@ section#footer {
   
   p {
     margin: 0;
-    color: rgba(variables.$color-text-inverted, 0.7);
+    color: var(--theme-text-secondary);
     font-size: var(--step--1);
     font-weight: 500;
   }
@@ -338,14 +366,14 @@ section#footer {
     gap: var(--space-l);
     
     a {
-      color: rgba(variables.$color-text-inverted, 0.7);
+      color: var(--theme-text-secondary);
       text-decoration: none;
       font-size: var(--step--1);
       font-weight: 500;
       transition: all 0.3s ease;
       
       &:hover {
-        color: variables.$color-accent;
+        color: var(--theme-accent);
         transform: translateY(-1px);
       }
     }

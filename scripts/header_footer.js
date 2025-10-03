@@ -15,6 +15,11 @@ async function loadHeaderFooter() {
 
     // Now that header is loaded, set up the menu toggle
     setupMenuToggle();
+    
+    // Also set up theme toggle if the theme manager exists
+    if (window.themeManager) {
+      window.themeManager.attachToggleListener();
+    }
 
   } catch (error) {
     console.error("Error loading header/footer:", error);

@@ -21,8 +21,8 @@ body {
   line-height: 1.6;
   font-weight: 400;
   // Set default background and text colors for the whole site
-  background-color: variables.$color-background-dark;
-  color: variables.$color-text-inverted;
+  background-color: var(--theme-bg-primary);
+  color: var(--theme-text-primary);
 }
 
 /* Remove list styles */

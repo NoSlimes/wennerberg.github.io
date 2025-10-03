@@ -1,9 +1,9 @@
 @use "../variables";
+@use 'sass:color';
 
 // About section - clean and cohesive
 section#about {
-  background: linear-gradient(135deg, lighten(variables.$color-background-dark, 1%) 0%, variables.$color-background-dark 100%);
-  color: variables.$color-text-inverted;
+  color: var(--theme-text-primary);
 }
 
 .about-me__container {
@@ -40,14 +40,14 @@ section#about {
   height: 220px;
   object-fit: cover;
   border-radius: 20px;
-  border: 3px solid rgba(variables.$color-accent, 0.3);
-  box-shadow: 0 8px 32px rgba(variables.$color-black, 0.2);
+  border: 3px solid rgba(var(--theme-accent), 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(variables.$color-black, 0.3);
-    border-color: variables.$color-accent;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--theme-accent);
   }
 
   @media (max-width: 767px) {
@@ -67,7 +67,7 @@ section#about {
 .about-me__text {
   h2 {
     margin-bottom: var(--space-m);
-    color: variables.$color-accent;
+    color: var(--theme-accent);
     font-size: var(--step-3);
     font-weight: 600;
   }
@@ -76,13 +76,15 @@ section#about {
     font-size: var(--step-1);
     line-height: 1.6;
     margin-bottom: var(--space-l);
-    color: rgba(variables.$color-text-inverted, 0.9);
+    color: var(--theme-text-primary);
+    opacity: 0.9;
   }
 
   p {
     margin-bottom: var(--space-m);
     line-height: 1.7;
-    color: rgba(variables.$color-text-inverted, 0.8);
+    color: var(--theme-text-primary);
+    opacity: 0.8;
 
     &:last-child {
       margin-bottom: 0;

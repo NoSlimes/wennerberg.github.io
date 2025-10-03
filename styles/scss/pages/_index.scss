@@ -1,21 +1,91 @@
 @use "../variables";
 
-.skill-flairs {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--space-s);
-  width: fit-content;
-  height: fit-content;
-  margin-inline: auto; // centers it in parent
+// About section - clean and cohesive
+section#about {
+  background: linear-gradient(135deg, lighten(variables.$color-background-dark, 1%) 0%, variables.$color-background-dark 100%);
+  color: variables.$color-text-inverted;
+}
 
-  .project-flair {
-    font-size: 1.5rem;
+.about-me__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-me__content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-3xl);
+    text-align: left;
+  }
+}
+
+.about-me__figure {
+  margin: 0;
+  justify-self: center;
+  position: relative;
+
+  @media (min-width: 768px) {
+    justify-self: start;
+  }
+}
+
+.about-me__image {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 3px solid rgba(variables.$color-accent, 0.3);
+  box-shadow: 0 8px 32px rgba(variables.$color-black, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(variables.$color-black, 0.3);
+    border-color: variables.$color-accent;
   }
 
-  @media (max-width: 600px) {
-    .project-flair {
-      font-size: 1.2rem;
+  @media (max-width: 767px) {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.about-me__caption {
+  color: variables.$color-mid-gray;
+  margin-top: var(--space-s);
+  font-style: italic;
+  font-size: var(--step--1);
+  text-align: center;
+}
+
+.about-me__text {
+  h2 {
+    margin-bottom: var(--space-m);
+    color: variables.$color-accent;
+    font-size: var(--step-3);
+    font-weight: 600;
+  }
+
+  .text-large {
+    font-size: var(--step-1);
+    line-height: 1.6;
+    margin-bottom: var(--space-l);
+    color: rgba(variables.$color-text-inverted, 0.9);
+  }
+
+  p {
+    margin-bottom: var(--space-m);
+    line-height: 1.7;
+    color: rgba(variables.$color-text-inverted, 0.8);
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }

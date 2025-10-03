@@ -37,6 +37,13 @@ async function loadProject() {
       }
     });
 
+    // Close modal with Escape key
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('show-modal')) {
+        closeModal();
+      }
+    });
+
     const response = await fetch('/data/projects.yml'); 
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
@@ -46,10 +53,17 @@ async function loadProject() {
 
     const params = new URLSearchParams(window.location.search);
     const projectId = params.get('id');
+    // Access project data directly from the root level (not under 'projects' key)
     const project = projectsData[projectId];
+    
+    console.log('Project ID:', projectId);
+    console.log('Available projects:', Object.keys(projectsData).filter(key => key !== 'summaries'));
+    console.log('Found project:', project);
 
     if (!project) {
-        mainContent.innerHTML = `<div class="wrapper" style="text-align: center; padding: 4rem 0;"><h1>Project Not Found</h1><p>The project ID "${projectId}" does not exist. <a href="/">Return to homepage</a>.</p></div>`;
+        const availableProjects = Object.keys(projectsData).filter(key => key !== 'summaries');
+        console.error('Available projects:', availableProjects);
+        mainContent.innerHTML = `<div class="wrapper" style="text-align: center; padding: 4rem 0;"><h1>Project Not Found</h1><p>The project ID "${projectId}" does not exist.</p><p>Available projects: ${availableProjects.join(', ')}</p><a href="/">Return to homepage</a>.</div>`;
         document.title = "Project Not Found";
         return;
     }
@@ -64,7 +78,7 @@ async function loadProject() {
     flairsContainer.innerHTML = '';
     project.flairs.forEach(flairText => {
       const el = document.createElement('span');
-      el.className = 'project-flair';
+      el.className = 'skill-tag';
       el.textContent = flairText;
       flairsContainer.appendChild(el);
     });

@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="styles/main.css" />
 
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <title>Elias Wennerberg - Dev Portfolio</title>
 </head>
 
@@ -16,31 +17,43 @@
 
     <section id="hero">
       <div class="wrapper">
-        <div class="hero_content text_center">
-          <h1 class="h2">Elias Wennerberg</h1>
-          <p class="h5">Game Programming Student</p>
-        </div>
-        <div class="hero_social flex flex_between">
-          <address>Malmö, Sweden</address>
-          <ul role="list" class="flex">
-            <li>Find me online:</li>
-            <li>
-              <a href="https://github.com/noslimes" target="_blank" aria-label="GitHub Profile">
-                <img src="./assets/images/logos/logo-github.png" alt="GitHub logo" width="24" height="24" />
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/elias-wennerberg-7604061a1/" target="_blank"
-                aria-label="LinkedIn Profile">
-                <img src="./assets/images/logos/logo-linkedin.png" alt="LinkedIn logo" width="24" height="24" />
-              </a>
-            </li>
-            <li>
-              <a href="https://noslimes.com/" target="_blank" aria-label="Personal Website">
-                <img src="./assets/images/NSJC Mono INV.svg" alt="Personal brand logo" width="32" height="32" />
-              </a>
-            </li>
-          </ul>
+        <div class="hero_content">
+          <div class="hero_intro">
+            <h1 class="h1">Elias Wennerberg</h1>
+            <p class="hero_subtitle">Game Programming Student</p>
+            <p class="hero_description">
+              Passionate about creating immersive experiences with C# in Unity and C++ in Unreal Engine 5.
+            </p>
+            <div class="hero_skills">
+              <span class="skill-tag">C#</span>
+              <span class="skill-tag">Unity</span>
+              <span class="skill-tag">C++</span>
+              <span class="skill-tag">Unreal Engine 5</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">Perforce</span>
+            </div>
+          </div>
+          <div class="hero_meta">
+            <div class="hero_location">
+              <span class="location-icon">📍</span>
+              <address>Malmö, Sweden</address>
+            </div>
+            <div class="hero_social">
+              <span class="social-label">Connect with me:</span>
+              <div class="social_links">
+                <a href="https://github.com/noslimes" target="_blank" aria-label="GitHub Profile" class="social_link">
+                  <img src="./assets/images/logos/logo-github.png" alt="GitHub logo" width="20" height="20" />
+                </a>
+                <a href="https://www.linkedin.com/in/elias-wennerberg-7604061a1/" target="_blank" aria-label="LinkedIn Profile" class="social_link">
+                  <img src="./assets/images/logos/logo-linkedin.png" alt="LinkedIn logo" width="20" height="20" />
+                </a>
+                <a href="https://noslimes.com/" target="_blank" aria-label="Personal Website" class="social_link">
+                  <img src="./assets/images/NSJC Mono INV.svg" alt="Personal brand logo" width="24" height="24" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -49,33 +62,23 @@
     <!-- ============================================= -->
     <section id="about">
       <div class="wrapper">
-        <div class="text_center">
-          <h2>
-            Game programming student studying professional game development with C# in Unity and C++ in Unreal Engine 5.
-          </h2>
-        </div>
-        <div class="about-me__flex-container">
+        <div class="about-me__container">
           <div class="about-me__content">
             <figure class="about-me__figure">
               <img width="200" height="200" src="./assets/images/portrait.jpg" alt="A portrait of Elias Wennerberg"
                 class="about-me__image" />
               <figcaption class="about-me__caption">Hey! That's me o.O</figcaption>
             </figure>
-            <p class="about-me__text h5">
-              Hello! I'm a game programming student passionate about C# in Unity and C++ in Unreal Engine 5.
-            </p>
-          </div>
-
-          <div class="info-box">
-            <h3>Skills</h3>
-            <div class="skill-flairs">
-              <span class="project-flair" ;>C#</span>
-              <span class="project-flair" ;>Unity</span>
-              <span class="project-flair" ;>C++</span>
-              <span class="project-flair" ;>Unreal Engine 5</span>
-              <span class="project-flair" ;>Git</span>
-              <span class="project-flair" ;>GitHub</span>
-              <span class="project-flair" ;>Perforce</span>
+            <div class="about-me__text">
+              <h2>About Me</h2>
+              <p class="text-large">
+                Hello! I'm currently studying game development at Futuregames, focusing on both Unity and Unreal Engine. 
+                I love the challenge of bringing creative ideas to life through code and creating experiences that players can truly enjoy.
+              </p>
+              <p>
+                My journey in game development has taken me through various projects, from simple prototypes to more complex 
+                multiplayer systems. Each project teaches me something new and pushes me to explore different aspects of game programming.
+              </p>
             </div>
           </div>
         </div>

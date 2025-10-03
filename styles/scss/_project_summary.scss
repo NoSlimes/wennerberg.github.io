@@ -1,35 +1,52 @@
 @use "variables";
 
 /* ============================================= /
-/ == Project Summaries == /
+/ == Enhanced Project Summaries == /
 / ============================================= */
 .summary_container {
   max-width: 1800px;
   width: auto;
   margin: 0 auto;
-  // margin-left: var(--space-l);
-  // margin-right: var(--space-l);
-  margin-bottom: var(--space-m);
+  margin-bottom: var(--space-xl);
 
-  background-color: variables.$color-white;
+  background: linear-gradient(135deg, variables.$color-white 0%, lighten(variables.$color-white, 3%) 100%);
   color: variables.$color-text-primary;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(variables.$color-black, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(variables.$color-black, 0.08);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-blend-mode: overlay;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(variables.$color-accent, 0.1);
+  position: relative;
 
   cursor: pointer;
 
+  // Add subtle gradient overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, variables.$color-accent 0%, variables.$color-accent-soft 100%);
+    opacity: 0.8;
+  }
+
   &:hover {
-    // transform: translateY(-5px); // Removed the skew for a cleaner look
-    transform: scale(1.02); // Slightly scale up on hover
-    box-shadow: 0 10px 15px rgba(variables.$color-black, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(variables.$color-black, 0.15);
+    
+    &::before {
+      opacity: 1;
+      height: 4px;
+    }
   }
 
   h2 {
     color: variables.$color-text-primary;
-    padding: var(--space-l) var(--space-l) 0; // Add padding to the title
+    padding: var(--space-l) var(--space-l) 0;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 }
 
@@ -83,22 +100,52 @@
   margin-bottom: 0rem;
 }
 
+// Enhanced project flairs/tags
 .project-flair {
-  display: inline-block;
-  background-color: variables.$color-background-dark;
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, variables.$color-background-dark 0%, lighten(variables.$color-background-dark, 5%) 100%);
   color: variables.$color-text-inverted;
-  padding: 4px 8px;
-  margin: 0 5px 5px 0;
-  border-radius: 12px;
+  padding: 6px 12px;
+  margin: 0 6px 8px 0;
+  border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 500;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  ;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(variables.$color-accent, 0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  // Add subtle shine effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, variables.$color-accent 0%, variables.$color-accent-soft 100%);
+    color: variables.$color-text-primary;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(variables.$color-accent, 0.2);
+    border-color: variables.$color-accent;
+
+    &::before {
+      left: 100%;
+    }
+  }
 }
 
-.project-flair:hover {
-  background-color: variables.$color-accent;
-  color: variables.$color-text-primary;
-  // cursor: pointer;
+.project-flairs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
 }

@@ -6,12 +6,14 @@ async function injectProjectSummaries() {
     }
 
     try {
-        const response = await fetch('/data/project-summaries.json');
+        const response = await fetch('/data/projects.yml');
         if (!response.ok) {
-            throw new Error(`Failed to fetch project-summaries.json: ${response.statusText}`);
+            throw new Error(`Failed to fetch projects.yml: ${response.statusText}`);
         }
 
-        const projects = await response.json();
+        const yamlText = await response.text();
+        const projectsData = jsyaml.load(yamlText);
+        const projects = projectsData.summaries;
 
         contentContainer.innerHTML = '';
 

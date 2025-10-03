@@ -5,33 +5,60 @@
 /* == Reusable Components == */
 /* ============================================= */
 
-/* 1. Unified Button Style */
+/* 1. Enhanced Button System */
 /* Apply the .button class to any <a>, <button>, or <input type="submit"> for a consistent look. */
 .button {
-  display: inline-block;
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 12px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: var(--step-0);
   text-align: center;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 
-  // Use the variables we defined in _variables.scss
-  background-color: variables.$color-background-light;
+  // Primary button style
+  background: linear-gradient(135deg, variables.$color-background-light 0%, darken(variables.$color-background-light, 5%) 100%);
   color: variables.$color-text-inverted;
+  box-shadow: 0 2px 8px rgba(variables.$color-black, 0.15);
 
   &:hover {
-    background-color: darken(variables.$color-background-light, 5%);
+    background: linear-gradient(135deg, lighten(variables.$color-background-light, 3%) 0%, darken(variables.$color-background-light, 2%) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(variables.$color-black, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(variables.$color-black, 0.2);
   }
 
   &--secondary {
-    background-color: variables.$color-accent;
+    background: linear-gradient(135deg, variables.$color-accent 0%, variables.$color-accent-soft 100%);
     color: variables.$color-text-primary;
+    box-shadow: 0 2px 8px rgba(variables.$color-accent, 0.25);
 
     &:hover {
-      background-color: darken(variables.$color-accent, 5%);
+      background: linear-gradient(135deg, lighten(variables.$color-accent, 5%) 0%, variables.$color-accent 100%);
+      box-shadow: 0 4px 12px rgba(variables.$color-accent, 0.3);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    border: 2px solid variables.$color-accent;
+    color: variables.$color-accent;
+    box-shadow: none;
+
+    &:hover {
+      background: variables.$color-accent;
+      color: variables.$color-text-primary;
     }
   }
 }
@@ -93,73 +120,220 @@ section#hero {
 }
 
 
+// Enhanced Hero Section
 .hero_content {
-  padding: var(--space-3xl) 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  padding: var(--space-2xl) 0;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+}
+
+.hero_intro {
   h1 {
-    margin-bottom: var(--space-s);
+    margin-bottom: var(--space-l);
+    padding-bottom: 0.2em;
+    line-height: 1.2;
+    background: linear-gradient(135deg, variables.$color-text-inverted 0%, variables.$color-accent-soft 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.hero_subtitle {
+  font-size: var(--step-2);
+  color: variables.$color-accent;
+  font-weight: 600;
+  margin-bottom: var(--space-m);
+}
+
+.hero_description {
+  font-size: var(--step-1);
+  line-height: 1.6;
+  margin-bottom: var(--space-l);
+  opacity: 0.9;
+}
+
+.hero_skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(variables.$color-accent, 0.15);
+  color: variables.$color-accent;
+  border: 1px solid rgba(variables.$color-accent, 0.3);
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(variables.$color-accent, 0.25);
+    border-color: variables.$color-accent;
+    transform: translateY(-1px);
+  }
+}
+
+.hero_meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.hero_location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--step-0);
+  opacity: 0.8;
+
+  .location-icon {
+    font-size: 1rem;
+  }
+
+  address {
+    font-style: normal;
   }
 }
 
 .hero_social {
-  padding-top: var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 1rem;
+  }
 }
 
-section#about {
-  background-color: variables.$color-background-dark;
-  color: variables.$color-text-inverted;
+.social-label {
+  font-size: var(--step--1);
+  opacity: 0.7;
+  font-weight: 500;
+}
 
-  // --- THIS IS THE CRUCIAL LAYOUT FIX ---
-  // These styles control the positioning of the image and text inside the section.
-  .about-me__content {
-    display: flex; // THIS IS THE KEY: Makes children go side-by-side.
-    align-items: center; // Vertically aligns the image and text to their centers.
-    justify-content: center; // Horizontally centers the group on the page.
-    gap: var(--space-xl); // Adds space BETWEEN the image and text.
-    margin-top: var(--space-l);
-    margin-bottom: var(--space-l);
-    flex-wrap: wrap; // Good practice for responsiveness.
+.social_links {
+  display: flex;
+  gap: 1rem;
+}
 
-    // On smaller screens, stack them vertically.
-    @media (max-width: 768px) {
-      flex-direction: column;
-      text-align: center;
+.social_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(variables.$color-white, 0.1);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(variables.$color-white, 0.2);
+
+  &:hover {
+    background: rgba(variables.$color-accent, 0.2);
+    border-color: variables.$color-accent;
+    transform: translateY(-2px);
+  }
+
+  img {
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover img {
+    opacity: 1;
+  }
+}
+
+// Project page hero enhancements
+.project-hero {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  
+  .hero_intro {
+    h1 {
+      margin-bottom: var(--space-m);
+      background: linear-gradient(135deg, variables.$color-text-inverted 0%, variables.$color-accent-soft 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding-bottom: 0.2em;
+      line-height: 1.2;
     }
   }
-
-  .info-box {
-    width: fit-content;
-    height: fit-content;
-    margin-inline: auto;
-    max-width: 80vb;
+  
+  .hero_subtitle {
+    font-size: var(--step-2);
+    color: variables.$color-accent;
+    font-weight: 600;
+    margin-bottom: var(--space-m);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
-
-  // The container for the portrait image.
-  .about-me__figure {
-    margin: 0;
-    flex-shrink: 0; // Prevents the image from shrinking.
+  
+  .hero_description {
+    font-size: var(--step-1);
+    line-height: 1.6;
+    margin-bottom: var(--space-l);
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
   }
-
-  // The styles for the image itself.
-  .about-me__image {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10%; // Makes it round!
-    border: 4px solid variables.$color-white;
-    box-shadow: 0 4px 10px rgba(variables.$color-black, 0.25);
+  
+  .hero_skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: var(--space-l);
   }
+}
 
-  // The caption below the image.
-  .about-me__caption {
-    color: variables.$color-light-gray;
-    margin-top: var(--space-s);
-    font-style: italic;
-  }
-
-  // The paragraph of text next to the image.
-  .about-me__text {
-    max-width: 500px; // Keeps text lines from getting too long.
+// Enhanced project page section backgrounds
+.project-detail-page {
+  section#hero {
+    background: linear-gradient(135deg, variables.$color-background-dark 0%, lighten(variables.$color-background-dark, 3%) 100%);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 70%, rgba(variables.$color-accent, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(variables.$color-accent, 0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
   }
 }
 

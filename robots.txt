@@ -1,3 +1,6 @@
+# robots.txt for https://wennerberg.github.io
+# Generated/updated: 2025-10-03
+
 User-agent: *
-Disallow: 
-Disallow: /assets/
+Disallow: /assets/code/
+Disallow: /assets/documents/

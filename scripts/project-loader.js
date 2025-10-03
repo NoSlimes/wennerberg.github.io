@@ -287,7 +287,8 @@ function openCodeModal(codeElement, language) {
   const preEl = document.createElement('pre');
   const codeEl = document.createElement('code');
   codeEl.className = `language-${language}`;
-  codeEl.textContent = codeElement.textContent;
+  // Inject copyright header if not present
+  codeEl.textContent = injectCopyright(codeElement.textContent, language);
   
   preEl.appendChild(codeEl);
   modalCodeContainer.appendChild(preEl);
@@ -393,12 +394,14 @@ function createExpandableCodeSection(container, previewCode, expandedCode, langu
   const previewBlock = document.createElement('pre');
   const previewElement = document.createElement('code');
   previewElement.className = `language-${language}`;
+  // Do not inject copyright into previews
   previewElement.textContent = previewCode;
   previewBlock.appendChild(previewElement);
   
   // Create expanded version (for modal)
   const expandedElement = document.createElement('code');
   expandedElement.className = `language-${language}`;
+  // Keep expanded element raw; modal will inject when opened
   expandedElement.textContent = expandedCode;
   
   // Create expand/collapse button
@@ -442,6 +445,7 @@ function createSingleCodeBlock(container, code, language) {
   const preEl = document.createElement('pre');
   const codeEl = document.createElement('code');
   codeEl.className = `language-${language}`;
+  // Do not inject copyright into single inline code blocks
   codeEl.textContent = code;
   
   preEl.appendChild(codeEl);
@@ -552,3 +556,87 @@ function openImageModal(imageSrc, altText) {
     modal.classList.add('show-modal');
   }
 }
+
+// Copyright injection helper
+function _normalizeLang(lang) {
+  if (!lang) return 'text';
+  return lang.toString().toLowerCase().replace(/^language-/,'');
+}
+
+function shouldInjectCopyright(code) {
+  if (!code) return true;
+  return !/copyright|\u00A9|all rights reserved/i.test(code);
+}
+
+function buildCopyrightBlock(language) {
+  const year = new Date().getFullYear();
+  const author = 'Elias Wennerberg';
+  const lang = _normalizeLang(language);
+
+  // Languages using single-line comments
+  const singleLine = new Set(['javascript','js','typescript','ts','java','csharp','cs','cpp','c','php','go','rust','swift','kotlin','scala','sql','powershell','ps1','bash','sh','zsh','ruby']);
+  const hashLine = new Set(['python','py','yaml','yml','r']);
+  const htmlLine = new Set(['html','xml','markdown','md']);
+
+  if (singleLine.has(lang)) {
+    return `// Copyright (c) ${year} ${author}\n// All rights reserved.\n\n`;
+  }
+
+  if (hashLine.has(lang)) {
+    return `# Copyright (c) ${year} ${author}\n# All rights reserved.\n\n`;
+  }
+
+  if (htmlLine.has(lang)) {
+    return `<!-- Copyright (c) ${year} ${author} -->\n<!-- All rights reserved. -->\n\n`;
+  }
+
+  // Fallback to block comment
+  return `/*\n * Copyright (c) ${year} ${author}\n * All rights reserved.\n */\n\n`;
+}
+
+function injectCopyright(code, language) {
+  try {
+    if (!shouldInjectCopyright(code)) return code;
+    // If a repository-level copyright text was loaded, use that as the notice.
+    const repoNotice = window.__REPO_COPYRIGHT_TEXT || null;
+    if (repoNotice) {
+      // Wrap the raw text with language-appropriate comment markers
+      const lang = _normalizeLang(language);
+      let wrapped = repoNotice;
+      const singleLine = new Set(['javascript','js','typescript','ts','java','csharp','cs','cpp','c','php','go','rust','swift','kotlin','scala','sql','powershell','ps1','bash','sh','zsh','ruby']);
+      const hashLine = new Set(['python','py','yaml','yml','r']);
+      const htmlLine = new Set(['html','xml','markdown','md']);
+
+      if (singleLine.has(lang)) {
+        wrapped = repoNotice.split('\n').map(l => `// ${l}`).join('\n') + '\n\n';
+      } else if (hashLine.has(lang)) {
+        wrapped = repoNotice.split('\n').map(l => `# ${l}`).join('\n') + '\n\n';
+      } else if (htmlLine.has(lang)) {
+        wrapped = '<!--\n' + repoNotice.split('\n').join('\n') + '\n-->\n\n';
+      } else {
+        wrapped = '/*\n' + repoNotice.split('\n').map(l => ` * ${l}`).join('\n') + '\n */\n\n';
+      }
+      return wrapped + code;
+    }
+
+    // Fallback to built-in small header if repo notice isn't available
+    if (!shouldInjectCopyright(code)) return code;
+    const header = buildCopyrightBlock(language);
+    return header + code;
+  } catch (err) {
+    return code;
+  }
+}
+
+// Load repository copyright text (raw) and cache it on window for other scripts
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('/copyright_modal.txt').then(r => {
+    if (r.ok) return r.text();
+    throw new Error('Not found');
+  }).then(text => {
+    // Trim any trailing YAML-like markers or leading/trailing whitespace
+    window.__REPO_COPYRIGHT_TEXT = text.trim();
+  }).catch(() => {
+    window.__REPO_COPYRIGHT_TEXT = null;
+  });
+});

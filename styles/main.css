@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --step--2: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
   --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
@@ -1414,7 +1415,8 @@ textarea {
 
 .code-modal-content {
   flex: 1;
-  overflow: auto;
+  /* Prevent the modal content itself from scrolling; the inner <pre> will handle scrolling. */
+  overflow: visible;
   background: #170d0b;
 }
 .code-modal-content pre {
@@ -1426,6 +1428,9 @@ textarea {
   color: #c8b6aa;
   white-space: pre-wrap;
   word-wrap: break-word;
+  /* Ensure the code block itself is the only scrolling element. */
+  overflow: auto;
+  max-height: calc(90vh - 80px);
 }
 
 .keyword {
@@ -2138,7 +2143,8 @@ textarea {
 
 .code-modal-body {
   flex: 1;
-  overflow: auto;
+  /* Prevent outer modal body from creating the scrollbar — only the code <pre> should scroll. */
+  overflow: visible;
   padding: 0;
 }
 .code-modal-body pre {
@@ -2148,8 +2154,8 @@ textarea {
   color: #c8b6aa;
   font-size: var(--step--1);
   line-height: 1.5;
+  /* Make the code block the scroll container. */
   overflow: auto;
-  height: 100%;
   max-height: calc(90vh - 80px);
 }
 .code-modal-body pre code {
@@ -2172,6 +2178,29 @@ textarea {
     font-size: var(--step--2);
   }
 }
+/* Strong override: make sure the modal shell does not create its own scrollbar
+   and that the code block (<pre>) is the single scroll container. Using
+   !important here helps if other partials accidentally reintroduce overflow. */
+.code-modal-overlay,
+.code-modal-overlay.show-modal {
+  /* overlay should not scroll */
+  overflow: hidden !important;
+}
+
+.code-modal,
+.code-modal-content,
+.code-modal-body {
+  overflow: visible !important;
+  max-height: 90vh !important;
+}
+
+.code-modal-body pre,
+.code-modal-content pre {
+  overflow: auto !important;
+  max-height: calc(90vh - 80px) !important;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Hover underline effect */
 .hover_underline {
   font-size: 2rem;

@@ -649,7 +649,8 @@ textarea {
 
 .code-modal-content {
   flex: 1;
-  overflow: auto;
+  /* Prevent the modal content itself from scrolling; the inner <pre> will handle scrolling. */
+  overflow: visible;
   background: variables.$color-background-dark;
 
   pre {
@@ -661,6 +662,9 @@ textarea {
     color: variables.$color-text-inverted;
     white-space: pre-wrap;
     word-wrap: break-word;
+    /* Ensure the code block itself is the only scrolling element. */
+    overflow: auto;
+    max-height: calc(90vh - 80px);
   }
 }
 

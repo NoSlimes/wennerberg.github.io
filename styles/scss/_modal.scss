@@ -147,7 +147,8 @@
 
 .code-modal-body {
   flex: 1;
-  overflow: auto;
+  /* Prevent outer modal body from creating the scrollbar — only the code <pre> should scroll. */
+  overflow: visible;
   padding: 0;
 
   pre {
@@ -157,8 +158,8 @@
     color: variables.$color-text-inverted;
     font-size: var(--step--1);
     line-height: 1.5;
+    /* Make the code block the scroll container. */
     overflow: auto;
-    height: 100%;
     max-height: calc(90vh - 80px);
 
     code {
@@ -186,4 +187,27 @@
     padding: var(--space-m);
     font-size: var(--step--2);
   }
+}
+
+/* Strong override: make sure the modal shell does not create its own scrollbar
+   and that the code block (<pre>) is the single scroll container. Using
+   !important here helps if other partials accidentally reintroduce overflow. */
+.code-modal-overlay,
+.code-modal-overlay.show-modal {
+  /* overlay should not scroll */
+  overflow: hidden !important;
+}
+
+.code-modal,
+.code-modal-content,
+.code-modal-body {
+  overflow: visible !important;
+  max-height: 90vh !important;
+}
+
+.code-modal-body pre,
+.code-modal-content pre {
+  overflow: auto !important;
+  max-height: calc(90vh - 80px) !important;
+  -webkit-overflow-scrolling: touch;
 }

@@ -1,16 +1,59 @@
 // Theme Toggle Functionality
 class ThemeManager {
   constructor() {
-    this.currentTheme = this.getStoredTheme() || 'dark';
+    // If user has a stored preference, use it. Otherwise fall back to the
+    // browser/OS preference (prefers-color-scheme). Default to 'dark' if
+    // neither is available.
+    const stored = this.getStoredTheme();
+    if (stored) {
+      this.currentTheme = stored;
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      this.currentTheme = 'light';
+    } else {
+      this.currentTheme = 'dark';
+    }
+
     this.init();
   }
 
   init() {
     // Set initial theme
-    this.applyTheme(this.currentTheme);
+    // When initializing, if the source of the theme was a system preference
+    // (i.e. there was no stored user preference), do NOT persist it. That
+    // allows the site to follow future system changes until the user toggles.
+    const hasStored = !!this.getStoredTheme();
+    this.applyTheme(this.currentTheme, hasStored);
     
     // Simple approach - try multiple times
     this.tryAttachListener();
+    // Start listening to system preference changes only when user has NOT
+    // explicitly chosen a theme.
+    this.setupSystemPrefListener();
+  }
+
+  setupSystemPrefListener() {
+    if (!window.matchMedia) return;
+    // Listen for changes to the *light* preference. We'll only respond if
+    // the user hasn't stored an explicit choice.
+    try {
+      this._mq = window.matchMedia('(prefers-color-scheme: light)');
+      const handler = (e) => this._handleSystemPrefChange(e);
+      if (this._mq.addEventListener) {
+        this._mq.addEventListener('change', handler);
+      } else if (this._mq.addListener) {
+        this._mq.addListener(handler);
+      }
+    } catch (err) {
+      // ignore
+    }
+  }
+
+  _handleSystemPrefChange(e) {
+    // Only auto-apply system changes when the user hasn't saved a theme
+    if (this.getStoredTheme()) return;
+    const newTheme = e.matches ? 'light' : 'dark';
+    // Do not persist system-driven changes
+    this.applyTheme(newTheme, false);
   }
 
   tryAttachListener() {
@@ -62,7 +105,9 @@ class ThemeManager {
     }
   }
 
-  applyTheme(theme) {
+  // persist: if true, store the choice in localStorage; if false, don't
+  // (used for system-driven defaults)
+  applyTheme(theme, persist = true) {
     // Remove existing theme attribute
     document.documentElement.removeAttribute('data-theme');
     
@@ -72,7 +117,7 @@ class ThemeManager {
     }
     
     this.currentTheme = theme;
-    this.setStoredTheme(theme);
+    if (persist) this.setStoredTheme(theme);
     
     // Dispatch custom event for other scripts to listen to
     window.dispatchEvent(new CustomEvent('themeChanged', { 
@@ -82,7 +127,8 @@ class ThemeManager {
 
   toggleTheme() {
     const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-    this.applyTheme(newTheme);
+    // User action should persist their choice
+    this.applyTheme(newTheme, true);
     
     // Add a small animation to the toggle button
     const toggleBtn = document.getElementById('theme-toggle');

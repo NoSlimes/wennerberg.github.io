@@ -3,6 +3,78 @@ document.addEventListener('DOMContentLoaded', function() {
   initCodeSnippets();
 });
 
+// --- Copyright injection helper (local copy) ---
+function _normalizeLang(lang) {
+    if (!lang) return 'text';
+    return lang.toString().toLowerCase().replace(/^language-/,'');
+}
+
+function shouldInjectCopyright(code) {
+    if (!code) return true;
+    return !/copyright|\u00A9|all rights reserved|wennerberg/i.test(code);
+}
+
+function buildCopyrightBlock(language) {
+    const year = new Date().getFullYear();
+    const author = 'Elias Wennerberg';
+    const lang = _normalizeLang(language);
+
+    const singleLine = new Set(['javascript','js','typescript','ts','java','csharp','cs','cpp','c','php','go','rust','swift','kotlin','scala','sql','powershell','ps1','bash','sh','zsh','ruby']);
+    const hashLine = new Set(['python','py','yaml','yml','r']);
+    const htmlLine = new Set(['html','xml','markdown','md']);
+
+    if (singleLine.has(lang)) {
+        return `// Copyright (c) ${year} ${author}\n// All rights reserved.\n\n`;
+    }
+
+    if (hashLine.has(lang)) {
+        return `# Copyright (c) ${year} ${author}\n# All rights reserved.\n\n`;
+    }
+
+    if (htmlLine.has(lang)) {
+        return `<!-- Copyright (c) ${year} ${author} -->\n<!-- All rights reserved. -->\n\n`;
+    }
+
+    return `/*\n * Copyright (c) ${year} ${author}\n * All rights reserved.\n */\n\n`;
+}
+
+function injectCopyright(code, language) {
+    try {
+        if (!shouldInjectCopyright(code)) return code;
+        const repoNotice = window.__REPO_COPYRIGHT_TEXT || null;
+        if (repoNotice) {
+            const lang = _normalizeLang(language);
+            let wrapped = repoNotice;
+            const singleLine = new Set(['javascript','js','typescript','ts','java','csharp','cs','cpp','c','php','go','rust','swift','kotlin','scala','sql','powershell','ps1','bash','sh','zsh','ruby']);
+            const hashLine = new Set(['python','py','yaml','yml','r']);
+            const htmlLine = new Set(['html','xml','markdown','md']);
+
+            if (singleLine.has(lang)) {
+                wrapped = repoNotice.split('\n').map(l => `// ${l}`).join('\n') + '\n\n';
+            } else if (hashLine.has(lang)) {
+                wrapped = repoNotice.split('\n').map(l => `# ${l}`).join('\n') + '\n\n';
+            } else if (htmlLine.has(lang)) {
+                wrapped = '<!--\n' + repoNotice.split('\n').join('\n') + '\n-->\n\n';
+            } else {
+                wrapped = '/*\n' + repoNotice.split('\n').map(l => ` * ${l}`).join('\n') + '\n */\n\n';
+            }
+            return wrapped + code;
+        }
+
+        const header = buildCopyrightBlock(language);
+        return header + code;
+    } catch (err) {
+        return code;
+    }
+}
+
+// Fetch repo copyright text once and cache it for injector use
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/copyright_modal.txt').then(r => r.ok ? r.text() : Promise.reject()).then(t => {
+        window.__REPO_COPYRIGHT_TEXT = t.trim();
+    }).catch(() => { window.__REPO_COPYRIGHT_TEXT = null; });
+});
+
 function initCodeSnippets() {
   // Add syntax highlighting classes
   addSyntaxHighlighting();
@@ -75,9 +147,9 @@ function showExpandedCode(target) {
         <h3>Full Implementation</h3>
         <button class="close-modal">&times;</button>
       </div>
-      <div class="code-modal-content">
-        <pre><code class="language-csharp">${getExpandedCode(target)}</code></pre>
-      </div>
+            <div class="code-modal-content">
+                    <pre><code class="language-csharp">${injectCopyright(getExpandedCode(target), 'csharp')}</code></pre>
+            </div>
     </div>
   `;
   

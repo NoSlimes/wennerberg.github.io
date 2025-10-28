@@ -921,7 +921,7 @@ section#footer .footer-links a:hover {
 /* ============================================= */
 /* Hero Section */
 section#hero {
-  --hero-bg-image: url("/assets/images/portrait.jpg");
+  --hero-bg-image: url("");
   background: linear-gradient(var(--theme-hero-overlay-start), var(--theme-hero-overlay-end)), var(--hero-bg-image);
   padding-bottom: 4px;
   background-size: cover;
@@ -1883,7 +1883,8 @@ textarea {
   max-width: 1800px;
   width: auto;
   margin: 0 auto;
-  margin-bottom: var(--space-xl);
+  /* reduce the per-card bottom margin when in a grid - grid gap controls spacing */
+  margin-bottom: var(--space-s);
   background: linear-gradient(135deg, #c8b6aa 0%, rgb(206.0107142857, 189.9778571429, 179.2892857143) 100%);
   color: #170d0b;
   border-radius: 16px;
@@ -1893,6 +1894,10 @@ textarea {
   border: 1px solid rgba(131, 193, 20, 0.1);
   position: relative;
   cursor: pointer;
+  /* make the container a column flexbox so internal content can stretch
+    to match height with other cards in the same grid row */
+  display: flex;
+  flex-direction: column;
 }
 .summary_container::before {
   content: "";
@@ -1920,38 +1925,135 @@ textarea {
 }
 
 .project_summary {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
   gap: var(--space-l);
   padding: var(--space-l);
+  align-items: center;
+  min-height: 260px;
+  /* allow the inner grid to grow so its parent (.summary_container)
+     can match heights with sibling cards */
+  flex: 1 1 auto;
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .project_summary {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 }
 
 .project-card__figure {
-  flex-shrink: 0;
   margin: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  height: 100%;
+}
+
+.project-card__figure::after {
+  /* dark overlay to make blurred image readable behind text */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
+  pointer-events: none;
 }
 
 .project-card__image {
-  width: 350px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   display: block;
-  border-radius: 4px;
-}
-@media (max-width: 768px) {
-  .project-card__image {
-    width: 100%;
-    height: 220px;
-  }
+  border-radius: 8px;
+  filter: blur(6px);
+  transform: scale(1.03);
+  transition: filter 0.25s ease, transform 0.25s ease;
 }
 
+.project_summary > div {
+  padding: var(--space-l);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  z-index: 2; /* sit above blurred image */
+}
+
+/* background layer used when images are background of the whole card */
+.summary_container .card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center center;
+  filter: blur(8px);
+  transform: scale(1.04);
+  transition: transform 0.3s ease, filter 0.3s ease;
+  z-index: 0;
+}
+
+.summary_container .card-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
+}
+
+.summary_container .project-card-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 8px;
+  /* move the whole content panel down so the title sits fully outside
+    the box (margin, not internal padding, so the panel background is pushed) */
+  /* use a smaller offset so cards don't grow too tall */
+  margin-top: calc(var(--space-s) + 0.4rem);
+  padding: var(--space-l);
+}
+
+/* Title element that sits outside the content panel in the top-left corner */
+/* Title sits relative to the summary container; use the container-qualified
+  selector so it overrides the generic `.summary_container h2` padding rule. */
+.summary_container .project-card-title {
+  position: absolute;
+  /* place the title firmly in the top-left corner of the card container
+     with a small inset so it doesn't overlap the rounded corner. Using
+     smaller spacing keeps it clearly outside the content panel. */
+  top: var(--space-s);
+  left: var(--space-s);
+  z-index: 20;
+  margin: 0;
+  padding: 0; /* ensure no extra padding (override .summary_container h2) */
+  /* Match the title color to the content panel background so it visually
+    relates to the text box (use same white tint as the panel) */
+  color: rgba(255, 255, 255, 0.88);
+  font-size: var(--step-1);
+  font-weight: 600;
+  display: inline-block;
+  /* subtle text shadow for contrast against images; no background/panel */
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  pointer-events: none; /* clicks should go through to the card */
+}
+
+.summary_container.highlighted .project-card-title {
+  font-weight: 700;
+}
+
+/* slightly reduce overlay for highlighted card so content pops more */
+.summary_container.highlighted .project-card-content {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* On small screens, image becomes a shorter block above content */
+@media (max-width: 900px) {
+  .project-card__image {
+    height: 220px;
+  }
+  .summary_container .project-card-content {
+    margin-top: calc(var(--space-s) + 0.3rem);
+    padding: var(--space-l);
+  }
+}
 .project-card__caption {
   color: rgb(74.75, 42.25, 35.75);
   font-size: 0.9rem;
@@ -2014,6 +2116,54 @@ textarea {
   margin-bottom: 1rem;
 }
 
+/* Grid layout for project cards on homepage */
+#project-card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* smaller vertical gap (row-gap) but keep generous horizontal gap */
+  gap: var(--space-s) var(--space-l);
+  /* let grid items stretch to the height of the tallest item in the row */
+  align-items: stretch;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+/* Keep section color minimal; avoid forcing a background from SCSS so site themes stay consistent */
+section#work {
+  color: #170d0b;
+}
+
+/* Highlighted card spans full width and stands out visually */
+.summary_container.highlighted {
+  grid-column: 1/-1;
+  margin: 0; /* spacing is handled by grid gap */
+  border: 2px solid var(--theme-accent);
+  box-shadow: 0 20px 40px rgba(23, 13, 11, 0.18);
+  transform: translateY(-12px);
+  position: relative;
+  z-index: 10;
+}
+
+/* Slightly larger image for highlighted cards */
+.summary_container.highlighted .project-card__image {
+  width: 100%;
+  height: 420px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+  #project-card-container {
+    grid-template-columns: 1fr;
+  }
+  .summary_container.highlighted .project-card__image {
+    height: 260px;
+  }
+}
+/* No additional background or padding applied here to avoid visual clutter.
+   The compiled CSS is the source of truth for the live site; keep SCSS neutral. */
 .modal-overlay {
   visibility: hidden;
   opacity: 0;

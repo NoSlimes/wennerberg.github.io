@@ -13,47 +13,50 @@ async function injectProjectSummaries() {
 
         const yamlText = await response.text();
         const projectsData = jsyaml.load(yamlText);
-        const projects = projectsData.summaries;
+        let projects = projectsData.summaries || [];
+
+        // If any project has `highlighted: true`, move the first one to the start
+        const highlightedIndex = projects.findIndex(p => p.highlighted === true);
+        if (highlightedIndex > 0) {
+            const [highlighted] = projects.splice(highlightedIndex, 1);
+            projects.unshift(highlighted);
+        }
 
         contentContainer.innerHTML = '';
 
         projects.forEach(project => {
             const projectDiv = document.createElement('div');
             projectDiv.classList.add('summary_container', 'clickable-card');
+            if (project.highlighted) projectDiv.classList.add('highlighted');
 
             const flairsHTML = project.flairs
                 .map(flair => `<span class="project-flair">${flair}</span>`)
                 .join(' ');
 
+            // Render project with a background image div; content sits on top
+            // Render the project title as an absolutely positioned element so it appears
+            // outside the content panel in the top-left corner of the card
             const projectHTML = `
-    <h2 class="h2">${project.title}</h2>
-    <div class="project_summary flex flex_around">
-        <figure class="project-card__figure">
-            <img src="${project.imageSrc}" alt="${project.imageCaption}" class="project-card__image" />
-            <figcaption class="project-card__caption">${project.imageCaption}</figcaption>
-        </figure>
+            <div class="project_summary">
+            <div class="card-bg" style="background-image: url('${project.imageSrc}');" aria-hidden="true"></div>
 
-        <div>
-<p class="project-card__description">
-  <strong>${project.projectType}</strong>
-</p>
+            <div class="project-card-content">
+            <p class="project-card__description"><strong>${project.projectType}</strong></p>
 
-<div class="project-flairs" style="margin: 4px 0;">
-  ${flairsHTML}
-</div>
+            <div class="project-flairs" style="margin: 8px 0;">${flairsHTML}</div>
 
-<p class="project-card__description">
-  ${project.description}
-</p>
+            <p class="project-card__description">${project.description}</p>
+
             <div class="project-links" style="margin-top: 20px;">
                 <a href="${project.detailPageUrl}" class="button">Read More</a>
                 ${project.links.github ? `<a href="${project.links.github}" class="button button--secondary" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
                 ${project.links.trello ? `<a href="${project.links.trello}" class="button button--secondary" target="_blank" rel="noopener noreferrer">Trello</a>` : ''}
                 ${project.links.demo ? `<a href="${project.links.demo}" class="button button--secondary">Download Game</a>` : ''}
             </div>
+            </div>
         </div>
-    </div>
-`;
+        <h2 class="project-card-title">${project.title}</h2>
+    `;
             projectDiv.innerHTML = projectHTML;
 
             projectDiv.addEventListener('click', (e) => {

@@ -3,28 +3,30 @@ summaries:
   - id: slime-murderer
     title: "SLIME MURDERER"
     flairs:
-      - Unity
+      - Unity 
       - C#
       - FUTUREGAMES
     detailPageUrl: "/project.html?id=slime-murderer"
     imageSrc: "/assets/projects/slime-murderer/slime-murderer-00.gif"
     imageCaption: "SLIME MURDERER gameplay"
     projectType: "C# UNITY COURSE - FUTUREGAMES"
-    description: "\"Slime Murderer\" is a <a href=\"https://store.steampowered.com/app/1794680/Vampire_Survivors/\">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course."
+    description: "\"Slime Murderer\" is a <a href=\"https://store.steampowered.com/app/1794680/Vampire_Survivors/\">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities."
     links:
       github: ""
       demo: "https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip"
   
   - id: cat-survival-craft
     title: "Cat Survival Craft [Working Title]"
+    highlighted: true
     flairs:
-      - Unity
+      - Unity 6
       - C#
+      - Networking (NGO)
     detailPageUrl: "/project.html?id=cat-survival-craft"
     imageSrc: "/assets/projects/cat-survival-craft/cat-survival.png"
     imageCaption: "In-progress image"
     projectType: "PERSONAL PROJECT - NETWORKED GAMEPLAY"
-    description: "An in-development multiplayer survival game built in Unity. This project is a deep dive into networking architecture, featuring a fully server-authoritative design for both player movement and the inventory system. Key implementations include client-side prediction and server reconciliation to ensure smooth gameplay even with network latency."
+    description: "An in-progress networked game project with server-authoritative gameplay. So far it features a fully server-authoritative inventory system."
     links:
       github: "https://github.com/NoSlimes/CatSurvivalCraft_Portfolio"
       trello: ""
@@ -41,7 +43,7 @@ summaries:
     imageSrc: "/assets/projects/slaylien/slaylien.png"
     imageCaption: "Slaylien"
     projectType: "GAME PROJECT 3 - FUTUREGAMES"
-    description: "Slaylien is a third-person wave-defense game where players control a team of three characters to fend off hordes of insectoid aliens. Developed in Unreal Engine 5, it features a unique character switching mechanic where players can switch between characters in real-time to utilize their unique abilities.  designed and implemented the real-time character switching system, which allowed players to dynamically change tactics. I also developed the enemy AI using Behavior Trees, and core gameplay mechanics such as health and stats systems."
+    description: "Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics."
     links:
       github: ""
       demo: "https://download.noslimes.com/My%20Games/Futuregames/GP3/Team04_Slaylien.zip"
@@ -49,7 +51,7 @@ summaries:
   - id: dead_sector
     title: "DEAD SECTOR"
     flairs:
-      - Unity
+      - Unity 6
       - C#
       - Group Project
       - FUTUREGAMES
@@ -57,7 +59,24 @@ summaries:
     imageSrc: "/assets/projects/dead_sector/dead_sector.jpg"
     imageCaption: "Splash screen for Dead Sector"
     projectType: "GAME PROJECT 2 - FUTUREGAMES"
-    description: "Dead Sector is a top-down sci-fi shooter where the player must find their way off their alien-infested space ship. The game is developed in Unity 6 during Game Project 2 at Futuregames. It features a unique weapon system that allows players to combine different weapon types to create powerful combinations. My main contributions in this project were in UI programming and the quest system implementation, as well as some gameplay programming."
+    description: "Top-down sci-fi shooter in Unity. I handled all UI programming and implemented the quest system."
+    links:
+      github: ""
+      demo: ""
+
+  - id: tamashii
+    title: "TAMASHII"
+    flairs:
+      - Unreal Engine 5
+      - Blueprints
+      - C++
+      - Group Project
+      - FUTUREGAMES
+    detailPageUrl: "/project.html?id=tamashii"
+    imageSrc: "/assets/projects/tamashii/tamashii.png"
+    imageCaption: "Splash screen for Tamashii"
+    projectType: "GAME PROJECT 4 - FUTUREGAMES"
+    description: "2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement."
     links:
       github: ""
       demo: ""
@@ -71,29 +90,28 @@ cat-survival-craft:
   flairs:
     - Unity
     - C#
-    - Networking
+    - Networking (NGO)
   overview: |
-    An in-development multiplayer survival game built in Unity. This project is a deep dive into networking architecture, featuring a fully server-authoritative design for both player movement and the inventory system to prevent cheating. The plan is to develop this into a full co-op survival game.
+    An in-progress networked game project with server-authoritative gameplay. 
+    So far it features a fully server-authoritative inventory system.
   projectInfo:
     Status: In Development
     Engine: Unity
     Language: C#
   contributions:
-    - Implemented client-side prediction and server reconciliation for smooth gameplay.
-    - Designed and developed the fully server-authoritative inventory system.
+    - Implemented a secure, server-side inventory system to prevent cheating and item duplication.
+    - Implemented a basic server-authoritative movement system with client-side prediction. 
   detailedSections:
     - heading: Networking Philosophy
       body: |
-        The primary goal is to build a secure, server-authoritative architecture. This means the server has the final say on all game state, preventing common cheats like flying or item duplication. 
+        The primary goal in this project is to build a secure, server-authoritative architecture. This means the server has the final say on all game state, preventing common cheats like flying or item duplication. 
         
-        {{image:cat-survival-inventory-00.png|Server-authoritative inventory system in action|right}}
-        
-        All player inputs are sent to the server, which processes them and broadcasts the resulting state back to the clients. All item useage (for tools like pickaxes, axes, etc.) is ran solely on the server, and the clients only receive the results of the actions. The game is made using NGO (Netcode for GameObjects) and Unity Transport.
+        All player inputs are sent to the server, which processes them and broadcasts the resulting state back to the clients. All item useage (for tools like pickaxes, axes, etc.) is ran solely on the server, and the clients only receive the results of the actions. The game is made using NGO (Netcode for GameObjects).
         
         {{gallery:cat-survival-inventory-00.png,cat-survival-inventory-01.png|Inventory System Screenshots}}
     - heading: Networked Inventory System
       body: |
-        The inventory system is built with security as the top priority. Every item operation—adding, removing, swapping, or transferring—is validated server-side to prevent cheating and duplication exploits. 
+        The inventory system is built with server authority as the top priority. Every item operation—adding, removing, swapping, or transferring—is validated server-side to prevent cheating and duplication exploits. 
         
         The system elegantly handles both stackable items (like resources) and unique instanced items (like tools with durability), with configurable access rules enabling different gameplay scenarios like private player inventories or proximity-based chests.
         
@@ -155,7 +173,7 @@ dead_sector:
     - C#
     - Group Project
   overview: |
-    Dead Sector is a top-down sci-fi shooter where the player must find their way off their alien-infested space ship. Developed in Unity 6, the game features a unique weapon system that allows players to combine different weapon types to create powerful combinations.
+    Dead Sector is a top-down sci-fi shooter where the player must find their way off their alien-infested space ship. 
   projectInfo:
     Team Size: 16
     Engine: Unity
@@ -167,7 +185,10 @@ dead_sector:
   detailedSections:
     - heading: Modular UI System
       body: |
-        I built a scalable UI system using C# and Unity's UI Toolkit. It was designed to be easily managed by designers, with prefabs for common elements like buttons and health bars, ensuring a consistent look and feel across the entire game.
+        I built a scalable UI system using C# and Unity's UGUI. It was managed by a MenuViewManager which handled switching between different menus and HUD states. This modular approach allowed for easy addition of new UI elements as the project evolved.
+    - heading: Quest System Implementation
+      body: |
+        The quest system was designed to drive the game forward - it tracked player objectives and provided UI feedback. I implemented it using ScriptableObjects to define quests and a QuestManager to handle quest states and updates.
   galleryImages:
     - /assets/projects/dead_sector/dead_sector.jpg
     - https://picsum.photos/id/62/600/400
@@ -189,14 +210,14 @@ slime-murderer:
     Language: C#
     Key Features: Endless | Abilities | Upgrades
   contributions:
-    - Developed the entire game from scratch as a solo project.
-    - Programmed the enemy spawning system and AI movement.
-    - Created the weapon and player upgrade systems.
+    - Developed the entire game from scratch as a solo project in Unity.
+    - Procedural enemy spawning and wave management
+    - An extendable player ability and upgrade system
     - A custom status effect system
   detailedSections:
     - heading: Replicating the Core Loop
       body: |
-        The biggest challenge was capturing the 'feel' of Vampire Survivors. This involved fine-tuning the player's movement speed, the timing of auto-attacking weapons, and the wave progression to create a satisfying difficulty curve that feels challenging but fair.
+        The biggest challenge was capturing the 'feel' of Vampire Survivors. Since I had never played the game before, I had to rely on gameplay videos and community feedback to understand its mechanics and pacing. I had to come up with my own interpretations of how certain systems worked, such as enemy spawn patterns and weapon behaviors. I opted to focus on active abilities rather than many passive ones to create a more engaging gameplay experience.
     - heading: Custom Status Effects
       body: |
         I implemented a custom status effect system that supports various effects like burning and poison. This system uses inheritance, allowing a specific status effect class to be selected in the inspector for abilities, where its settings can also be adjusted.
@@ -221,3 +242,34 @@ slime-murderer:
     - /assets/projects/slime-murderer/slime-murderer-01.gif
   videoURL: ""
 
+tamashii:
+  pageTitle: Project - TAMASHII
+  heroImage: /assets/projects/tamashii/tamashii.png
+  projectName: TAMASHII
+  projectType: "[GAME PROJECT 4 - FUTUREGAMES]"
+  flairs:
+    - Unreal Engine 5
+    - Blueprints
+    - C++
+    - Group Project
+    - Futuregames
+  overview: |
+    A 2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement.
+  projectInfo:
+    Team Size: 11
+    Engine: Unreal Engine 5
+    Language: C++, Blueprints
+  contributions:
+    - Developed the tether mechanic to allow for unique cooperative gameplay.
+    - Implemented player movement and controls.
+  detailedSections:
+    - heading: Tether Mechanic
+      body: |
+        The tether mechanic was a core feature that attached the two players together. It allowed for unique cooperative gameplay, as players had to work together to navigate the environment and get over obstacles .
+    - heading: Player Movement
+      body: |
+        I implemented the player movement system, implementing movement and wall- and double-jumping mechanics.
+  galleryImages:
+    - /assets/projects/tamashii/tamashii.png
+    - https://picsum.photos/id/62/600/400
+  videoURL: ""

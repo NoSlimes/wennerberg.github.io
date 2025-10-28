@@ -31,6 +31,22 @@ summaries:
       github: "https://github.com/NoSlimes/CatSurvivalCraft_Portfolio"
       trello: ""
 
+  - id: dead_sector
+    title: "DEAD SECTOR"
+    flairs:
+      - Unity 6
+      - C#
+      - Group Project
+      - FUTUREGAMES
+    detailPageUrl: "/project.html?id=dead_sector"
+    imageSrc: "/assets/projects/dead_sector/dead_sector.jpg"
+    imageCaption: "Splash screen for Dead Sector"
+    projectType: "GAME PROJECT 2 - FUTUREGAMES"
+    description: "Top-down sci-fi shooter in Unity. I handled all UI programming and implemented the quest system."
+    links:
+      github: ""
+      demo: ""
+
   - id: slaylien
     title: "SLAYLIEN"
     flairs:
@@ -47,22 +63,6 @@ summaries:
     links:
       github: ""
       demo: "https://download.noslimes.com/My%20Games/Futuregames/GP3/Team04_Slaylien.zip"
-
-  - id: dead_sector
-    title: "DEAD SECTOR"
-    flairs:
-      - Unity 6
-      - C#
-      - Group Project
-      - FUTUREGAMES
-    detailPageUrl: "/project.html?id=dead_sector"
-    imageSrc: "/assets/projects/dead_sector/dead_sector.jpg"
-    imageCaption: "Splash screen for Dead Sector"
-    projectType: "GAME PROJECT 2 - FUTUREGAMES"
-    description: "Top-down sci-fi shooter in Unity. I handled all UI programming and implemented the quest system."
-    links:
-      github: ""
-      demo: ""
 
   - id: tamashii
     title: "TAMASHII"

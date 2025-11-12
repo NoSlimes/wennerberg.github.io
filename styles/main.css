@@ -1459,6 +1459,19 @@ textarea {
 /* ============================================= */
 /* == Project Page Code Snippets == */
 /* ============================================= */
+.project-detailed-section {
+  /* Inline / side-placed code snippet helpers
+     Use these classes on the container that normally wraps a code snippet:
+     - .code-snippet-inline-right  -> floats the snippet to the right
+     - .code-snippet-inline-left   -> floats the snippet to the left
+     These create a narrower code block that sits beside text on wide screens
+     and collapse to full-width on small screens for readability. */
+}
+.project-detailed-section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .project-detailed-section .code-snippet-container {
   margin: var(--space-l) 0;
   background: #170d0b;
@@ -1515,6 +1528,41 @@ textarea {
   outline: 2px solid #83c114;
   outline-offset: 2px;
 }
+.project-detailed-section .code-snippet-inline-right,
+.project-detailed-section .code-snippet-inline-left {
+  width: 40%;
+  max-width: 520px;
+  min-width: 260px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(23, 13, 11, 0.12);
+  box-shadow: 0 6px 18px rgba(23, 13, 11, 0.08);
+  background: #170d0b;
+  margin: var(--space-s) var(--space-m) var(--space-m) var(--space-m);
+}
+.project-detailed-section .code-snippet-inline-right pre,
+.project-detailed-section .code-snippet-inline-left pre {
+  margin: 0;
+  padding: var(--space-m);
+  font-family: "Fira Code", "Monaco", "Cascadia Code", "Consolas", monospace;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: #c8b6aa;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 480px;
+}
+.project-detailed-section .code-snippet-inline-right {
+  float: right;
+  margin-left: var(--space-l);
+  margin-right: 0;
+}
+.project-detailed-section .code-snippet-inline-left {
+  float: left;
+  margin-right: var(--space-l);
+  margin-left: 0;
+}
 
 @media (max-width: 768px) {
   .project-detailed-section .code-snippet-container {
@@ -1524,6 +1572,21 @@ textarea {
   .project-detailed-section .code-snippet-container pre {
     padding: var(--space-m);
     font-size: var(--step--2);
+  }
+  /* On smaller screens, stacked/full-width behavior for inline code snippets */
+  .code-snippet-inline-right,
+  .code-snippet-inline-left {
+    float: none;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: var(--space-m) 0;
+  }
+  .code-snippet-inline-right pre,
+  .code-snippet-inline-left pre {
+    font-size: var(--step--2);
+    padding: var(--space-m);
+    max-height: none;
   }
 }
 /* ============================================= */
@@ -1917,6 +1980,16 @@ textarea {
   opacity: 1;
   height: 4px;
 }
+.summary_container:hover .project-card__image {
+  filter: blur(2px);
+  transform: scale(1.02);
+  transition: filter 220ms ease, transform 220ms ease;
+}
+.summary_container:hover .card-bg {
+  filter: blur(2px);
+  transform: scale(1.03);
+  transition: filter 220ms ease, transform 220ms ease;
+}
 .summary_container h2 {
   color: #170d0b;
   padding: var(--space-l) var(--space-l) 0;
@@ -2130,8 +2203,19 @@ textarea {
 }
 
 /* Keep section color minimal; avoid forcing a background from SCSS so site themes stay consistent */
+/* Ensure the Projects section headings and subtitle contrast with the section background
+   Use the runtime CSS custom properties so theme toggles (dark/light) remain supported. */
 section#work {
-  color: #170d0b;
+  color: var(--theme-text-primary);
+}
+section#work .text_center h2.h3,
+section#work .text_center h2,
+section#work .text_center p {
+  color: var(--theme-text-primary);
+}
+section#work .text_center p {
+  opacity: 0.9;
+  color: var(--theme-text-secondary);
 }
 
 /* Highlighted card spans full width and stands out visually */

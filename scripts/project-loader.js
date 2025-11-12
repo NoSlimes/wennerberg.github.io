@@ -83,6 +83,60 @@ async function loadProject() {
       flairsContainer.appendChild(el);
     });
 
+    // Inject action buttons (GitHub, Demo, Trello, Website, etc.) under the flairs
+    const actionsContainer = document.getElementById('project-actions');
+    if (actionsContainer) {
+      actionsContainer.innerHTML = '';
+
+      // Prefer links defined on the detailed project entry; fall back to summaries if present
+      let links = project.links || {};
+      if ((!links || Object.keys(links).length === 0) && projectsData.summaries) {
+        const summaryEntry = projectsData.summaries.find(s => s.id === projectId);
+        if (summaryEntry && summaryEntry.links) links = summaryEntry.links;
+      }
+
+      // Mapping of known link keys to button labels
+      const labelMap = {
+        github: 'GitHub',
+        demo: 'Download / Demo',
+        trello: 'Trello',
+        website: 'Website',
+        itch: 'Itch',
+        steam: 'Steam',
+        playstore: 'Play Store',
+        appstore: 'App Store',
+        video: 'Video',
+        blog: 'Blog',
+        docs: 'Docs'
+      };
+
+      // Create a button for each non-empty link, excluding keys like 'readMore' or blank values
+      Object.entries(links).forEach(([key, href]) => {
+        if (!href) return; // skip empty values
+        const forbidden = ['readMore', 'detailPageUrl'];
+        if (forbidden.includes(key)) return;
+
+        const a = document.createElement('a');
+        a.className = 'button button--secondary';
+        a.href = href;
+        // Open external links in a new tab
+        try {
+          const urlObj = new URL(href, window.location.origin);
+          if (urlObj.hostname !== window.location.hostname) {
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+          }
+        } catch (e) {
+          // If parsing fails, still open in new tab to be safe
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+        }
+
+        a.textContent = labelMap[key] || key.charAt(0).toUpperCase() + key.slice(1);
+        actionsContainer.appendChild(a);
+      });
+    }
+
     const detailsContainer = document.getElementById('project-details-container');
     detailsContainer.innerHTML = '';
     const createInfoBox = (title, data) => {
@@ -134,7 +188,9 @@ async function loadProject() {
         // Add code snippet if present (preview or single)
         if ((section.codeSnippet && section.codeLanguage) || (section.codePreview && section.codeExpanded) || (section.codePreviewFile && section.codeExpandedFile)) {
           const codeContainer = document.createElement('div');
-          codeContainer.className = 'code-snippet-container';
+          // Default to side-placed, smaller code blocks so they don't span full page width.
+          // Editors can override this by adding different classes in the project data later.
+          codeContainer.className = 'code-snippet-container code-snippet-inline-right';
           
           // Check if we have expandable code (inline or from files)
           if ((section.codePreview && section.codeExpanded) || (section.codePreviewFile && section.codeExpandedFile)) {
@@ -174,7 +230,19 @@ async function loadProject() {
             }
           }
           
-          sectionEl.appendChild(codeContainer);
+          // Try to inline the code block within the section body (after the first paragraph)
+          // This keeps code visually next to the descriptive text instead of always at the end.
+          const firstParagraph = sectionEl.querySelector('p');
+          if (firstParagraph && firstParagraph.parentNode) {
+            // Insert before the first paragraph so the floated code aligns higher with the section text
+            firstParagraph.parentNode.insertBefore(codeContainer, firstParagraph);
+          } else if (sectionEl.firstChild) {
+            // If there's no paragraph but there is other content, insert at the top
+            sectionEl.insertBefore(codeContainer, sectionEl.firstChild);
+          } else {
+            // Fallback: append at the end of the section
+            sectionEl.appendChild(codeContainer);
+          }
         }
         
         detailedContainer.appendChild(sectionEl);

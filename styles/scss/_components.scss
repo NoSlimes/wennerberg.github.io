@@ -697,6 +697,13 @@ textarea {
 /* ============================================= */
 
 .project-detailed-section {
+  // Clear any floated children (like .code-snippet-inline-right) so the section
+  // expands and subsequent sections are pushed down instead of overlapping.
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
   .code-snippet-container {
     margin: var(--space-l) 0;
     background: variables.$color-background-dark;
@@ -765,6 +772,50 @@ textarea {
       outline-offset: 2px;
     }
   }
+
+  /* Inline / side-placed code snippet helpers
+     Use these classes on the container that normally wraps a code snippet:
+     - .code-snippet-inline-right  -> floats the snippet to the right
+     - .code-snippet-inline-left   -> floats the snippet to the left
+     These create a narrower code block that sits beside text on wide screens
+     and collapse to full-width on small screens for readability. */
+  .code-snippet-inline-right,
+  .code-snippet-inline-left {
+    width: 40%;
+    max-width: 520px;
+    min-width: 260px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(variables.$color-text-primary, 0.12);
+    box-shadow: 0 6px 18px rgba(variables.$color-black, 0.08);
+    background: variables.$color-background-dark;
+    margin: var(--space-s) var(--space-m) var(--space-m) var(--space-m);
+
+    pre {
+      margin: 0;
+      padding: var(--space-m);
+      font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+      font-size: var(--step--2);
+      line-height: 1.5;
+      color: variables.$color-text-inverted;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 480px;
+    }
+  }
+
+  .code-snippet-inline-right {
+    float: right;
+    margin-left: var(--space-l);
+    margin-right: 0;
+  }
+
+  .code-snippet-inline-left {
+    float: left;
+    margin-right: var(--space-l);
+    margin-left: 0;
+  }
 }
 
 // Mobile responsiveness for project code
@@ -778,6 +829,22 @@ textarea {
         padding: var(--space-m);
         font-size: var(--step--2);
       }
+    }
+  }
+
+  /* On smaller screens, stacked/full-width behavior for inline code snippets */
+  .code-snippet-inline-right,
+  .code-snippet-inline-left {
+    float: none;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: var(--space-m) 0;
+
+    pre {
+      font-size: var(--step--2);
+      padding: var(--space-m);
+      max-height: none;
     }
   }
 }

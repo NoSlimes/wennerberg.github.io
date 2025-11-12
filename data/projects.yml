@@ -150,7 +150,7 @@ devcon:
     - C#
     - Tooling
   overview: |
-    DevCon is an in-game developer console built for Unity. It provides a runtime overlay where developers can type and execute registered custom commands. The focus is on a simple, extensible command registration API and a lightweight console UI for development builds. Commands are discovered/compiled and cached in-editor after compilation, so newly added commands appear after a recompile.
+    DevCon is an in-game developer console built for Unity. It provides a runtime overlay where developers can type and execute registered custom commands. The focus is on a simple, extensible command registration API and a lightweight console UI for development builds.
   projectInfo:
     Language: C#
     Engine: Unity
@@ -161,7 +161,7 @@ devcon:
   detailedSections:
     - heading: What DevCon Does
       body: |
-        DevCon provides a lightweight console overlay for entering and executing custom runtime commands. Commands are registered via a small API and executed immediately when entered. The console supports command history and simple auto-complete to speed developer workflows. Commands are cached in-editor after compile so the console reflects the set of compiled commands until the next build.
+        DevCon provides a lightweight console overlay for entering and executing custom runtime commands. Commands are registered via a small API and executed immediately when entered. The console supports command history and simple auto-complete to speed developer workflows.
     - heading: How to Use
       body: |
         Include DevCon as source or a package and enable it in development builds. Toggle the console (commonly the backquote/tilde key) to open the overlay. Register commands using the provided API; commands can accept arguments and return results that are printed to the console. See the repository README for registration examples and integration notes.

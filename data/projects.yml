@@ -60,7 +60,7 @@ summaries:
     description: "Top-down sci-fi shooter in Unity. I handled all UI programming and implemented the quest system."
     links:
       github: ""
-      demo: ""
+      demo: "https://futuregames.itch.io/dead-sector"
 
   - id: slaylien
     title: "SLAYLIEN"
@@ -77,7 +77,7 @@ summaries:
     description: "Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics."
     links:
       github: ""
-      demo: "https://download.noslimes.com/My%20Games/Futuregames/GP3/Team04_Slaylien.zip"
+      demo: "https://futuregames.itch.io/slaylien"
 
   - id: tamashii
     title: "TAMASHII"

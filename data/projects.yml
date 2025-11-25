@@ -41,7 +41,7 @@ summaries:
     imageSrc: "/assets/projects/devcon/devcon-00.png"
     imageCaption: "DevCon — in-game developer console"
     projectType: "IN-GAME DEVELOPER CONSOLE - UNITY"
-    description: "DevCon is an in-game developer console for Unity that lets developers and testers type and run custom runtime commands. It's intended for use in development builds to quickly execute registered commands for debugging and testing."
+    description: "DevCon is an in-game developer console built for Unity. It provides a runtime overlay where developers can type and execute registered custom commands. The focus is on a simple, extensible command registration API and a lightweight console UI."
     links:
       github: "https://github.com/NoSlimes/devcon"
       
@@ -150,12 +150,12 @@ devcon:
     - C#
     - Tooling
   overview: |
-    DevCon is an in-game developer console built for Unity. It provides a runtime overlay where developers can type and execute registered custom commands. The focus is on a simple, extensible command registration API and a lightweight console UI for development builds.
+    DevCon is an in-game developer console built for Unity. It provides a runtime overlay where developers can type and execute registered custom commands. The focus is on a simple, extensible command registration API and a lightweight console UI.
   projectInfo:
     Language: C#
     Engine: Unity
   contributions:
-    - Implemented a safe runtime command registration and execution system for development builds.
+    - Implemented a safe runtime command registration and execution system for both in-editor and runtime builds.
     - Built an in-game overlay UI that supports command history, auto-complete, and argument parsing.
     - Documented usage patterns and examples for integrating DevCon into existing Unity projects.
   detailedSections:
@@ -164,7 +164,7 @@ devcon:
         DevCon provides a lightweight console overlay for entering and executing custom runtime commands. Commands are registered via a small API and executed immediately when entered. The console supports command history and simple auto-complete to speed developer workflows.
     - heading: How to Use
       body: |
-        Include DevCon as source or a package and enable it in development builds. Toggle the console (commonly the backquote/tilde key) to open the overlay. Register commands using the provided API; commands can accept arguments and return results that are printed to the console. See the repository README for registration examples and integration notes.
+        --
       codePreviewFile: "/assets/code/DevCon-preview.cs"
       codeExpandedFile: "/assets/code/DevCon-full.cs"
       codeLanguage: "csharp"

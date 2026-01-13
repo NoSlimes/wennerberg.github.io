@@ -1,3 +1,213 @@
+// Parse YAML frontmatter and markdown content from project markdown files
+function parseMarkdownProject(mdText, projectId) {
+  // Split frontmatter from content - handle various line endings
+  const lines = mdText.split(/\r?\n/);
+  
+  if (!lines[0].match(/^---\s*$/)) {
+    throw new Error(`Invalid markdown format for project ${projectId} - missing opening frontmatter`);
+  }
+
+  // Find closing frontmatter delimiter
+  let frontmatterEndLine = -1;
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i].match(/^---\s*$/)) {
+      frontmatterEndLine = i;
+      break;
+    }
+  }
+
+  if (frontmatterEndLine === -1) {
+    throw new Error(`Invalid markdown format for project ${projectId} - missing closing frontmatter`);
+  }
+
+  const frontmatterText = lines.slice(1, frontmatterEndLine).join('\n');
+  const markdownContent = lines.slice(frontmatterEndLine + 1).join('\n');
+
+  // Parse YAML frontmatter
+  let frontmatter;
+  try {
+    frontmatter = jsyaml.load(frontmatterText);
+  } catch (e) {
+    console.error('YAML parse error for project', projectId, ':', e);
+    throw new Error(`Failed to parse frontmatter for project ${projectId}: ${e.message}`);
+  }
+
+  // Parse markdown into sections
+  const sections = [];
+  const mdLines = markdownContent.trim().split(/\r?\n/);
+  
+  let currentSection = null;
+  let currentBody = [];
+  let overview = '';
+  let contributions = [];
+  let inOverview = true;
+
+  for (let i = 0; i < mdLines.length; i++) {
+    const line = mdLines[i];
+    
+    // Check for markdown heading (## = section)
+    if (line.match(/^##\s+/)) {
+      inOverview = false;
+      
+      // Save previous section if exists
+      if (currentSection) {
+        currentSection.body = currentBody.join('\n').trim();
+        sections.push(currentSection);
+      }
+      
+      const heading = line.replace(/^##\s+/, '').trim();
+      
+      // Special handling for Contributions section - parse as list
+      if (heading.toLowerCase() === 'contributions') {
+        currentSection = {
+          heading: heading,
+          body: '',
+          codePreviewFile: null,
+          codeExpandedFile: null,
+          codeLanguage: null,
+          isContributions: true
+        };
+      } else {
+        currentSection = {
+          heading: heading,
+          body: '',
+          codePreviewFile: null,
+          codeExpandedFile: null,
+          codeLanguage: null
+        };
+      }
+      currentBody = [];
+    } 
+    // Check for code block markers
+    else if (line.match(/^```\w+-preview:/)) {
+      const match = line.match(/^```(\w+)-preview:(.+)$/);
+      if (match && currentSection) {
+        currentSection.codeLanguage = match[1];
+        currentSection.codePreviewFile = match[2].trim();
+      }
+    }
+    else if (line.match(/^```\w+-expanded:/)) {
+      const match = line.match(/^```(\w+)-expanded:(.+)$/);
+      if (match && currentSection) {
+        currentSection.codeLanguage = match[1];
+        currentSection.codeExpandedFile = match[2].trim();
+      }
+    }
+    else if (line === '```') {
+      // Skip closing backticks
+      continue;
+    }
+    else if (inOverview && line.trim()) {
+      // Collect overview text before first ## heading
+      overview += (overview ? '\n' : '') + line;
+    }
+    else if (currentSection) {
+      currentBody.push(line);
+    }
+  }
+
+  // Save last section
+  if (currentSection) {
+    currentSection.body = currentBody.join('\n').trim();
+    
+    // If it's the Contributions section, parse bullet points
+    if (currentSection.isContributions) {
+      contributions = currentSection.body
+        .split(/\r?\n/)
+        .filter(line => line.trim().startsWith('-'))
+        .map(line => line.trim().slice(1).trim());
+    } else {
+      sections.push(currentSection);
+    }
+  }
+
+  // Filter out empty sections
+  const detailedSections = sections.filter(s => s.body || s.codePreviewFile);
+
+  return {
+    pageTitle: frontmatter.pageTitle,
+    heroImage: frontmatter.heroImage,
+    projectName: frontmatter.projectName,
+    projectType: frontmatter.projectType,
+    flairs: frontmatter.flairs || [],
+    projectInfo: frontmatter.projectInfo || {},
+    galleryImages: frontmatter.galleryImages || [],
+    videoURL: frontmatter.videoURL || '',
+    codeLanguage: frontmatter.codeLanguage,
+    codePreviewFile: frontmatter.codePreviewFile,
+    codeExpandedFile: frontmatter.codeExpandedFile,
+    overview: overview || frontmatter.overview || '',
+    highlights: Array.isArray(frontmatter.highlights) ? frontmatter.highlights : (contributions.length > 0 ? contributions : []),
+    contributions: contributions.length > 0 ? contributions : [],
+    detailedSections: detailedSections,
+    links: frontmatter.links || {}
+  };
+}
+
+// Convert markdown to HTML
+function markdownToHtml(markdown) {
+  if (!markdown) return '';
+  
+  let html = markdown;
+  
+  // Code blocks with language (multi-line)
+  html = html.replace(/```(\w+)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
+  
+  // Inline code
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  
+  // Bold text
+  html = html.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+  
+  // Italic text
+  html = html.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
+  html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+  
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+
+  // Blockquotes (consecutive lines starting with '>')
+  {
+    const lines = html.split('\n');
+    const out = [];
+    let i = 0;
+    while (i < lines.length) {
+      if (/^\s*>\s?/.test(lines[i])) {
+        const quoteLines = [];
+        while (i < lines.length && /^\s*>\s?/.test(lines[i])) {
+          quoteLines.push(lines[i].replace(/^\s*>\s?/, ''));
+          i++;
+        }
+        const inner = quoteLines.join('<br>');
+        out.push(`<blockquote>${inner}</blockquote>`);
+      } else {
+        out.push(lines[i]);
+        i++;
+      }
+    }
+    html = out.join('\n');
+  }
+  
+  // Bullet lists
+  html = html.replace(/^\s*[-*+]\s+(.+)$/gm, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+  html = html.replace(/<\/li>\n<li>/g, '</li>\n<li>');
+  
+  // Line breaks - convert double newlines to paragraphs
+  html = html.replace(/\n\n+/g, '</p><p>');
+  html = '<p>' + html + '</p>';
+  
+  // Clean up empty paragraphs
+  html = html.replace(/<p><\/p>/g, '');
+  html = html.replace(/<p>\s*<(ul|ol|pre)/g, '<$1');
+  html = html.replace(/<\/(ul|ol|pre)>\s*<\/p>/g, '</$1>');
+  html = html.replace(/<p>\s*<blockquote>/g, '<blockquote>');
+  html = html.replace(/<\/blockquote>\s*<\/p>/g, '</blockquote>');
+  
+  return html;
+}
+
 function getVideoEmbed(url) {
   let embedHtml = null;
   try {
@@ -53,20 +263,26 @@ async function loadProject() {
 
     const params = new URLSearchParams(window.location.search);
     const projectId = params.get('id');
-    // Access project data directly from the root level (not under 'projects' key)
-    const project = projectsData[projectId];
+    
+    // Fetch and parse the markdown file for this project
+    const mdResponse = await fetch(`/data/projects/${projectId}.md`);
+    if (!mdResponse.ok) {
+      const availableProjects = projectsData.summaries ? projectsData.summaries.map(p => p.id) : [];
+      console.error('Available projects:', availableProjects);
+      mainContent.innerHTML = `<div class="wrapper" style="text-align: center; padding: 4rem 0;"><h1>Project Not Found</h1><p>The project ID "${projectId}" does not exist.</p><p>Available projects: ${availableProjects.join(', ')}</p><a href="/">Return to homepage</a>.</div>`;
+      document.title = "Project Not Found";
+      return;
+    }
+
+    const mdText = await mdResponse.text();
+    const project = parseMarkdownProject(mdText, projectId);
+    
+    // Get summary info for links/photos if not in markdown
+    const summaryEntry = projectsData.summaries ? projectsData.summaries.find(s => s.id === projectId) : null;
     
     console.log('Project ID:', projectId);
-    console.log('Available projects:', Object.keys(projectsData).filter(key => key !== 'summaries'));
+    console.log('Available projects:', projectsData.summaries ? projectsData.summaries.map(p => p.id) : []);
     console.log('Found project:', project);
-
-    if (!project) {
-        const availableProjects = Object.keys(projectsData).filter(key => key !== 'summaries');
-        console.error('Available projects:', availableProjects);
-        mainContent.innerHTML = `<div class="wrapper" style="text-align: center; padding: 4rem 0;"><h1>Project Not Found</h1><p>The project ID "${projectId}" does not exist.</p><p>Available projects: ${availableProjects.join(', ')}</p><a href="/">Return to homepage</a>.</div>`;
-        document.title = "Project Not Found";
-        return;
-    }
 
     document.title = project.pageTitle;
     document.getElementById('project-name').textContent = project.projectName;
@@ -151,11 +367,42 @@ async function loadProject() {
       }
       return `<div class="project-info__box"><h3>${title}</h3><ul>${listItems}</ul></div>`;
     };
-    detailsContainer.innerHTML = createInfoBox('My Contributions', project.contributions) + createInfoBox('Project Info', project.projectInfo);
+    detailsContainer.innerHTML = createInfoBox('Project Highlights', (project.highlights && project.highlights.length ? project.highlights : project.contributions)) + createInfoBox('Project Info', project.projectInfo);
 
     const detailedContainer = document.getElementById('project-detailed-sections');
     detailedContainer.innerHTML = '';
+    // Prepare a project-level code container from frontmatter (behaves like videoURL)
+    let projectLevelCodeContainer = null;
+    if ((project.codePreviewFile && project.codeExpandedFile) || project.codePreviewFile || project.codeExpandedFile) {
+      projectLevelCodeContainer = document.createElement('div');
+      projectLevelCodeContainer.className = 'code-snippet-container code-snippet-inline-right';
+
+      const detectedLanguage = project.codeLanguage || (project.codeExpandedFile ? getLanguageFromExtension(project.codeExpandedFile) : (project.codePreviewFile ? getLanguageFromExtension(project.codePreviewFile) : 'text'));
+
+      if (project.codePreviewFile && project.codeExpandedFile) {
+        Promise.all([
+          fetch(project.codePreviewFile).then(r => r.text()),
+          fetch(project.codeExpandedFile).then(r => r.text())
+        ]).then(([previewCode, expandedCode]) => {
+          createExpandableCodeSection(projectLevelCodeContainer, previewCode, expandedCode, detectedLanguage);
+        }).catch(error => {
+          console.error('Error loading project-level code files:', error);
+          projectLevelCodeContainer.innerHTML = '<p>Error loading code files</p>';
+        });
+      } else {
+        // If only one is provided, show single code block
+        const singleFile = project.codePreviewFile || project.codeExpandedFile;
+        fetch(singleFile).then(r => r.text()).then(code => {
+          createSingleCodeBlock(projectLevelCodeContainer, code, detectedLanguage);
+        }).catch(error => {
+          console.error('Error loading project-level code file:', error);
+          projectLevelCodeContainer.innerHTML = '<p>Error loading code file</p>';
+        });
+      }
+    }
+
     if (project.detailedSections && project.detailedSections.length > 0) {
+      let insertedProjectLevelCode = false;
       project.detailedSections.forEach(section => {
         const sectionEl = document.createElement('div');
         sectionEl.className = 'project-detailed-section';
@@ -169,7 +416,7 @@ async function loadProject() {
             sectionEl.appendChild(subheadingEl);
             
             const subBodyDiv = document.createElement('div');
-            subBodyDiv.innerHTML = processInlineImages(subheading.body, project, projectId);
+            subBodyDiv.innerHTML = processInlineImages(markdownToHtml(subheading.body), project, projectId);
             sectionEl.appendChild(subBodyDiv);
           });
         } else {
@@ -180,12 +427,18 @@ async function loadProject() {
             sectionEl.appendChild(listEl);
           } else {
             const bodyDiv = document.createElement('div');
-            bodyDiv.innerHTML = processInlineImages(section.body, project, projectId);
+            bodyDiv.innerHTML = processInlineImages(markdownToHtml(section.body), project, projectId);
             sectionEl.appendChild(bodyDiv);
           }
         }
         
-        // Add code snippet if present (preview or single)
+        // If frontmatter provided code files, insert their code preview into the first section
+        if (projectLevelCodeContainer && !insertedProjectLevelCode) {
+          sectionEl.appendChild(projectLevelCodeContainer);
+          insertedProjectLevelCode = true;
+        }
+
+        // Add code snippet if present (preview or single) within this section
         if ((section.codeSnippet && section.codeLanguage) || (section.codePreview && section.codeExpanded) || (section.codePreviewFile && section.codeExpandedFile)) {
           const codeContainer = document.createElement('div');
           // Default to side-placed, smaller code blocks so they don't span full page width.
@@ -230,23 +483,22 @@ async function loadProject() {
             }
           }
           
-          // Try to inline the code block within the section body (after the first paragraph)
-          // This keeps code visually next to the descriptive text instead of always at the end.
-          const firstParagraph = sectionEl.querySelector('p');
-          if (firstParagraph && firstParagraph.parentNode) {
-            // Insert before the first paragraph so the floated code aligns higher with the section text
-            firstParagraph.parentNode.insertBefore(codeContainer, firstParagraph);
-          } else if (sectionEl.firstChild) {
-            // If there's no paragraph but there is other content, insert at the top
-            sectionEl.insertBefore(codeContainer, sectionEl.firstChild);
-          } else {
-            // Fallback: append at the end of the section
-            sectionEl.appendChild(codeContainer);
-          }
+          // Append code container as a direct child of the section (for grid layout)
+          // The CSS grid will position it to the right of text content
+          sectionEl.appendChild(codeContainer);
         }
         
         detailedContainer.appendChild(sectionEl);
       });
+      // If there were no sections to append the project-level code, create a section for it
+      if (projectLevelCodeContainer && !insertedProjectLevelCode) {
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'project-detailed-section';
+        // Keep a minimal heading for context if desired; or omit
+        // sectionEl.innerHTML = `<h2>Code Preview</h2>`;
+        sectionEl.appendChild(projectLevelCodeContainer);
+        detailedContainer.appendChild(sectionEl);
+      }
     }
 
     // Add testimonials section if present
@@ -532,7 +784,12 @@ function processInlineImages(text, project, projectId) {
   
   // Process single images: {{image:path/to/image.jpg|Caption text|position}}
   text = text.replace(/\{\{image:([^|}]+)(?:\|([^|}]*))?(?:\|([^}]*))?\}\}/g, (match, imagePath, caption, position) => {
-    const fullPath = imagePath.startsWith('/') ? imagePath : `/assets/projects/${projectId}/${imagePath}`;
+    // Check if it's a full URL (http:// or https://)
+    const fullPath = imagePath.startsWith('http://') || imagePath.startsWith('https://') 
+      ? imagePath 
+      : imagePath.startsWith('/') 
+        ? imagePath 
+        : `/assets/projects/${projectId}/${imagePath}`;
     const altText = caption || `${project.projectName} image`;
     
     // Determine positioning class - check if caption is actually a position keyword

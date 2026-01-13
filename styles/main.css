@@ -710,11 +710,16 @@ section#footer .footer-links a:hover {
   padding: 0;
   margin: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
 }
 .project-article .project-info .project-info__box ul li {
-  padding: 2px 0;
+  padding: 0;
   color: #170d0b;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  text-align: left;
+  line-height: 1.5;
 }
 .project-article .project-info .project-info__box ul li strong {
   font-weight: 600;
@@ -722,8 +727,8 @@ section#footer .footer-links a:hover {
 @media (max-width: 1050px) {
   .project-article .project-info {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: stretch;
+    text-align: left;
   }
   .project-article .project-info .project-info__box {
     min-width: 100%;
@@ -1460,20 +1465,31 @@ textarea {
 /* == Project Page Code Snippets == */
 /* ============================================= */
 .project-detailed-section {
-  /* Inline / side-placed code snippet helpers
-     Use these classes on the container that normally wraps a code snippet:
-     - .code-snippet-inline-right  -> floats the snippet to the right
-     - .code-snippet-inline-left   -> floats the snippet to the left
-     These create a narrower code block that sits beside text on wide screens
-     and collapse to full-width on small screens for readability. */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-l);
+  align-items: start;
+  /* Side-placed code snippet helpers */
 }
-.project-detailed-section::after {
-  content: "";
-  display: table;
-  clear: both;
+.project-detailed-section h2 {
+  grid-column: 1/-1;
+  margin-top: var(--space-m);
+}
+.project-detailed-section h2:first-child {
+  margin-top: 0;
+}
+.project-detailed-section > p,
+.project-detailed-section > ul,
+.project-detailed-section > ol,
+.project-detailed-section > div:not(.code-snippet-container) {
+  grid-column: 1;
+}
+.project-detailed-section .code-snippet-inline-right {
+  grid-column: 2;
+  grid-row: 2;
 }
 .project-detailed-section .code-snippet-container {
-  margin: var(--space-l) 0;
+  margin: 0;
   background: #170d0b;
   border-radius: 8px;
   overflow: hidden;
@@ -1530,15 +1546,16 @@ textarea {
 }
 .project-detailed-section .code-snippet-inline-right,
 .project-detailed-section .code-snippet-inline-left {
-  width: 40%;
-  max-width: 520px;
-  min-width: 260px;
+  width: auto;
+  max-width: 500px;
+  min-width: 280px;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid rgba(23, 13, 11, 0.12);
   box-shadow: 0 6px 18px rgba(23, 13, 11, 0.08);
   background: #170d0b;
-  margin: var(--space-s) var(--space-m) var(--space-m) var(--space-m);
+  margin: 0;
+  flex-shrink: 0;
 }
 .project-detailed-section .code-snippet-inline-right pre,
 .project-detailed-section .code-snippet-inline-left pre {
@@ -1554,17 +1571,23 @@ textarea {
   max-height: 480px;
 }
 .project-detailed-section .code-snippet-inline-right {
-  float: right;
-  margin-left: var(--space-l);
-  margin-right: 0;
+  grid-column: 2;
+  grid-row: 2;
 }
 .project-detailed-section .code-snippet-inline-left {
-  float: left;
-  margin-right: var(--space-l);
-  margin-left: 0;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 @media (max-width: 768px) {
+  .project-detailed-section {
+    grid-template-columns: 1fr;
+  }
+  .project-detailed-section .code-snippet-inline-right,
+  .project-detailed-section .code-snippet-inline-left {
+    grid-column: 1;
+    max-width: 100%;
+  }
   .project-detailed-section .code-snippet-container {
     margin: var(--space-m) -var(--space-s);
     border-radius: 0;
@@ -1572,21 +1595,6 @@ textarea {
   .project-detailed-section .code-snippet-container pre {
     padding: var(--space-m);
     font-size: var(--step--2);
-  }
-  /* On smaller screens, stacked/full-width behavior for inline code snippets */
-  .code-snippet-inline-right,
-  .code-snippet-inline-left {
-    float: none;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    margin: var(--space-m) 0;
-  }
-  .code-snippet-inline-right pre,
-  .code-snippet-inline-left pre {
-    font-size: var(--step--2);
-    padding: var(--space-m);
-    max-height: none;
   }
 }
 /* ============================================= */

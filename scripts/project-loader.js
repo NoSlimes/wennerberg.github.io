@@ -251,7 +251,7 @@ async function loadProject() {
       }
     });
 
-    const response = await fetch('/data/projects.yml'); 
+    const response = await fetch('data/projects.yml'); 
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const yamlText = await response.text();
@@ -262,7 +262,7 @@ async function loadProject() {
     const projectId = params.get('id');
     
     // Fetch and parse the markdown file for this project
-    const mdResponse = await fetch(`/data/projects/${projectId}.md`);
+    const mdResponse = await fetch(`data/projects/${projectId}.md`);
     if (!mdResponse.ok) {
       const availableProjects = projectsData.summaries ? projectsData.summaries.map(p => p.id) : [];
       console.error('Available projects:', availableProjects);

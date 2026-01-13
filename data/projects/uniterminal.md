@@ -3,7 +3,6 @@ pageTitle: Project - UniTerminal
 heroImage: /assets/projects/UniTerminal/hero.png
 projectName: UniTerminal
 projectType: "[SYSTEMS & TOOLS - UNITY]"
-instructorFeedback: "This project is overengineered compared to the expectations—thousands of lines of cohesively written, robust systems."
 flairs:
   - Unity
   - C#
@@ -12,6 +11,8 @@ flairs:
 projectInfo:
   Language: C#
   Engine: Unity
+  License: MIT
+  Dependencies: Unity
 codeLanguage: csharp
 codePreviewFile: "/assets/code/UniTerminal-preview.cs"
 codeExpandedFile: "/assets/code/UniTerminal-full.cs"
@@ -143,3 +144,7 @@ UniTerminal has become the backbone of development iteration on **PlanetFactory*
 - **Early Testing:** Bypass UI scaffolding entirely, allowing deep-system testing and balance tuning before front-end implementation begins.
 
 ![PlanetFactory nuke command for stress test](/assets/projects/uniterminal/nuke_command.webp)
+
+### Collaborative Development
+
+During the process of developing the system, I've received continuous feedback and suggestions from a friend. He's been actively using the tool while developing his own game [Bengan Box](https://store.steampowered.com/app/2269150/Bengan_Box/) and been able to give suggestions on several parts of the system. The autocomplete wouldn't have been as advanced as it is without his feedback - neither would it be as optimized as it now is with the reflection.

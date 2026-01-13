@@ -202,6 +202,10 @@ function markdownToHtml(markdown) {
     html = html.replace(new RegExp(placeholder, 'g'), codeHtml);
   });
   
+  // Add target="_blank" to all external links
+  html = html.replace(/<a\s+(?!.*target=)((?:[^>](?!href=))*?)href="(https?:\/\/[^"]*)"([^>]*)>/g, 
+    '<a $1href="$2" target="_blank" rel="noopener noreferrer"$3>');
+  
   return html;
 }
 

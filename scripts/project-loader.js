@@ -41,12 +41,15 @@ function parseMarkdownProject(mdText, projectId) {
   let overview = '';
   let contributions = [];
   let inOverview = true;
+  let inCodeBlock = false;
 
   for (let i = 0; i < mdLines.length; i++) {
     const line = mdLines[i];
+    const isSpecialCodeFence = /^```\w+-(preview|expanded):/.test(line);
+    const isRegularFence = line.startsWith('```') && !isSpecialCodeFence;
     
-    // Check for markdown heading (## = section)
-    if (line.match(/^##\s+/)) {
+    // Only treat headings when not inside a fenced code block
+    if (!inCodeBlock && line.match(/^##\s+/)) {
       inOverview = false;
       
       // Save previous section if exists
@@ -77,32 +80,32 @@ function parseMarkdownProject(mdText, projectId) {
         };
       }
       currentBody = [];
+      continue;
     } 
-    // Check for code block markers
-    else if (line.match(/^```\w+-preview:/)) {
-      const match = line.match(/^```(\w+)-preview:(.+)$/);
-      if (match && currentSection) {
-        currentSection.codeLanguage = match[1];
-        currentSection.codePreviewFile = match[2].trim();
+    // Handle custom code block markers for preview/expanded files (outside fenced blocks)
+    else if (!inCodeBlock && isSpecialCodeFence) {
+      const previewMatch = line.match(/^```(\w+)-preview:(.+)$/);
+      if (previewMatch && currentSection) {
+        currentSection.codeLanguage = previewMatch[1];
+        currentSection.codePreviewFile = previewMatch[2].trim();
       }
-    }
-    else if (line.match(/^```\w+-expanded:/)) {
-      const match = line.match(/^```(\w+)-expanded:(.+)$/);
-      if (match && currentSection) {
-        currentSection.codeLanguage = match[1];
-        currentSection.codeExpandedFile = match[2].trim();
+      const expandedMatch = line.match(/^```(\w+)-expanded:(.+)$/);
+      if (expandedMatch && currentSection) {
+        currentSection.codeLanguage = expandedMatch[1];
+        currentSection.codeExpandedFile = expandedMatch[2].trim();
       }
-    }
-    else if (line === '```') {
-      // Skip closing backticks
       continue;
     }
-    else if (inOverview && line.trim()) {
+
+    if (currentSection) {
+      currentBody.push(line);
+    } else if (inOverview && line.trim()) {
       // Collect overview text before first ## heading
       overview += (overview ? '\n' : '') + line;
     }
-    else if (currentSection) {
-      currentBody.push(line);
+
+    if (isRegularFence) {
+      inCodeBlock = !inCodeBlock;
     }
   }
 
@@ -144,66 +147,60 @@ function parseMarkdownProject(mdText, projectId) {
   };
 }
 
-// Convert markdown to HTML
+// Convert markdown to HTML using marked.js library
 function markdownToHtml(markdown) {
   if (!markdown) return '';
   
-  let html = markdown;
+  // Extract code blocks BEFORE marked processes them
+  const codeBlocks = [];
+  let processedMarkdown = markdown.replace(/```(\w+)\n([\s\S]*?)```/g, (match, lang, code) => {
+    const placeholder = `\n::CODEBLOCK_${codeBlocks.length}::\n`;
+    codeBlocks.push({ lang, code });
+    return placeholder;
+  });
   
-  // Code blocks with language (multi-line)
-  html = html.replace(/```(\w+)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
+  // Process custom image syntax
+  processedMarkdown = processedMarkdown.replace(
+    /{{image:([^|]+)\|([^|]+)\|([^}]+)}}/g,
+    '![$2]($1)'
+  );
   
-  // Inline code
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Parse markdown
+  let html = marked.parse(processedMarkdown);
   
-  // Bold text
-  html = html.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
-  
-  // Italic text
-  html = html.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
-  html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
-  
-  // Links
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-
-  // Blockquotes (consecutive lines starting with '>')
-  {
-    const lines = html.split('\n');
-    const out = [];
-    let i = 0;
-    while (i < lines.length) {
-      if (/^\s*>\s?/.test(lines[i])) {
-        const quoteLines = [];
-        while (i < lines.length && /^\s*>\s?/.test(lines[i])) {
-          quoteLines.push(lines[i].replace(/^\s*>\s?/, ''));
-          i++;
-        }
-        const inner = quoteLines.join('<br>');
-        out.push(`<blockquote>${inner}</blockquote>`);
-      } else {
-        out.push(lines[i]);
-        i++;
+  // Restore code blocks with Prism highlighting
+  codeBlocks.forEach((block, i) => {
+    let highlighted = block.code;
+    
+    // Use Prism to highlight if available
+    if (typeof Prism !== 'undefined') {
+      try {
+        const grammar = Prism.languages[block.lang] || Prism.languages.plaintext;
+        highlighted = Prism.highlight(block.code, grammar, block.lang);
+      } catch (e) {
+        // Fallback to plain code if highlighting fails
+        highlighted = block.code
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
       }
+    } else {
+      // Escape if Prism not available
+      highlighted = block.code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
-    html = out.join('\n');
-  }
-  
-  // Bullet lists
-  html = html.replace(/^\s*[-*+]\s+(.+)$/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-  html = html.replace(/<\/li>\n<li>/g, '</li>\n<li>');
-  
-  // Line breaks - convert double newlines to paragraphs
-  html = html.replace(/\n\n+/g, '</p><p>');
-  html = '<p>' + html + '</p>';
-  
-  // Clean up empty paragraphs
-  html = html.replace(/<p><\/p>/g, '');
-  html = html.replace(/<p>\s*<(ul|ol|pre)/g, '<$1');
-  html = html.replace(/<\/(ul|ol|pre)>\s*<\/p>/g, '</$1>');
-  html = html.replace(/<p>\s*<blockquote>/g, '<blockquote>');
-  html = html.replace(/<\/blockquote>\s*<\/p>/g, '</blockquote>');
+    
+    const placeholder = `::CODEBLOCK_${i}::`;
+    const codeHtml = `<pre><code class="language-${block.lang}">${highlighted}</code></pre>`;
+    // Replace placeholder wrapped by <p> with optional whitespace/newlines
+    const paragraphRegex = new RegExp(`<p[^>]*>\\s*${placeholder}\\s*<\/p>`, 'g');
+    html = html.replace(paragraphRegex, codeHtml);
+    html = html.replace(new RegExp(placeholder, 'g'), codeHtml);
+  });
   
   return html;
 }
@@ -371,38 +368,8 @@ async function loadProject() {
 
     const detailedContainer = document.getElementById('project-detailed-sections');
     detailedContainer.innerHTML = '';
-    // Prepare a project-level code container from frontmatter (behaves like videoURL)
-    let projectLevelCodeContainer = null;
-    if ((project.codePreviewFile && project.codeExpandedFile) || project.codePreviewFile || project.codeExpandedFile) {
-      projectLevelCodeContainer = document.createElement('div');
-      projectLevelCodeContainer.className = 'code-snippet-container code-snippet-inline-right';
-
-      const detectedLanguage = project.codeLanguage || (project.codeExpandedFile ? getLanguageFromExtension(project.codeExpandedFile) : (project.codePreviewFile ? getLanguageFromExtension(project.codePreviewFile) : 'text'));
-
-      if (project.codePreviewFile && project.codeExpandedFile) {
-        Promise.all([
-          fetch(project.codePreviewFile).then(r => r.text()),
-          fetch(project.codeExpandedFile).then(r => r.text())
-        ]).then(([previewCode, expandedCode]) => {
-          createExpandableCodeSection(projectLevelCodeContainer, previewCode, expandedCode, detectedLanguage);
-        }).catch(error => {
-          console.error('Error loading project-level code files:', error);
-          projectLevelCodeContainer.innerHTML = '<p>Error loading code files</p>';
-        });
-      } else {
-        // If only one is provided, show single code block
-        const singleFile = project.codePreviewFile || project.codeExpandedFile;
-        fetch(singleFile).then(r => r.text()).then(code => {
-          createSingleCodeBlock(projectLevelCodeContainer, code, detectedLanguage);
-        }).catch(error => {
-          console.error('Error loading project-level code file:', error);
-          projectLevelCodeContainer.innerHTML = '<p>Error loading code file</p>';
-        });
-      }
-    }
 
     if (project.detailedSections && project.detailedSections.length > 0) {
-      let insertedProjectLevelCode = false;
       project.detailedSections.forEach(section => {
         const sectionEl = document.createElement('div');
         sectionEl.className = 'project-detailed-section';
@@ -432,73 +399,8 @@ async function loadProject() {
           }
         }
         
-        // If frontmatter provided code files, insert their code preview into the first section
-        if (projectLevelCodeContainer && !insertedProjectLevelCode) {
-          sectionEl.appendChild(projectLevelCodeContainer);
-          insertedProjectLevelCode = true;
-        }
-
-        // Add code snippet if present (preview or single) within this section
-        if ((section.codeSnippet && section.codeLanguage) || (section.codePreview && section.codeExpanded) || (section.codePreviewFile && section.codeExpandedFile)) {
-          const codeContainer = document.createElement('div');
-          // Default to side-placed, smaller code blocks so they don't span full page width.
-          // Editors can override this by adding different classes in the project data later.
-          codeContainer.className = 'code-snippet-container code-snippet-inline-right';
-          
-          // Check if we have expandable code (inline or from files)
-          if ((section.codePreview && section.codeExpanded) || (section.codePreviewFile && section.codeExpandedFile)) {
-            // Handle file-based code
-            if (section.codePreviewFile && section.codeExpandedFile) {
-              // Auto-detect language from file extension or use specified language
-              const detectedLanguage = section.codeLanguage || getLanguageFromExtension(section.codeExpandedFile);
-              
-              // Load preview and expanded code from files
-              Promise.all([
-                fetch(section.codePreviewFile).then(r => r.text()),
-                fetch(section.codeExpandedFile).then(r => r.text())
-              ]).then(([previewCode, expandedCode]) => {
-                createExpandableCodeSection(codeContainer, previewCode, expandedCode, detectedLanguage);
-              }).catch(error => {
-                console.error('Error loading code files:', error);
-                codeContainer.innerHTML = '<p>Error loading code files</p>';
-              });
-            } else {
-              // Handle inline code (existing behavior)
-              createExpandableCodeSection(codeContainer, section.codePreview, section.codeExpanded, section.codeLanguage || 'javascript');
-            }
-          } else if (section.codeSnippet) {
-            // Handle file-based single code block
-            if (section.codeSnippetFile) {
-              const detectedLanguage = section.codeLanguage || getLanguageFromExtension(section.codeSnippetFile);
-              
-              fetch(section.codeSnippetFile).then(r => r.text()).then(code => {
-                createSingleCodeBlock(codeContainer, code, detectedLanguage);
-              }).catch(error => {
-                console.error('Error loading code file:', error);
-                codeContainer.innerHTML = '<p>Error loading code file</p>';
-              });
-            } else {
-              // Regular single code block (inline)
-              createSingleCodeBlock(codeContainer, section.codeSnippet, section.codeLanguage || 'text');
-            }
-          }
-          
-          // Append code container as a direct child of the section (for grid layout)
-          // The CSS grid will position it to the right of text content
-          sectionEl.appendChild(codeContainer);
-        }
-        
         detailedContainer.appendChild(sectionEl);
       });
-      // If there were no sections to append the project-level code, create a section for it
-      if (projectLevelCodeContainer && !insertedProjectLevelCode) {
-        const sectionEl = document.createElement('div');
-        sectionEl.className = 'project-detailed-section';
-        // Keep a minimal heading for context if desired; or omit
-        // sectionEl.innerHTML = `<h2>Code Preview</h2>`;
-        sectionEl.appendChild(projectLevelCodeContainer);
-        detailedContainer.appendChild(sectionEl);
-      }
     }
 
     // Add testimonials section if present
@@ -572,6 +474,14 @@ async function loadProject() {
       if (videoHtml) { document.getElementById('video-container-wrapper').innerHTML = videoHtml; }
     }
 
+    // Highlight all code blocks with Prism after content is loaded
+    if (typeof Prism !== 'undefined') {
+      setTimeout(() => {
+        Prism.highlightAllUnder(document.getElementById('project-detailed-sections'));
+        Prism.highlightAllUnder(document.getElementById('project-details-container'));
+      }, 100);
+    }
+
   } catch (error) {
     console.error("Failed to load project data:", error);
     mainContent.innerHTML = `<div class="wrapper" style="text-align: center; padding: 4rem 0;"><h1>Error</h1><p>Could not load project information. Please try again later.</p></div>`;
@@ -581,206 +491,10 @@ async function loadProject() {
 
 document.addEventListener('DOMContentLoaded', loadProject);
 
-// Code Modal Functionality
-function openCodeModal(codeElement, language) {
-  // Create modal overlay
-  const modalOverlay = document.createElement('div');
-  modalOverlay.className = 'code-modal-overlay';
-  modalOverlay.id = 'code-modal';
-  
-  // Create modal content
-  const modalContent = document.createElement('div');
-  modalContent.className = 'code-modal-content';
-  
-  // Create modal header
-  const modalHeader = document.createElement('div');
-  modalHeader.className = 'code-modal-header';
-  modalHeader.innerHTML = `
-    <h3>Full Implementation</h3>
-    <button class="code-modal-close" onclick="closeCodeModal()">&times;</button>
-  `;
-  
-  // Create code container for modal
-  const modalCodeContainer = document.createElement('div');
-  modalCodeContainer.className = 'code-modal-body';
-  
-  const preEl = document.createElement('pre');
-  const codeEl = document.createElement('code');
-  codeEl.className = `language-${language}`;
-  // Inject copyright header if not present
-  codeEl.textContent = injectCopyright(codeElement.textContent, language);
-  
-  preEl.appendChild(codeEl);
-  modalCodeContainer.appendChild(preEl);
-  
-  // Assemble modal
-  modalContent.appendChild(modalHeader);
-  modalContent.appendChild(modalCodeContainer);
-  modalOverlay.appendChild(modalContent);
-  
-  // Add to DOM and show
-  document.body.appendChild(modalOverlay);
-  
-  // Apply syntax highlighting
-  setTimeout(() => {
-    if (typeof Prism !== 'undefined') {
-      Prism.highlightElement(codeEl);
-    }
-    modalOverlay.classList.add('show-modal');
-  }, 10);
-  
-  // Close on overlay click
-  modalOverlay.addEventListener('click', function(e) {
-    if (e.target === modalOverlay) {
-      closeCodeModal();
-    }
-  });
-  
-  // Close on escape key
-  document.addEventListener('keydown', handleEscapeKey);
-}
-
-function closeCodeModal() {
-  const modal = document.getElementById('code-modal');
-  if (modal) {
-    modal.classList.remove('show-modal');
-    setTimeout(() => {
-      document.body.removeChild(modal);
-    }, 300);
-    document.removeEventListener('keydown', handleEscapeKey);
-  }
-  
-  // Reset all toggle buttons
-  const toggleButtons = document.querySelectorAll('.code-toggle-btn');
-  toggleButtons.forEach(btn => {
-    btn.textContent = 'Show Full Implementation';
-    btn.setAttribute('aria-expanded', 'false');
-  });
-}
-
-function handleEscapeKey(e) {
-  if (e.key === 'Escape') {
-    closeCodeModal();
-  }
-}
-
-function getLanguageFromExtension(filePath) {
-  const extensionMap = {
-    '.cs': 'csharp',
-    '.cpp': 'cpp',
-    '.cc': 'cpp',
-    '.cxx': 'cpp',
-    '.c': 'c',
-    '.h': 'c',
-    '.hpp': 'cpp',
-    '.py': 'python',
-    '.js': 'javascript',
-    '.ts': 'typescript',
-    '.java': 'java',
-    '.php': 'php',
-    '.rb': 'ruby',
-    '.go': 'go',
-    '.rs': 'rust',
-    '.swift': 'swift',
-    '.kt': 'kotlin',
-    '.scala': 'scala',
-    '.r': 'r',
-    '.sql': 'sql',
-    '.html': 'html',
-    '.xml': 'xml',
-    '.json': 'json',
-    '.yaml': 'yaml',
-    '.yml': 'yaml',
-    '.css': 'css',
-    '.scss': 'scss',
-    '.sass': 'sass',
-    '.less': 'less',
-    '.sh': 'bash',
-    '.bash': 'bash',
-    '.zsh': 'bash',
-    '.ps1': 'powershell',
-    '.bat': 'batch',
-    '.dockerfile': 'dockerfile',
-    '.md': 'markdown',
-    '.tex': 'latex'
-  };
-  
-  const ext = filePath.toLowerCase().substring(filePath.lastIndexOf('.'));
-  return extensionMap[ext] || 'text';
-}
-
-function createExpandableCodeSection(container, previewCode, expandedCode, language) {
-  // Create preview version
-  const previewBlock = document.createElement('pre');
-  const previewElement = document.createElement('code');
-  previewElement.className = `language-${language}`;
-  // Do not inject copyright into previews
-  previewElement.textContent = previewCode;
-  previewBlock.appendChild(previewElement);
-  
-  // Create expanded version (for modal)
-  const expandedElement = document.createElement('code');
-  expandedElement.className = `language-${language}`;
-  // Keep expanded element raw; modal will inject when opened
-  expandedElement.textContent = expandedCode;
-  
-  // Create expand/collapse button
-  const toggleButton = document.createElement('button');
-  toggleButton.className = 'code-toggle-btn';
-  toggleButton.textContent = 'Show Full Implementation';
-  toggleButton.setAttribute('aria-expanded', 'false');
-  
-  // Toggle functionality - open full code in modal
-  toggleButton.addEventListener('click', function() {
-    const isExpanded = this.getAttribute('aria-expanded') === 'true';
-    
-    if (isExpanded) {
-      // Close modal
-      closeCodeModal();
-    } else {
-      // Open modal with full code
-      openCodeModal(this.expandedElement, this.codeLanguage);
-      this.textContent = 'Close Full View';
-      this.setAttribute('aria-expanded', 'true');
-    }
-  });
-  
-  container.appendChild(previewBlock);
-  container.appendChild(toggleButton);
-  
-  // Store the expanded element as data for modal use
-  toggleButton.expandedElement = expandedElement;
-  toggleButton.codeLanguage = language;
-  
-  // Apply syntax highlighting after DOM insertion
-  setTimeout(() => {
-    if (typeof Prism !== 'undefined') {
-      Prism.highlightElement(previewElement);
-      Prism.highlightElement(expandedElement);
-    }
-  }, 100);
-}
-
-function createSingleCodeBlock(container, code, language) {
-  const preEl = document.createElement('pre');
-  const codeEl = document.createElement('code');
-  codeEl.className = `language-${language}`;
-  // Do not inject copyright into single inline code blocks
-  codeEl.textContent = code;
-  
-  preEl.appendChild(codeEl);
-  container.appendChild(preEl);
-  
-  // Apply syntax highlighting after DOM insertion
-  setTimeout(() => {
-    if (typeof Prism !== 'undefined') {
-      Prism.highlightElement(codeEl);
-    }
-  }, 100);
-}
-
 function processInlineImages(text, project, projectId) {
   if (!text) return text;
+  const containsPre = /<pre[\s>]/i.test(text);
+  const containsList = /<ul[\s>]|<ol[\s>]/i.test(text);
   
   // Process single images: {{image:path/to/image.jpg|Caption text|position}}
   text = text.replace(/\{\{image:([^|}]+)(?:\|([^|}]*))?(?:\|([^}]*))?\}\}/g, (match, imagePath, caption, position) => {
@@ -857,15 +571,18 @@ function processInlineImages(text, project, projectId) {
             </div>`;
   });
   
-  // Convert line breaks to HTML
-  // First, convert double line breaks to paragraph breaks
-  text = text.replace(/\n\s*\n/g, '</p><p>');
-  // Then convert single line breaks to <br> tags
-  text = text.replace(/\n/g, '<br>');
-  
-  // Wrap in paragraph tags if not already wrapped
-  if (text && !text.trim().startsWith('<p>')) {
-    text = `<p>${text}</p>`;
+  // If the HTML already includes <pre> or <ul>/<ol>, avoid messing with whitespace/paragraphs
+  if (!containsPre && !containsList) {
+    // Convert line breaks to HTML
+    // First, convert double line breaks to paragraph breaks
+    text = text.replace(/\n\s*\n/g, '</p><p>');
+    // Then convert single line breaks to <br> tags
+    text = text.replace(/\n/g, '<br>');
+    
+    // Wrap in paragraph tags if not already wrapped
+    if (text && !text.trim().startsWith('<p>')) {
+      text = `<p>${text}</p>`;
+    }
   }
   
   return text;

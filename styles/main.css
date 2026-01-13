@@ -1,4 +1,3 @@
-@charset "UTF-8";
 :root {
   --step--2: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
   --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
@@ -112,6 +111,85 @@ picture {
 /* Inherit fonts for inputs and buttons */
 input, button, textarea, select {
   font: inherit;
+}
+
+/* Code block styling with Prism.js */
+pre {
+  background: #2d2d2d;
+  padding: 16px !important;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 20px 0 !important;
+  font-family: "Fira Code", "Monaco", "Cascadia Code", "Consolas", monospace !important;
+  font-size: 0.85rem !important;
+  line-height: 1.5 !important;
+  color: #f8f8f2 !important;
+  white-space: pre !important;
+  overflow-x: auto !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+code {
+  font-family: "Fira Code", "Monaco", "Cascadia Code", "Consolas", monospace;
+}
+
+pre code {
+  background: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Prism syntax highlighting token styles */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6a9955;
+}
+
+.token.punctuation {
+  color: #d4d4d4;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #b5cea8;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #ce9178;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #d4d4d4;
+}
+
+.token.atrule,
+.token.keyword {
+  color: #569cd6;
+}
+
+.token.function,
+.token.class-name {
+  color: #dcdcaa;
 }
 
 main:focus {
@@ -1238,365 +1316,30 @@ textarea {
 }
 
 /* ============================================= */
-/* == Code Snippets Section == */
-/* ============================================= */
-.code-snippets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: var(--space-l);
-  margin-top: var(--space-xl);
-}
-
-.code-snippet-card {
-  background: #c8b6aa;
-  border-radius: 12px;
-  border: 1px solid rgba(23, 13, 11, 0.15);
-  box-shadow: 0 4px 12px rgba(23, 13, 11, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.code-snippet-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(23, 13, 11, 0.15);
-}
-
-.snippet-header {
-  padding: var(--space-m) var(--space-l);
-  background: linear-gradient(135deg, #584934 0%, #5d5639 100%);
-  border-bottom: 1px solid rgba(23, 13, 11, 0.1);
-  display: flex;
-  align-items: center;
-  gap: var(--space-s);
-}
-.snippet-header h4 {
-  margin: 0;
-  color: #c8b6aa;
-  font-weight: 600;
-  font-size: var(--step-0);
-  flex-grow: 1;
-}
-
-.tech-tag {
-  display: inline-block;
-  background: rgba(131, 193, 20, 0.2);
-  color: #c8b6aa;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: var(--step--2);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.code-content {
-  background: #170d0b;
-  overflow-x: auto;
-}
-.code-content pre {
-  margin: 0;
-  padding: var(--space-m) var(--space-l);
-  font-family: "Fira Code", "Monaco", "Cascadia Code", monospace;
-  font-size: var(--step--1);
-  line-height: 1.5;
-  color: #c8b6aa;
-  overflow-x: auto;
-}
-.code-content pre code {
-  color: inherit;
-  background: none;
-  padding: 0;
-  border-radius: 0;
-  font-size: inherit;
-}
-
-.snippet-footer {
-  padding: var(--space-s) var(--space-l);
-  background: #c8b6aa;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(23, 13, 11, 0.1);
-}
-
-.expand-btn {
-  background: transparent;
-  border: 1px solid #83c114;
-  color: #83c114;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: var(--step--1);
-  transition: all 0.2s ease;
-}
-.expand-btn:hover {
-  background: #83c114;
-  color: #c8b6aa;
-}
-
-.project-ref {
-  color: rgba(23, 13, 11, 0.6);
-  font-size: var(--step--1);
-  font-style: italic;
-}
-
-@media (max-width: 768px) {
-  .testimonials-grid,
-  .code-snippets-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-m);
-  }
-  .code-snippet-card {
-    min-width: 0;
-  }
-  .code-content pre {
-    font-size: var(--step--2);
-    padding: var(--space-s);
-  }
-  .snippet-footer {
-    flex-direction: column;
-    gap: var(--space-xs);
-    align-items: flex-start;
-  }
-}
-/* ============================================= */
-/* == Code Modal & Syntax Highlighting == */
-/* ============================================= */
-.code-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(23, 13, 11, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: var(--space-m);
-}
-
-.code-modal {
-  background: #c8b6aa;
-  border-radius: 12px;
-  max-width: 90vw;
-  max-height: 90vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 20px 40px rgba(23, 13, 11, 0.3);
-}
-
-.code-modal-header {
-  padding: var(--space-m) var(--space-l);
-  background: #584934;
-  border-bottom: 1px solid rgba(23, 13, 11, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.code-modal-header h3 {
-  margin: 0;
-  color: #c8b6aa;
-  font-size: var(--step-1);
-}
-.code-modal-header .close-modal {
-  background: none;
-  border: none;
-  color: #c8b6aa;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-.code-modal-header .close-modal:hover {
-  background: rgba(200, 182, 170, 0.1);
-}
-
-.code-modal-content {
-  flex: 1;
-  /* Prevent the modal content itself from scrolling; the inner <pre> will handle scrolling. */
-  overflow: visible;
-  background: #170d0b;
-}
-.code-modal-content pre {
-  margin: 0;
-  padding: var(--space-l);
-  font-family: "Fira Code", "Monaco", "Cascadia Code", monospace;
-  font-size: var(--step--1);
-  line-height: 1.6;
-  color: #c8b6aa;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  /* Ensure the code block itself is the only scrolling element. */
-  overflow: auto;
-  max-height: calc(90vh - 80px);
-}
-
-.keyword {
-  color: #569CD6;
-  font-weight: 500;
-}
-
-.comment {
-  color: #6A9955;
-  font-style: italic;
-}
-
-.string {
-  color: #CE9178;
-}
-
-.number {
-  color: #B5CEA8;
-}
-
-.type {
-  color: #4EC9B0;
-  font-weight: 500;
-}
-
-/* ============================================= */
 /* == Project Page Code Snippets == */
 /* ============================================= */
-.project-detailed-section {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--space-l);
-  align-items: start;
-  /* Side-placed code snippet helpers */
-}
 .project-detailed-section h2 {
-  grid-column: 1/-1;
   margin-top: var(--space-m);
 }
 .project-detailed-section h2:first-child {
   margin-top: 0;
 }
-.project-detailed-section > p,
-.project-detailed-section > ul,
-.project-detailed-section > ol,
-.project-detailed-section > div:not(.code-snippet-container) {
-  grid-column: 1;
-}
-.project-detailed-section .code-snippet-inline-right {
-  grid-column: 2;
-  grid-row: 2;
-}
-.project-detailed-section .code-snippet-container {
-  margin: 0;
-  background: #170d0b;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(23, 13, 11, 0.15);
-  box-shadow: 0 4px 12px rgba(23, 13, 11, 0.1);
-}
-.project-detailed-section .code-snippet-container pre {
-  margin: 0;
-  padding: var(--space-l);
-  font-family: "Fira Code", "Monaco", "Cascadia Code", "Consolas", monospace;
-  font-size: var(--step--1);
-  line-height: 1.6;
-  color: #c8b6aa;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-.project-detailed-section .code-snippet-container pre code {
-  font-family: inherit;
-  font-size: inherit;
-  background: none;
-  color: inherit;
-  padding: 0;
-  border-radius: 0;
-}
-.project-detailed-section .code-snippet-container.language-csharp, .project-detailed-section .code-snippet-container.language-cpp {
-  background: #170d0b !important;
-}
-.project-detailed-section .code-snippet-container pre.hidden {
-  display: none;
-}
-.project-detailed-section .code-snippet-container pre.code-expanded {
-  max-height: 600px;
-  overflow-y: auto;
-}
-.project-detailed-section .code-toggle-btn {
-  width: 100%;
-  padding: var(--space-m);
-  background: #83c114;
-  color: white;
-  border: none;
-  font-size: var(--step--1);
+.project-detailed-section h3 {
+  margin-top: var(--space-l);
+  margin-bottom: var(--space-m);
+  color: #83c114;
+  font-size: var(--step-1);
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border-top: 1px solid rgba(23, 13, 11, 0.15);
 }
-.project-detailed-section .code-toggle-btn:hover {
-  background: #a0d142;
-}
-.project-detailed-section .code-toggle-btn:focus {
-  outline: 2px solid #83c114;
-  outline-offset: 2px;
-}
-.project-detailed-section .code-snippet-inline-right,
-.project-detailed-section .code-snippet-inline-left {
-  width: auto;
-  max-width: 500px;
-  min-width: 280px;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(23, 13, 11, 0.12);
-  box-shadow: 0 6px 18px rgba(23, 13, 11, 0.08);
-  background: #170d0b;
+.project-detailed-section ul {
   margin: 0;
-  flex-shrink: 0;
+  padding-left: 1.5em;
+  line-height: 1.3;
 }
-.project-detailed-section .code-snippet-inline-right pre,
-.project-detailed-section .code-snippet-inline-left pre {
+.project-detailed-section ul li {
   margin: 0;
-  padding: var(--space-m);
-  font-family: "Fira Code", "Monaco", "Cascadia Code", "Consolas", monospace;
-  font-size: var(--step--2);
-  line-height: 1.5;
-  color: #c8b6aa;
-  overflow: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  max-height: 480px;
-}
-.project-detailed-section .code-snippet-inline-right {
-  grid-column: 2;
-  grid-row: 2;
-}
-.project-detailed-section .code-snippet-inline-left {
-  grid-column: 1;
-  grid-row: 2;
 }
 
-@media (max-width: 768px) {
-  .project-detailed-section {
-    grid-template-columns: 1fr;
-  }
-  .project-detailed-section .code-snippet-inline-right,
-  .project-detailed-section .code-snippet-inline-left {
-    grid-column: 1;
-    max-width: 100%;
-  }
-  .project-detailed-section .code-snippet-container {
-    margin: var(--space-m) -var(--space-s);
-    border-radius: 0;
-  }
-  .project-detailed-section .code-snippet-container pre {
-    padding: var(--space-m);
-    font-size: var(--step--2);
-  }
-}
 /* ============================================= */
 /* == Project Page Testimonials == */
 /* ============================================= */
@@ -1867,7 +1610,6 @@ textarea {
 
 .inline-gallery-container,
 .gallery-grid,
-.code-snippet-container,
 .project-detailed-section {
   clear: both;
 }
@@ -2310,137 +2052,6 @@ section#work .text_center p {
 }
 .modal-close:hover {
   color: #bbb;
-}
-
-.code-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(23, 13, 11, 0.9);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  padding: var(--space-l);
-}
-.code-modal-overlay.show-modal {
-  opacity: 1;
-  visibility: visible;
-}
-
-.code-modal-content {
-  background: #170d0b;
-  border-radius: 12px;
-  max-width: 90vw;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(23, 13, 11, 0.5);
-  transform: scale(0.9);
-  transition: transform 0.3s ease;
-}
-.code-modal-overlay.show-modal .code-modal-content {
-  transform: scale(1);
-}
-
-.code-modal-header {
-  background: #83c114;
-  padding: var(--space-m) var(--space-l);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(23, 13, 11, 0.2);
-}
-.code-modal-header h3 {
-  color: #170d0b;
-  margin: 0;
-  font-size: var(--step-1);
-  font-weight: 600;
-}
-
-.code-modal-close {
-  background: none;
-  border: none;
-  color: #170d0b;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-.code-modal-close:hover {
-  background: rgba(200, 182, 170, 0.1);
-}
-
-.code-modal-body {
-  flex: 1;
-  /* Prevent outer modal body from creating the scrollbar — only the code <pre> should scroll. */
-  overflow: visible;
-  padding: 0;
-}
-.code-modal-body pre {
-  margin: 0;
-  padding: var(--space-l);
-  background: #170d0b;
-  color: #c8b6aa;
-  font-size: var(--step--1);
-  line-height: 1.5;
-  /* Make the code block the scroll container. */
-  overflow: auto;
-  max-height: calc(90vh - 80px);
-}
-.code-modal-body pre code {
-  font-family: "Fira Code", "Monaco", "Cascadia Code", "Consolas", monospace;
-}
-
-@media (max-width: 768px) {
-  .code-modal-overlay {
-    padding: var(--space-m);
-  }
-  .code-modal-content {
-    max-width: 95vw;
-    max-height: 95vh;
-  }
-  .code-modal-header {
-    padding: var(--space-s) var(--space-m);
-  }
-  .code-modal-body pre {
-    padding: var(--space-m);
-    font-size: var(--step--2);
-  }
-}
-/* Strong override: make sure the modal shell does not create its own scrollbar
-   and that the code block (<pre>) is the single scroll container. Using
-   !important here helps if other partials accidentally reintroduce overflow. */
-.code-modal-overlay,
-.code-modal-overlay.show-modal {
-  /* overlay should not scroll */
-  overflow: hidden !important;
-}
-
-.code-modal,
-.code-modal-content,
-.code-modal-body {
-  overflow: visible !important;
-  max-height: 90vh !important;
-}
-
-.code-modal-body pre,
-.code-modal-content pre {
-  overflow: auto !important;
-  max-height: calc(90vh - 80px) !important;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Hover underline effect */

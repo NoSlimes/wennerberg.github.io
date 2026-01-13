@@ -15,17 +15,17 @@ summaries:
       github: ""
       demo: "https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip"
   
-  - id: cat-survival-craft
-    title: "Cat Survival Craft [Working Title]"
+  - id: planetfactory
+    title: "PlanetFactory [Working Title]"
     highlighted: true
     flairs:
       - Unity 6
       - C#
       - Networking (NGO)
-    detailPageUrl: "/project.html?id=cat-survival-craft"
-    imageSrc: "/assets/projects/cat-survival-craft/cat-survival.png"
+    detailPageUrl: "/project.html?id=planetfactory"
+    imageSrc: "/assets/projects/planetfactory/planetfactory.png"
     imageCaption: "In-progress image"
-    projectType: "PERSONAL PROJECT - NETWORKED GAMEPLAY"
+    projectType: "RTS Factory Builder PVP | Solo Project"
     description: "An in-progress networked game project with server-authoritative gameplay. So far it features a fully server-authoritative inventory system."
     links:
       github: "https://github.com/NoSlimes/CatSurvivalCraft_Portfolio"
@@ -38,14 +38,13 @@ summaries:
       - C#
       - Tooling
     detailPageUrl: "/project.html?id=uniterminal"
-    imageSrc: "/assets/projects/UniTerminal/uniterminal-00.png"
+    imageSrc: "/assets/projects/uniterminal/hero.png"
     imageCaption: "UniTerminal — in-game developer console"
     projectType: "IN-GAME DEVELOPER CONSOLE - UNITY"
     description: "Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion."
     links:
       github: "https://github.com/NoSlimes/uniterminal"
       
-
   - id: dead_sector
     title: "DEAD SECTOR"
     flairs:

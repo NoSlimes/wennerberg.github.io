@@ -41,7 +41,7 @@ async function injectProjectSummaries() {
             <div class="card-bg" style="background-image: url('${project.imageSrc}');" aria-hidden="true"></div>
 
             <div class="project-card-content">
-            <p class="project-card__description"><strong>${project.projectType}</strong></p>
+            <p class="project-card__title"><strong>${project.title}</strong></p>
 
             <div class="project-flairs" style="margin: 8px 0;">${flairsHTML}</div>
 
@@ -55,7 +55,7 @@ async function injectProjectSummaries() {
             </div>
             </div>
         </div>
-        <h2 class="project-card-title">${project.title}</h2>
+        <h2 class="project-card-title">${project.projectType}</h2>
     `;
             projectDiv.innerHTML = projectHTML;
 

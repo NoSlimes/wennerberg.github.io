@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - UniTerminal
-heroImage: /assets/projects/UniTerminal/hero.png
+heroImage: /assets/projects/uniterminal/hero.png
 projectName: UniTerminal
 projectType: "[SYSTEMS & TOOLS - UNITY]"
 flairs:
@@ -13,9 +13,6 @@ projectInfo:
   Engine: Unity
   License: MIT
   Dependencies: Unity
-codeLanguage: csharp
-codePreviewFile: "/assets/code/UniTerminal-preview.cs"
-codeExpandedFile: "/assets/code/UniTerminal-full.cs"
 galleryImages: []
 videoURL: ""
 highlights:

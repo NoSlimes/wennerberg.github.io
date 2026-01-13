@@ -2,7 +2,7 @@
 pageTitle: Project - UniTerminal
 heroImage: /assets/projects/uniterminal/hero.png
 projectName: UniTerminal
-projectType: "[SYSTEMS & TOOLS - UNITY]"
+projectType: "IN-GAME COMMAND CONSOLE | SOLO PROJECT | MIT"
 flairs:
   - Unity
   - C#

@@ -9,7 +9,7 @@ summaries:
     detailPageUrl: "/project.html?id=slime-murderer"
     imageSrc: "/assets/projects/slime-murderer/slime-murderer-00.gif"
     imageCaption: "SLIME MURDERER gameplay"
-    projectType: "C# UNITY COURSE - FUTUREGAMES"
+    projectType: "COURSE PROJECT FUTUREGAMES: C# UNITY COURSE"
     description: "\"Slime Murderer\" is a <a href=\"https://store.steampowered.com/app/1794680/Vampire_Survivors/\">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities."
     links:
       github: ""
@@ -26,7 +26,7 @@ summaries:
     imageSrc: "/assets/projects/planetfactory/planetfactory.png"
     imageCaption: "In-progress image"
     projectType: "RTS Factory Builder PVP | Solo Project"
-    description: "An in-progress networked game project with server-authoritative gameplay. So far it features a fully server-authoritative inventory system."
+    description: "A networked RTS factory builder set on a spherical hex-grid. Built to explore high-performance systems, featuring modular Addressables-powered databases and a server-authoritative combat system optimized for minimal network footprint."
     links:
       github: "https://github.com/NoSlimes/CatSurvivalCraft_Portfolio"
       trello: ""
@@ -40,13 +40,14 @@ summaries:
     detailPageUrl: "/project.html?id=uniterminal"
     imageSrc: "/assets/projects/uniterminal/hero.png"
     imageCaption: "UniTerminal — in-game developer console"
-    projectType: "IN-GAME DEVELOPER CONSOLE - UNITY"
+    projectType: "IN-GAME COMMAND CONSOLE | SOLO PROJECT | MIT LICENSE"
     description: "Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion."
     links:
       github: "https://github.com/NoSlimes/uniterminal"
       
   - id: dead_sector
     title: "DEAD SECTOR"
+    hidden: true
     flairs:
       - Unity 6
       - C#
@@ -63,6 +64,7 @@ summaries:
 
   - id: slaylien
     title: "SLAYLIEN"
+    hidden: true
     flairs:
       - Unreal Engine 5
       - Blueprints
@@ -80,6 +82,7 @@ summaries:
 
   - id: tamashii
     title: "TAMASHII"
+    hidden: true
     flairs:
       - Unreal Engine 5
       - Blueprints

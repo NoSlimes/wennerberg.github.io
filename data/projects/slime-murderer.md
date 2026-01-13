@@ -2,7 +2,7 @@
 pageTitle: Project - Slime Murderer
 heroImage: /assets/projects/slime-murderer/slime-murderer-oob.gif
 projectName: SLIME MURDERER
-projectType: "[C# UNITY COURSE - FUTUREGAMES]"
+projectType: "COURSE PROJECT FUTUREGAMES: C# UNITY COURSE"
 flairs:
   - Unity
   - C#
@@ -11,9 +11,6 @@ projectInfo:
   Engine: Unity
   Language: C#
   Key Features: Endless | Abilities | Upgrades
-codeLanguage: csharp
-codePreviewFile: "/assets/code/ObjectPoolManager-preview.cs"
-codeExpandedFile: "/assets/code/ObjectPoolManager-full.cs"
 highlights:
   - Developed the entire game from scratch as a solo project in Unity.
   - Procedural enemy spawning and wave management

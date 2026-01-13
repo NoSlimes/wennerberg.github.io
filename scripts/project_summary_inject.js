@@ -15,6 +15,9 @@ async function injectProjectSummaries() {
         const projectsData = jsyaml.load(yamlText);
         let projects = projectsData.summaries || [];
 
+        // Filter out hidden projects
+        projects = projects.filter(p => p.hidden !== true);
+
         // If any project has `highlighted: true`, move the first one to the start
         const highlightedIndex = projects.findIndex(p => p.highlighted === true);
         if (highlightedIndex > 0) {

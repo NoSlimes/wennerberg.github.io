@@ -745,6 +745,93 @@ section#footer .footer-links a:hover {
   font-size: 1.2rem;
   margin: 0 auto;
   line-height: 1.6;
+  display: flex;
+  gap: var(--space-m);
+  align-items: flex-start;
+  position: relative;
+  max-width: 1600px;
+}
+.project-article .table-of-contents {
+  position: sticky;
+  top: 100px;
+  width: 220px;
+  flex-shrink: 0;
+  background-color: #c8b6aa;
+  border-radius: 8px;
+  border: 1px solid rgba(23, 13, 11, 0.15);
+  padding: var(--space-m);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  align-self: flex-start;
+  margin-top: var(--space-l);
+}
+.project-article .table-of-contents h3 {
+  margin: 0 0 var(--space-s) 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #170d0b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.project-article .table-of-contents nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.project-article .table-of-contents a {
+  display: block;
+  padding: var(--space-xs) var(--space-s);
+  color: #170d0b;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+}
+.project-article .table-of-contents a:hover {
+  background-color: rgba(131, 193, 20, 0.1);
+  color: #83c114;
+}
+.project-article .table-of-contents a.toc-item-sub {
+  padding-left: var(--space-l);
+  font-size: 0.85rem;
+  color: rgba(23, 13, 11, 0.8);
+}
+.project-article .project-content {
+  flex: 1;
+  min-width: 0;
+}
+@media (max-width: 1200px) {
+  .project-article {
+    flex-direction: column;
+  }
+  .project-article .table-of-contents {
+    position: relative;
+    top: 0;
+    width: 100%;
+    max-height: none;
+    order: -1;
+    margin-bottom: var(--space-l);
+  }
+  .project-article .project-content {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .project-article .table-of-contents {
+    padding: var(--space-s);
+  }
+  .project-article .table-of-contents h3 {
+    font-size: 0.85rem;
+  }
+  .project-article .table-of-contents a {
+    font-size: 0.85rem;
+    padding: 6px var(--space-xs);
+  }
+  .project-article .table-of-contents a.toc-item-sub {
+    padding-left: var(--space-m);
+    font-size: 0.8rem;
+  }
 }
 .project-article .project-info {
   display: flex;
@@ -802,6 +889,33 @@ section#footer .footer-links a:hover {
 .project-article .project-info .project-info__box ul li strong {
   font-weight: 600;
 }
+.project-article .project-info .project-info__box .project-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+.project-article .project-info .project-info__box .project-info-table tbody tr {
+  border-bottom: 1px solid rgba(23, 13, 11, 0.1);
+}
+.project-article .project-info .project-info__box .project-info-table tbody tr:last-child {
+  border-bottom: none;
+}
+.project-article .project-info .project-info__box .project-info-table td {
+  padding: var(--space-xs) var(--space-s);
+  color: #170d0b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  vertical-align: top;
+}
+.project-article .project-info .project-info__box .project-info-table .project-info-table__key {
+  font-weight: 600;
+  width: 40%;
+  text-align: left;
+}
+.project-article .project-info .project-info__box .project-info-table .project-info-table__value {
+  width: 60%;
+  text-align: left;
+}
 @media (max-width: 1050px) {
   .project-article .project-info {
     flex-direction: column;
@@ -811,6 +925,24 @@ section#footer .footer-links a:hover {
   .project-article .project-info .project-info__box {
     min-width: 100%;
     width: 100%;
+  }
+  .project-article .project-info .project-info__box .project-info-table .project-info-table__key {
+    width: 35%;
+  }
+  .project-article .project-info .project-info__box .project-info-table .project-info-table__value {
+    width: 65%;
+  }
+}
+@media (max-width: 600px) {
+  .project-article .project-info .project-info__box .project-info-table td {
+    padding: var(--space-xs);
+    font-size: 0.9rem;
+  }
+  .project-article .project-info .project-info__box .project-info-table .project-info-table__key {
+    width: 30%;
+  }
+  .project-article .project-info .project-info__box .project-info-table .project-info-table__value {
+    width: 70%;
   }
 }
 .project-article .project-gallery {

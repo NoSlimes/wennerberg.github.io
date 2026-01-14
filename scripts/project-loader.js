@@ -287,7 +287,7 @@ async function loadProject() {
 
     document.title = project.pageTitle;
     document.getElementById('project-name').textContent = project.projectName;
-    document.getElementById('project-type').textContent = project.projectType;
+    document.getElementById('project-type').innerHTML = marked.parseInline(project.projectType);
     document.getElementById('hero').style.setProperty('--hero-bg-image', `url('${project.heroImage}')`);
     document.getElementById('project-overview').textContent = project.overview;
     
@@ -356,35 +356,59 @@ async function loadProject() {
 
     const detailsContainer = document.getElementById('project-details-container');
     detailsContainer.innerHTML = '';
-    const createInfoBox = (title, data) => {
+    const createInfoBox = (title, data, useTable = false) => {
       if (!data) return ''; 
-      let listItems = '';
+      let content = '';
       if (Array.isArray(data)) {
-        listItems = data.map(item => `<li>${item}</li>`).join('');
+        content = `<ul>${data.map(item => `<li>${item}</li>`).join('')}</ul>`;
       } else if (typeof data === 'object' && Object.keys(data).length > 0) {
-        listItems = Object.entries(data).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('');
+        if (useTable) {
+          // Render as a table for better mobile/desktop compatibility
+          const tableRows = Object.entries(data).map(([key, value]) => 
+            `<tr><td class="project-info-table__key">${key}</td><td class="project-info-table__value">${value}</td></tr>`
+          ).join('');
+          content = `<table class="project-info-table"><tbody>${tableRows}</tbody></table>`;
+        } else {
+          content = `<ul>${Object.entries(data).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>`;
+        }
       } else {
         return ''; 
       }
-      return `<div class="project-info__box"><h3>${title}</h3><ul>${listItems}</ul></div>`;
+      return `<div class="project-info__box"><h3>${title}</h3>${content}</div>`;
     };
-    detailsContainer.innerHTML = createInfoBox('Project Highlights', (project.highlights && project.highlights.length ? project.highlights : project.contributions)) + createInfoBox('Project Info', project.projectInfo);
+    detailsContainer.innerHTML = createInfoBox('Project Highlights', (project.highlights && project.highlights.length ? project.highlights : project.contributions)) + createInfoBox('Project Info', project.projectInfo, true);
 
     const detailedContainer = document.getElementById('project-detailed-sections');
     detailedContainer.innerHTML = '';
 
+    // Array to store TOC items
+    const tocItems = [];
+
     if (project.detailedSections && project.detailedSections.length > 0) {
       project.detailedSections.forEach(section => {
+        // Create slug from heading for ID
+        const sectionId = section.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        
         const sectionEl = document.createElement('div');
         sectionEl.className = 'project-detailed-section';
+        sectionEl.id = sectionId;
         sectionEl.innerHTML = `<h2>${section.heading}</h2>`;
+        
+        // Add to TOC
+        tocItems.push({ id: sectionId, title: section.heading, level: 2 });
         
         // Handle subheadings structure
         if (section.subheadings && Array.isArray(section.subheadings)) {
           section.subheadings.forEach(subheading => {
+            const subheadingId = `${sectionId}-${subheading.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+            
             const subheadingEl = document.createElement('h3');
+            subheadingEl.id = subheadingId;
             subheadingEl.textContent = subheading.heading;
             sectionEl.appendChild(subheadingEl);
+            
+            // Add to TOC
+            tocItems.push({ id: subheadingId, title: subheading.heading, level: 3 });
             
             const subBodyDiv = document.createElement('div');
             subBodyDiv.innerHTML = processInlineImages(markdownToHtml(subheading.body), project, projectId);
@@ -405,6 +429,19 @@ async function loadProject() {
         
         detailedContainer.appendChild(sectionEl);
       });
+    }
+
+    // Generate Table of Contents
+    const tocNav = document.getElementById('toc-nav');
+    const tocContainer = document.getElementById('table-of-contents');
+    if (tocItems.length > 0) {
+      tocNav.innerHTML = tocItems.map(item => {
+        const indentClass = item.level === 3 ? 'toc-item-sub' : 'toc-item';
+        return `<a href="#${item.id}" class="${indentClass}">${item.title}</a>`;
+      }).join('');
+      tocContainer.style.display = 'block';
+    } else {
+      tocContainer.style.display = 'none';
     }
 
     // Add testimonials section if present

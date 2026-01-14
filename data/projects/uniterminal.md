@@ -2,7 +2,7 @@
 pageTitle: Project - UniTerminal
 heroImage: /assets/projects/uniterminal/hero.png
 projectName: UniTerminal
-projectType: "IN-GAME COMMAND CONSOLE | SOLO PROJECT | MIT"
+projectType: "IN-GAME COMMAND CONSOLE | SOLO PROJECT | [MIT](https://github.com/NoSlimes/UniTerminal/tree/main)"
 flairs:
   - Unity
   - C#
@@ -24,53 +24,47 @@ highlights:
 
 UniTerminal is a high-performance in-game developer console designed to eliminate slow iteration loops. It serves as a project-agnostic bridge to game logic, enabling real-time state manipulation and testing without the need for constant recompilation or custom debug UIs.
 
-## High-Performance Architecture: Metadata Baking
+## Async Metadata Baking
 
-To ensure UniTerminal has a near-zero impact on runtime performance, I implemented a Metadata Baking system. Traditional reflection-based consoles scan all assemblies at startup, causing noticeable CPU spikes and "hitchy" loading screens.
+To ensure UniTerminal has a near-zero impact on runtime performance, I implemented a `Metadata Baking` system. Traditional reflection-based consoles scan all assemblies at startup, causing noticeable CPU spikes and "hitchy" loading screens.
 
-Instead, UniTerminal hooks into the Unity compilation pipeline via [InitializeOnLoad]. It pre-scans and validates methods in the Editor, serializing the metadata into a ScriptableObject. This shifts the *O(N)* cost of assembly scanning to edit-time, allowing the runtime to initialize in constant time by simply loading a lightweight asset.
+Instead, UniTerminal hooks into the Unity compilation pipeline and pre-scans methods in the Editor, serializing the metadata into a ScriptableObject. To keep the Editor responsive, I implemented an `Async Discovery` system using `Task.Run` and Unity's `Progress` API to display progrees. This offloads the scan to a background thread so the cache builds without locking the UI.
 
-The trade-off for this a few seconds extra recompile time inside Unity - hence I made the automatic cache refresh optional.
+This shifts the `O(N)` cost of assembly scanning to edit-time, allowing the runtime to initialize in constant time. The performance difference is massive: in this example loading from the baked cache takes `~1.8ms`, compared to `~9.6 seconds` for a full runtime scan. That is about a `5200x` increase in startup performance!
 
 ```csharp
-// Saves method metadata into a ScriptableObject to avoid expensive runtime Reflection
-private static void UpdateCacheEditor(List<MethodInfo> methods)
+// Offloads the expensive Reflection scan to a background thread to keep the Editor responsive
+internal static async void DiscoverCommandsEditor()
 {
-    _cache = Resources.Load<ConsoleCommandCache>("UniTerminal/UniTerminalCommandCache");
-
-    _cache.Commands = methods.Select(m => {
-        var attr = m.GetCustomAttribute<ConsoleCommandAttribute>();
-        return new CommandEntry {
-            CommandName = attr?.Command ?? m.Name,
-            DeclaringType = m.DeclaringType?.AssemblyQualifiedName,
-            MethodName = m.Name,
-            ParameterTypes = m.GetParameters().Select(p => p.ParameterType.AssemblyQualifiedName).ToArray()
-        };
-    }).ToArray();
-
-    EditorUtility.SetDirty(_cache);
-    AssetDatabase.SaveAssets();
+    int taskId = Progress.Start("UniTerminal", "Building Command Cache...");
+    try
+    {
+        await DiscoverCommandsAsync(AppDomain.CurrentDomain.GetAssemblies(), true, 
+            (progress, message) => Progress.Report(taskId, progress, message));
+    }
+    finally { Progress.Finish(taskId); }
 }
 
 // Reconstructs the command dictionary from the cached metadata at runtime
 public static void LoadCache()
 {
     _cache = Resources.Load<ConsoleCommandCache>("UniTerminal/UniTerminalCommandCache");
-    _commands.Clear();
-
+    
     foreach (var entry in _cache.Commands)
     {
-        Type type = Type.GetType(entry.DeclaringType);
-        if (type == null) continue;
-
-        var methods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
-                          .Where(m => m.Name == entry.MethodName);
-
-        string key = entry.CommandName.ToLower();
-        _commands[key] = methods.ToList();
+        Type type = Type.GetType(entry.DeclaringTypeName);
+        var paramTypes = entry.ParameterTypes.Select(Type.GetType).ToArray();
+        var method = type.GetMethod(entry.MethodName, flags, null, paramTypes, null);
+        
+        // Map method info and cache for execution...
     }
 }
 ```
+Here's the load time using the cache and no runtime discovery:
+![Fast runtime loading](/assets/projects/uniterminal/supafast.png)
+
+Aaaand, here's without
+![Slow runtime loading w/ discovery](/assets/projects/uniterminal/supaslow.png)
 
 ## Flexible API & Command Configuration
 
@@ -122,8 +116,36 @@ private static IEnumerable<string> TestAttackAutoComplete(int argIndex)
 
 ![UniTerminal autocomplete showcase](/assets/projects/uniterminal/auto_complete.webp)
 
-## Error handling
-Everyone runs into some issues once in a while while coding. It's unavoidable. To prevent said issues crashing the whole program - UniTerminal wraps all command execution in try/catch blocks. In debug builds It outputs the full stack trace so the developer can track down what actually went wrong. They are displayed visually distinct in the console window.
+### Help and Overloads
+
+As every other command console in existence—UniTerminal has a help command. The help command lists all commands and their different overloads. Because the system tracks method signatures during the baking process, you can have multiple versions of the same command and the console will show you all of them.
+
+```csharp
+[ConsoleCommand("error", "Prints an error")]
+private static void ErrorCommand(CommandResponseDelegate r)
+{
+    r("This is a command error.", false);
+}
+
+[ConsoleCommand("error", "Prints an error with a message")]
+private static void ErrorCommand(CommandResponseDelegate r, string message)
+{
+    r(message, false);
+}
+```
+
+### Intelligent Hover Hints
+While you're typing, the console looks at where your cursor is and tells you exactly which parameter you’re currently filling out. It’s smart enough to check if the command signature uses any of the internal `command response delegates` or not, shifting the index so it always highlights the correct argument name in the UI. 
+
+If you have multiple overloads for a single command, it will even aggregate the parameter names for that slot (e.g., `message | duration`), so you always know what your options are without having to run the help command first.
+
+### Zero-Maintenance Documentation
+The best part is that the developer don't have to manually write or update documentation. Since the system "bakes" everything directly from the source code, the help command is always 100% accurate. If the developer changes a parameter name or add a default value in the C# code, the console reflects that change immediately after the next compilation—no manual updates required. The obvious exception for this is the command description.
+
+![Help command showcase](/assets/projects/uniterminal/help_overloads.webp)
+
+## Error Handling
+Everyone runs into some issues once in a while while coding. It's unavoidable. To prevent said issues crashing the whole program - UniTerminal wraps all command execution in try/catch blocks. In debug builds It outputs the full stack trace so the developer can track down what actually went wrong. They are displayed visually distinct in the console window. 
 
 ![UniTerminal errors](/assets/projects/uniterminal/errors.webp)
 

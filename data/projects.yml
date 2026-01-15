@@ -25,7 +25,7 @@ summaries:
     detailPageUrl: "/project.html?id=planetfactory"
     imageSrc: "/assets/projects/planetfactory/planetfactory.png"
     imageCaption: "In-progress image"
-    projectType: "RTS Factory Builder PVP | Solo Project"
+    projectType: "PVP FACTORY BUILDER | SOLO PROJECT"
     description: "A networked RTS factory builder set on a spherical hex-grid. Built to explore high-performance systems, featuring modular Addressables-powered databases and a server-authoritative combat system optimized for minimal network footprint."
     links:
       github: "https://github.com/NoSlimes/CatSurvivalCraft_Portfolio"

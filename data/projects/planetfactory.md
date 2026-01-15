@@ -2,7 +2,7 @@
 pageTitle: Project - PlanetFactory
 heroImage: /assets/projects/planetfactory/cat-survival.png
 projectName: PlanetFactory
-projectType: "[RTS FACTORY BUILDER PVP - SOLO PROJECT]"
+projectType: "[PVP FACTORY BUILDER - SOLO PROJECT]"
 flairs:
   - Unity
   - C#

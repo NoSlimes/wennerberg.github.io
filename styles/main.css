@@ -399,6 +399,65 @@ section#about {
   margin-bottom: 0;
 }
 
+/* Make about image circular on wider screens */
+@media (min-width: 768px) {
+  .about-me__image {
+    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+    border: 4px solid rgba(255, 255, 255, 0.9);
+  }
+}
+/* Hero layout: portrait left, intro/meta on the right */
+.hero_content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.hero_intro,
+.hero_meta {
+  grid-column: 2;
+}
+
+.hero_portrait {
+  width: 240px;
+  height: 240px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  border: 3px solid rgba(255, 255, 255, 0.06);
+  margin-right: var(--space-3xl);
+}
+
+@media (max-width: 900px) {
+  .hero_content {
+    grid-template-columns: 1fr;
+  }
+  .hero_portrait {
+    display: none;
+  }
+  .hero_intro,
+  .hero_meta {
+    grid-column: auto;
+  }
+}
+/* Make hero portrait larger on wider viewports */
+@media (min-width: 1200px) {
+  .hero_portrait {
+    width: 340px;
+    height: 340px;
+    border-radius: 24px;
+  }
+}
+@media (min-width: 1600px) {
+  .hero_portrait {
+    width: 420px;
+    height: 420px;
+  }
+}
 /* Enhanced section styling */
 section {
   padding: var(--space-3xl) var(--space-l);

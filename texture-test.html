@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texture Test</title>
+    <style>
+        body { margin: 0; padding: 0; }
+        .texture-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background-image: url('/assets/images/textures/Top.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: 2px solid red;
+            z-index: 101;
+        }
+        .texture-left {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background-image: url('/assets/images/textures/left.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: left;
+            border: 2px solid blue;
+            z-index: 101;
+        }
+        .texture-right {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 250px;
+            background-image: url('/assets/images/textures/right.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: right;
+            border: 2px solid green;
+            z-index: 101;
+        }
+    </style>
+</head>
+<body>
+    <div class="texture-top"></div>
+    <div class="texture-left"></div>
+    <div class="texture-right"></div>
+    <h1 style="margin-top: 100px; text-align: center;">Texture Test Page</h1>
+    <p style="text-align: center;">If you see colored borders and textures, the images are loading.</p>
+</body>
+</html>

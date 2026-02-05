@@ -23,6 +23,8 @@ body {
   // Set default background and text colors for the whole site
   background-color: var(--theme-bg-primary);
   color: var(--theme-text-primary);
+  position: relative;
+  isolation: isolate;
 }
 
 /* Remove list styles */

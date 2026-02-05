@@ -13,6 +13,8 @@ async function loadHeaderFooter() {
     document.getElementById('header-container').innerHTML = headerHtml;
     document.getElementById('footer-container').innerHTML = footerHtml;
 
+    ensureBodyTextures();
+
     // Now that header is loaded, set up the menu toggle
     setupMenuToggle();
     
@@ -23,6 +25,23 @@ async function loadHeaderFooter() {
 
   } catch (error) {
     console.error("Error loading header/footer:", error);
+  }
+}
+
+function ensureBodyTextures() {
+  const existingLeft = document.querySelector('.texture-left');
+  const existingRight = document.querySelector('.texture-right');
+
+  if (!existingLeft) {
+    const left = document.createElement('div');
+    left.className = 'texture-left';
+    document.body.appendChild(left);
+  }
+
+  if (!existingRight) {
+    const right = document.createElement('div');
+    right.className = 'texture-right';
+    document.body.appendChild(right);
   }
 }
 

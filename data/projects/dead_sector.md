@@ -11,6 +11,7 @@ projectInfo:
   Team Size: 16
   Engine: Unity
   Language: C#
+  Duration: ""
 galleryImages:
   - /assets/projects/dead_sector/dead_sector.jpg
   - https://picsum.photos/id/62/600/400

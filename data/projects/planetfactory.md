@@ -9,9 +9,10 @@ flairs:
   - Networking (NGO)
   - Systems Architecture
 projectInfo:
-  Status: In Development
-  Engine: Unity 6 (Addressables + NGO)
-  Language: C#
+    Status: In Development
+    Engine: Unity 6 (Addressables + NGO)
+    Language: C#
+    Duration: "IN PROGRESS"
 codeLanguage: csharp
 highlights:
   - Scalable, Addressables-powered data architecture built for modular asset management.

@@ -9,10 +9,10 @@ flairs:
   - Tooling
   - Reflection
 projectInfo:
-  Language: C#
-  Engine: Unity
-  License: MIT
-  Dependencies: Unity
+    Language: C#
+    Engine: Unity
+    License: MIT
+    Dependencies: Unity
 galleryImages: []
 videoURL: ""
 highlights:

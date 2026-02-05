@@ -12,6 +12,7 @@ projectInfo:
   Team Size: 11
   Engine: Unreal Engine 5
   Language: C++ & Blueprints
+  Duration: ""
   Key Features: Wave Defense, Character Switching
 galleryImages:
   - https://picsum.photos/id/41/400/600

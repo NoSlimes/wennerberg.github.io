@@ -10,6 +10,7 @@ projectInfo:
   Team Size: 1
   Engine: Unity
   Language: C#
+  Duration: ""
   Key Features: Endless | Abilities | Upgrades
 highlights:
   - Developed the entire game from scratch as a solo project in Unity.

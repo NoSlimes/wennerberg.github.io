@@ -153,3 +153,28 @@ section#about {
     height: 420px;
   }
 }
+
+/* Main page: wider hero variant */
+section#hero.hero_wide {
+  /* reduce the large top gap so the heading sits closer to the top */
+  padding-top: calc(var(--space-2xl) + variables.$header-height);
+  /* let hero wrapper grow wider than default site wrapper */
+  .wrapper {
+    max-width: 1600px;
+    width: 100%;
+    padding-left: var(--space-l);
+    padding-right: var(--space-l);
+  }
+
+  /* slightly increase portrait cap on the wide hero */
+  .hero_portrait {
+    @media (min-width: 1200px) {
+      width: 420px;
+      height: 420px;
+    }
+    @media (min-width: 1600px) {
+      width: 540px;
+      height: 540px;
+    }
+  }
+}

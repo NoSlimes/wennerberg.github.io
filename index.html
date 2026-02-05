@@ -8,25 +8,6 @@
   <link rel="stylesheet" href="styles/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 
-  <style>
-    /* Immediate override to ensure hero portrait is always square without rebuilding SCSS */
-    .hero_portrait {
-      width: 240px !important;
-      height: 240px !important;
-      object-fit: cover;
-      display: block;
-    }
-    @media (min-width: 1200px) {
-      .hero_portrait { width: 340px !important; height: 340px !important; }
-    }
-    @media (min-width: 1600px) {
-      .hero_portrait { width: 420px !important; height: 420px !important; }
-    }
-    @media (max-width: 900px) {
-      .hero_portrait { display: none !important; }
-    }
-  </style>
-
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <title>Elias Wennerberg - Dev Portfolio</title>
 </head>
@@ -34,8 +15,7 @@
 <body>
   <header id="header-container"></header>
   <main>
-
-    <section id="hero">
+    <section id="hero" class="hero_wide">
       <div class="wrapper">
         <div class="hero_content">
           <img class="hero_portrait" src="./assets/images/portrait.jpg" alt="Portrait of Elias Wennerberg" width="260" height="260" />
@@ -91,8 +71,7 @@
       <!-- The section heading stays inside a narrow wrapper for a clean, centered look -->
       <div class="wrapper_inner">
         <div class="text_center">
-          <h2 class="h3">My Projects</h2>
-          <p class="project-subtitle">Selected projects showcasing gameplay systems, networking, and tools.</p>
+          <h2 class="h3">Featured Projects</h2>
           <br>
         </div>
       </div>

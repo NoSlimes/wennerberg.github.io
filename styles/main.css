@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --step--2: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
   --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
@@ -458,6 +459,32 @@ section#about {
     height: 420px;
   }
 }
+/* Main page: wider hero variant */
+section#hero.hero_wide {
+  /* reduce the large top gap so the heading sits closer to the top */
+  padding-top: calc(var(--space-2xl) + 70px);
+  /* let hero wrapper grow wider than default site wrapper */
+  /* slightly increase portrait cap on the wide hero */
+}
+section#hero.hero_wide .wrapper {
+  max-width: 1600px;
+  width: 100%;
+  padding-left: var(--space-l);
+  padding-right: var(--space-l);
+}
+@media (min-width: 1200px) {
+  section#hero.hero_wide .hero_portrait {
+    width: 420px;
+    height: 420px;
+  }
+}
+@media (min-width: 1600px) {
+  section#hero.hero_wide .hero_portrait {
+    width: 540px;
+    height: 540px;
+  }
+}
+
 /* Enhanced section styling */
 section {
   padding: var(--space-3xl) var(--space-l);
@@ -2021,8 +2048,12 @@ textarea {
   /* move the whole content panel down so the title sits fully outside
     the box (margin, not internal padding, so the panel background is pushed) */
   /* use a smaller offset so cards don't grow too tall */
-  margin-top: calc(var(--space-s) + 0.4rem);
-  padding: var(--space-l);
+  /* push the subcard slightly lower to reveal more background and make it compact */
+  margin-top: calc(var(--space-l) + 0.2rem);
+  padding: var(--space-s);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 /* Title element that sits outside the content panel in the top-left corner */
@@ -2076,8 +2107,34 @@ textarea {
 }
 
 .project-card__description {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: rgb(74.75, 42.25, 35.75);
+  margin: 0;
+  /* keep description concise — clamp to three lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #170d0b;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.project-meta {
+  gap: 6px;
+}
+
+.project-duration {
+  font-size: 0.8rem;
+  padding: 4px 8px;
 }
 
 .project-card__description strong {
@@ -2085,49 +2142,120 @@ textarea {
   margin-bottom: 0rem;
 }
 
-.project-flair {
-  display: inline-flex;
-  align-items: center;
-  background: linear-gradient(135deg, #170d0b 0%, rgb(40.25, 22.75, 19.25) 100%);
-  color: #c8b6aa;
-  padding: 6px 12px;
-  margin: 0 6px 8px 0;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border: 1px solid rgba(131, 193, 20, 0.2);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-.project-flair::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s ease;
-}
-.project-flair:hover {
-  background: linear-gradient(135deg, #83c114 0%, #a0d142 100%);
-  color: #170d0b;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(131, 193, 20, 0.2);
-  border-color: #83c114;
-}
-.project-flair:hover::before {
-  left: 100%;
-}
-
 .project-flairs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
+  gap: 0.5rem;
   margin-bottom: 1rem;
+  align-items: center;
+}
+
+.project-flair {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  margin: 0 6px 8px 0;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #170d0b;
+  background: linear-gradient(135deg, #170d0b 0%, rgb(43.7, 24.7, 20.9) 100%);
+  border: 1px solid rgba(131, 193, 20, 0.06);
+}
+
+/* Circular icon variant for flairs */
+.project-flair--icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.project-flair--icon img {
+  width: 60%;
+  height: 60%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  display: block;
+}
+
+/* When a real logo is used, let it fill the whole circular badge */
+.project-flair--logo {
+  /* add inner padding and include it in the width/height so the logo doesn't overflow */
+  padding: 4px;
+  box-sizing: border-box;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.project-flair--logo img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 0;
+  display: block;
+}
+
+/* project toolbar (top-right) with compact icon buttons */
+.project-toolbar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+  z-index: 40;
+}
+
+.project-toolbar .tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--theme-text-primary);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.project-toolbar .tool-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.project-toolbar .tool-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+.project-duration {
+  font-size: 0.85rem;
+  color: rgb(74.75, 42.25, 35.75);
+  background: rgba(0, 0, 0, 0.06);
+  padding: 6px 10px;
+  border-radius: 10px;
+  align-self: center;
+}
+
+/* Inline duration shown to the right of the project title */
+.project-card__duration {
+  font-size: 0.85rem;
+  color: rgb(74.75, 42.25, 35.75);
+  font-weight: 500;
+  margin-left: 0.25rem;
 }
 
 /* Grid layout for project cards on homepage */

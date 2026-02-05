@@ -13,6 +13,7 @@ projectInfo:
   Team Size: 11
   Engine: Unreal Engine 5
   Language: C++, Blueprints
+  Duration: ""
 galleryImages:
   - /assets/projects/tamashii/tamashii.png
   - https://picsum.photos/id/62/600/400

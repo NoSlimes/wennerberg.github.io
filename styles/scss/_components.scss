@@ -334,8 +334,14 @@ section#hero {
     background:
       linear-gradient(var(--theme-hero-overlay-start), var(--theme-hero-overlay-end)),
       var(--hero-bg-image);
-    background-size: cover;
-    background-position: center;
+    padding-top: variables.$header-height;
+    padding-bottom: var(--space-xl);
+    background-size: 100% auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - variables.$header-height);
     position: relative;
     overflow: hidden;
     
@@ -364,8 +370,8 @@ section#hero {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 160%;
-        height: 160%;
+        width: 120%;
+        height: 120%;
         transform: translate(-50%, -50%);
         border: 0;
         pointer-events: none;
@@ -375,6 +381,10 @@ section#hero {
     .wrapper {
       position: relative;
       z-index: 2;
+    }
+
+    .hero_content {
+      padding: 0;
     }
   }
 }

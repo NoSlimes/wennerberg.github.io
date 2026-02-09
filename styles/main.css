@@ -464,7 +464,11 @@ section#about {
 /* Main page: wider hero variant */
 section#hero.hero_wide {
   /* reduce the large top gap so the heading sits closer to the top */
-  padding-top: calc(var(--space-2xl) + 70px);
+  padding-top: 70px;
+  padding-bottom: var(--space-xl);
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 70px);
   /* let hero wrapper grow wider than default site wrapper */
   /* slightly increase portrait cap on the wide hero */
 }
@@ -473,6 +477,9 @@ section#hero.hero_wide .wrapper {
   width: 100%;
   padding-left: var(--space-l);
   padding-right: var(--space-l);
+}
+section#hero.hero_wide .hero_content {
+  padding: 0;
 }
 @media (min-width: 1200px) {
   section#hero.hero_wide .hero_portrait {
@@ -1484,8 +1491,14 @@ section#hero {
 
 .project-detail-page section#hero {
   background: linear-gradient(var(--theme-hero-overlay-start), var(--theme-hero-overlay-end)), var(--hero-bg-image);
-  background-size: cover;
-  background-position: center;
+  padding-top: 70px;
+  padding-bottom: var(--space-xl);
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 70px);
   position: relative;
   overflow: hidden;
 }
@@ -1511,8 +1524,8 @@ section#hero {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 160%;
-  height: 160%;
+  width: 120%;
+  height: 120%;
   transform: translate(-50%, -50%);
   border: 0;
   pointer-events: none;
@@ -1520,6 +1533,9 @@ section#hero {
 .project-detail-page section#hero .wrapper {
   position: relative;
   z-index: 2;
+}
+.project-detail-page section#hero .hero_content {
+  padding: 0;
 }
 
 /* Work Section */

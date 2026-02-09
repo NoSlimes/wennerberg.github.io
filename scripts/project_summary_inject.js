@@ -45,6 +45,7 @@ async function injectProjectSummaries() {
                     'csharp': {file: 'Logo_C_sharp.svg'},
                     'c++': {file: 'ISO_C++_Logo.svg'},
                     'cplusplus': {file: 'ISO_C++_Logo.svg'},
+                    'tooling': {file: 'wrench_hammer.svg'},
                     'unrealengine': {file: 'unreal-engine.svg'},
                     'github': {file: 'logo-github.png'},
                     'linkedin': {file: 'logo-linkedin.png'},

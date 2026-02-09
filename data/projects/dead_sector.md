@@ -1,7 +1,7 @@
 ---
 pageTitle: Project - DEAD SECTOR
 heroImage: /assets/projects/dead_sector/dead_sector.jpg
-heroVideoUrl: ""
+heroVideoUrl: "https://youtu.be/NRYq1QncCZc?t=12"
 projectName: DEAD SECTOR
 projectType: "[GAME PROJECT 2 - FUTUREGAMES]"
 flairs:

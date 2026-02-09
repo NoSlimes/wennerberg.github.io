@@ -337,6 +337,7 @@ section#hero {
     background-size: cover;
     background-position: center;
     position: relative;
+    overflow: hidden;
     
     &::before {
       content: '';
@@ -348,7 +349,32 @@ section#hero {
       background: 
         radial-gradient(circle at 30% 70%, rgba(variables.$color-accent, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 70% 30%, rgba(variables.$color-accent, 0.04) 0%, transparent 50%);
+      z-index: 1;
       pointer-events: none;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+
+      iframe,
+      video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 160%;
+        height: 160%;
+        transform: translate(-50%, -50%);
+        border: 0;
+        pointer-events: none;
+      }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 2;
     }
   }
 }

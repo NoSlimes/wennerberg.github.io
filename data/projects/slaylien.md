@@ -1,6 +1,7 @@
 ---
 pageTitle: Project - SLAYLIEN
 heroImage: /assets/projects/slaylien/slaylien.png
+heroVideoUrl: "https://youtu.be/BY15e9aDYMk?t=3"
 projectName: SLAYLIEN
 projectType: "[GAME PROJECT 3 - FUTUREGAMES]"
 flairs:
@@ -22,7 +23,7 @@ galleryImages:
   - https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk2MS5wbmc=/original/3EpW29.png
   - https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk1OS5wbmc=/original/UQBgmH.png
   - https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk1Ny5wbmc=/original/h7Q0By.png
-videoURL: ""
+videoURL: "https://youtu.be/BY15e9aDYMk?t=3"
 ---
 
 Slaylien is a third-person wave-defense game where players control a team of three characters to fend off hordes of insectoid aliens. Developed in Unreal Engine 5, it features a unique character switching mechanic where players can switch between characters in real-time to utilize their unique abilities.

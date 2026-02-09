@@ -684,15 +684,17 @@ main {
   content: "";
   position: absolute;
   bottom: 4px;
-  left: 50%;
-  width: 0;
+  left: 16px;
+  right: 16px;
+  width: auto;
   height: 2px;
   background: #170d0b;
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+  transition: transform 0.3s ease;
+  transform: scaleX(0);
+  transform-origin: right;
 }
 .site_header .header__nav > ul > li > a.hover_underline:hover::after {
-  width: calc(100% - 32px);
+  transform: scaleX(1);
 }
 .site_header .header__nav > ul > li.social-icons-container > ul {
   display: flex !important;
@@ -1485,6 +1487,7 @@ section#hero {
   background-size: cover;
   background-position: center;
   position: relative;
+  overflow: hidden;
 }
 .project-detail-page section#hero::before {
   content: "";
@@ -1494,7 +1497,29 @@ section#hero {
   right: 0;
   bottom: 0;
   background: radial-gradient(circle at 30% 70%, rgba(131, 193, 20, 0.08) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(131, 193, 20, 0.04) 0%, transparent 50%);
+  z-index: 1;
   pointer-events: none;
+}
+.project-detail-page section#hero .hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.project-detail-page section#hero .hero-video iframe,
+.project-detail-page section#hero .hero-video video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160%;
+  height: 160%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  pointer-events: none;
+}
+.project-detail-page section#hero .wrapper {
+  position: relative;
+  z-index: 2;
 }
 
 /* Work Section */

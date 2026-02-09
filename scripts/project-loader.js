@@ -130,6 +130,7 @@ function parseMarkdownProject(mdText, projectId) {
   return {
     pageTitle: frontmatter.pageTitle,
     heroImage: frontmatter.heroImage,
+    heroVideoUrl: frontmatter.heroVideoUrl || '',
     projectName: frontmatter.projectName,
     projectType: frontmatter.projectType,
     flairs: frontmatter.flairs || [],
@@ -228,6 +229,50 @@ function markdownToHtml(markdown) {
   return html;
 }
 
+function parseYouTubeStart(raw) {
+  if (!raw) return 0;
+  if (/^\d+$/.test(raw)) return Number(raw);
+
+  const match = raw.match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/i);
+  if (!match) return 0;
+  const hours = Number(match[1] || 0);
+  const minutes = Number(match[2] || 0);
+  const seconds = Number(match[3] || 0);
+  return (hours * 3600) + (minutes * 60) + seconds;
+}
+
+function getHeroVideoMarkup(url, title) {
+  if (!url) return '';
+  try {
+    const urlObj = new URL(url);
+    const host = urlObj.hostname.toLowerCase();
+
+    if (host.includes('youtube.com') || host.includes('youtu.be')) {
+      let videoId = urlObj.searchParams.get('v') || urlObj.pathname.slice(1);
+      if (!videoId) return '';
+      const tParam = urlObj.searchParams.get('t') || urlObj.searchParams.get('start');
+      const start = parseYouTubeStart(tParam);
+      const startParam = start > 0 ? `&start=${start}` : '';
+      const src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=${videoId}${startParam}`;
+      return `<div class="hero-video" aria-hidden="true"><iframe src="${src}" title="${title}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
+    }
+
+    if (host.includes('vimeo.com')) {
+      const videoId = urlObj.pathname.split('/').pop();
+      if (!videoId || isNaN(videoId)) return '';
+      const src = `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1`;
+      return `<div class="hero-video" aria-hidden="true"><iframe src="${src}" title="${title}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+    }
+
+    if (urlObj.pathname.endsWith('.mp4')) {
+      return `<div class="hero-video" aria-hidden="true"><video autoplay muted loop playsinline><source src="${url}" type="video/mp4"></video></div>`;
+    }
+  } catch (error) {
+    console.error("Could not parse hero video URL:", url, error);
+  }
+  return '';
+}
+
 function getVideoEmbed(url) {
   let embedHtml = null;
   try {
@@ -235,7 +280,10 @@ function getVideoEmbed(url) {
     if (urlObj.hostname.includes('youtube.com') || urlObj.hostname.includes('youtu.be')) {
       let videoId = urlObj.searchParams.get('v') || urlObj.pathname.slice(1);
       if (videoId) {
-        embedHtml = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        const tParam = urlObj.searchParams.get('t') || urlObj.searchParams.get('start');
+        const start = parseYouTubeStart(tParam);
+        const startParam = start > 0 ? `?start=${start}` : '';
+        embedHtml = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}${startParam}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
       }
     } else if (urlObj.hostname.includes('vimeo.com')) {
       const videoId = urlObj.pathname.split('/').pop();
@@ -309,6 +357,17 @@ async function loadProject() {
     document.getElementById('project-type').innerHTML = marked.parseInline(project.projectType);
     document.getElementById('hero').style.setProperty('--hero-bg-image', `url('${project.heroImage}')`);
     document.getElementById('project-overview').textContent = project.overview;
+
+    if (project.heroVideoUrl) {
+      const hero = document.getElementById('hero');
+      const existingVideo = hero.querySelector('.hero-video');
+      if (!existingVideo) {
+        const videoMarkup = getHeroVideoMarkup(project.heroVideoUrl, `${project.projectName} trailer`);
+        if (videoMarkup) {
+          hero.insertAdjacentHTML('afterbegin', videoMarkup);
+        }
+      }
+    }
     
     const flairsContainer = document.getElementById('project-flairs');
     flairsContainer.innerHTML = '';

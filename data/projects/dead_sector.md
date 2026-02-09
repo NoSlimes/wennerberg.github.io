@@ -1,6 +1,7 @@
 ---
 pageTitle: Project - DEAD SECTOR
 heroImage: /assets/projects/dead_sector/dead_sector.jpg
+heroVideoUrl: ""
 projectName: DEAD SECTOR
 projectType: "[GAME PROJECT 2 - FUTUREGAMES]"
 flairs:
@@ -11,7 +12,7 @@ projectInfo:
   Team Size: 16
   Engine: Unity
   Language: C#
-  Duration: ""
+  Duration: "4 weeks"
 galleryImages:
   - /assets/projects/dead_sector/dead_sector.jpg
   - https://img.itch.zone/aW1hZ2UvMzM3OTAxMS8yMDE3NzQ1MS5wbmc=/original/gtnvjO.png

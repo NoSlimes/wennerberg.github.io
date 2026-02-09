@@ -1,6 +1,7 @@
 ---
 pageTitle: Project - TAMASHII
 heroImage: /assets/projects/tamashii/tamashii.png
+heroVideoUrl: ""
 projectName: TAMASHII
 projectType: "[GAME PROJECT 4 - FUTUREGAMES]"
 flairs:

@@ -1,6 +1,7 @@
 ---
 pageTitle: Project - Slime Murderer
 heroImage: /assets/projects/slime-murderer/slime-murderer-oob.gif
+heroVideoUrl: ""
 projectName: SLIME MURDERER
 projectType: "COURSE PROJECT FUTUREGAMES: C# UNITY COURSE"
 flairs:

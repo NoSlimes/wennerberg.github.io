@@ -1,6 +1,7 @@
 ---
 pageTitle: Project - PlanetFactory
-heroImage: /assets/projects/planetfactory/cat-survival.png
+heroImage: /assets/projects/planetfactory/planetfactoryplanets.webp
+heroVideoUrl: ""
 projectName: PlanetFactory
 projectType: "[PVP FACTORY BUILDER - SOLO PROJECT]"
 flairs:
@@ -96,7 +97,7 @@ private IEnumerator ProcessAttackCoroutine(AttackArguments args, WeaponItemData 
 
 ## Planetary Destruction & State Sync
 
-Blowing things up in multiplayer is easy; keeping 1,000+ hex tiles in sync across the network is hard. I implemented the `PlanetDamageController` using a `NetworkList<TileStatusInfo>`. 
+Blowing things up in multiplayer is easy; keeping 1,000+ hex tiles in sync across the network is hard. I implemented the `PlanetDamageManager` using a `NetworkList<TileStatusInfo>`. 
 
 By wrapping tile state into a custom bit-serializable struct, I can synchronize health and destruction states efficiently. The system is entirely event-driven—visuals only refresh when the network list actually reports a delta, keeping CPU overhead low even during heavy orbital bombardments.
 
@@ -121,7 +122,7 @@ public struct TileStatusInfo : INetworkSerializable, IEquatable<TileStatusInfo>
 I wrote a custom Area-of-Effect (AOE) system that calculates damage falloff based on hex-grid depth. This ensures that a nuke is most devastating at the impact point while tapering off naturally across the spherical surface using a customizable falloff curve.
 
 ```csharp
-private void DealDamageToTiles(AttackArguments args, WeaponItemData weaponData, NetworkPlanetController targetPlanet)
+private void DealDamageToTiles(AttackArguments args, WeaponItemData weaponData, NetworkPlanet targetPlanet)
 {
     int aoeDepth = weaponData.WeaponAOE;
     var aoeTiles = targetPlanet.HexSphere.GetNeighborsWithDepth(targetTile, aoeDepth);
@@ -132,7 +133,7 @@ private void DealDamageToTiles(AttackArguments args, WeaponItemData weaponData, 
         float falloffMultiplier = Mathf.Pow(1f - (kvp.Value / (float)(aoeDepth + 1)), weaponData.FalloffStrength);
         int damageToDeal = Mathf.RoundToInt(weaponData.Damage * falloffMultiplier);
 
-        damageController.ApplyDamageToTile(kvp.Key.Data.Id, damageToDeal);
+        damageManager.ApplyDamageToTile(kvp.Key.Data.Id, damageToDeal);
     }
 }
 ```

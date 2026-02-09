@@ -102,6 +102,8 @@ function setupImageModal() {
     const img = event.target.closest('img');
     if (!img) return;
     if (img.closest('.modal-overlay') || img.closest('.code-modal-overlay')) return;
+    if (img.closest('button, [role="button"], .button, .tool-btn, .social_link, .theme-toggle-btn')) return;
+    if (img.closest('header, footer') && img.closest('a')) return;
     if (img.dataset.noImageModal === 'true') return;
 
     event.preventDefault();
@@ -109,9 +111,16 @@ function setupImageModal() {
     openImageModal(img.currentSrc || img.src, img.alt || 'Expanded image');
   });
 
+  const shouldSkipImage = (img) => {
+    if (img.dataset.noImageModal === 'true') return true;
+    if (img.closest('button, [role="button"], .button, .tool-btn, .social_link, .theme-toggle-btn')) return true;
+    if (img.closest('header, footer') && img.closest('a')) return true;
+    return false;
+  };
+
   const markTriggers = (root = document) => {
     root.querySelectorAll('img').forEach(img => {
-      if (img.dataset.noImageModal === 'true') return;
+      if (shouldSkipImage(img)) return;
       img.classList.add('image-modal-trigger');
     });
   };
@@ -123,7 +132,9 @@ function setupImageModal() {
       mutation.addedNodes.forEach(node => {
         if (node.nodeType !== 1) return;
         if (node.matches && node.matches('img')) {
-          node.classList.add('image-modal-trigger');
+          if (!shouldSkipImage(node)) {
+            node.classList.add('image-modal-trigger');
+          }
           return;
         }
         if (node.querySelectorAll) {

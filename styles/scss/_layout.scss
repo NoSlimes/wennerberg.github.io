@@ -212,16 +212,18 @@ main {
             content: '';
             position: absolute;
             bottom: 4px;
-            left: 50%;
-            width: 0;
+            left: 16px;
+            right: 16px;
+            width: auto;
             height: 2px;
             background: variables.$color-text-primary;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
+            transition: transform 0.3s ease;
+            transform: scaleX(0);
+            transform-origin: right;
           }
 
           &.hover_underline:hover::after {
-            width: calc(100% - 32px);
+            transform: scaleX(1);
           }
         }
 

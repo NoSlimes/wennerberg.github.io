@@ -45,6 +45,97 @@ function ensureBodyTextures() {
   }
 }
 
+function ensureImageModal() {
+  if (document.getElementById('image-modal')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'image-modal';
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <span class="modal-close">&times;</span>
+    <div class="modal-content">
+      <img id="modal-image-content" src="" alt="Expanded image">
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+function openImageModal(imageSrc, altText) {
+  const modal = document.getElementById('image-modal');
+  const modalImage = document.getElementById('modal-image-content');
+  if (!modal || !modalImage) return;
+
+  modalImage.src = imageSrc;
+  modalImage.alt = altText || 'Expanded image';
+  modal.classList.add('show-modal');
+}
+
+function closeImageModal() {
+  const modal = document.getElementById('image-modal');
+  if (modal) modal.classList.remove('show-modal');
+}
+
+function setupImageModal() {
+  ensureImageModal();
+
+  const modal = document.getElementById('image-modal');
+  const closeBtn = modal ? modal.querySelector('.modal-close') : null;
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeImageModal);
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeImageModal();
+    });
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal && modal.classList.contains('show-modal')) {
+      closeImageModal();
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    const img = event.target.closest('img');
+    if (!img) return;
+    if (img.closest('.modal-overlay') || img.closest('.code-modal-overlay')) return;
+    if (img.dataset.noImageModal === 'true') return;
+
+    event.preventDefault();
+    img.classList.add('image-modal-trigger');
+    openImageModal(img.currentSrc || img.src, img.alt || 'Expanded image');
+  });
+
+  const markTriggers = (root = document) => {
+    root.querySelectorAll('img').forEach(img => {
+      if (img.dataset.noImageModal === 'true') return;
+      img.classList.add('image-modal-trigger');
+    });
+  };
+
+  markTriggers();
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(mutation => {
+      mutation.addedNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+        if (node.matches && node.matches('img')) {
+          node.classList.add('image-modal-trigger');
+          return;
+        }
+        if (node.querySelectorAll) {
+          markTriggers(node);
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
 function setupMenuToggle() {
   const toggle = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".header__nav ul.flex");
@@ -67,3 +158,5 @@ function setupMenuToggle() {
 
 
 loadHeaderFooter();
+
+document.addEventListener('DOMContentLoaded', setupImageModal);

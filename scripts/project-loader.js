@@ -498,12 +498,6 @@ async function loadProject() {
         imgEl.alt = `${project.projectName} gallery image`;
         linkEl.appendChild(imgEl);
 
-        linkEl.addEventListener('click', (event) => {
-          event.preventDefault(); 
-          modalImage.src = linkEl.href; 
-          modal.classList.add('show-modal'); 
-        });
-
         galleryGrid.appendChild(linkEl);
       });
       
@@ -574,7 +568,7 @@ function processInlineImages(text, project, projectId) {
     }
     
     return `<div class="${positionClass}">
-              <img src="${fullPath}" alt="${altText}" class="inline-image" onclick="openImageModal('${fullPath}', '${altText}')">
+              <img src="${fullPath}" alt="${altText}" class="inline-image">
               ${actualCaption ? `<p class="image-caption">${actualCaption}</p>` : ''}
             </div>`;
   });
@@ -593,7 +587,7 @@ function processInlineImages(text, project, projectId) {
     images.forEach((imagePath, index) => {
       const fullPath = imagePath.startsWith('/') ? imagePath : `/assets/projects/${projectId}/${imagePath}`;
       const altText = `${project.projectName} gallery image ${index + 1}`;
-      galleryHtml += `<img src="${fullPath}" alt="${altText}" class="gallery-image" onclick="openImageModal('${fullPath}', '${altText}')">`;
+      galleryHtml += `<img src="${fullPath}" alt="${altText}" class="gallery-image">`;
     });
     
     galleryHtml += `</div></div>`;

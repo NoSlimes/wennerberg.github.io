@@ -42,7 +42,9 @@ async function injectProjectSummaries() {
                 const map = {
                     'unity': {file: 'U_Cube_1C_Black.svg', label: 'U', bg: '#222'},
                     'c#': {file: 'Logo_C_sharp.svg'},
+                    'csharp': {file: 'Logo_C_sharp.svg'},
                     'c++': {file: 'ISO_C++_Logo.svg'},
+                    'cplusplus': {file: 'ISO_C++_Logo.svg'},
                     'unrealengine': {file: 'unreal-engine.svg'},
                     'github': {file: 'logo-github.png'},
                     'linkedin': {file: 'logo-linkedin.png'},
@@ -83,10 +85,59 @@ async function injectProjectSummaries() {
                 return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
             }
 
+            function parseYouTubeStart(raw) {
+                if (!raw) return 0;
+                if (/^\d+$/.test(raw)) return Number(raw);
+
+                const match = raw.match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/i);
+                if (!match) return 0;
+                const hours = Number(match[1] || 0);
+                const minutes = Number(match[2] || 0);
+                const seconds = Number(match[3] || 0);
+                return (hours * 3600) + (minutes * 60) + seconds;
+            }
+
+            function getYouTubeEmbedUrl(url) {
+                if (!url) return '';
+                let videoId = '';
+                let start = 0;
+
+                try {
+                    const urlObj = new URL(url);
+                    const host = urlObj.hostname.toLowerCase();
+
+                    if (host.includes('youtu.be')) {
+                        videoId = urlObj.pathname.replace(/^\//, '');
+                    } else if (host.includes('youtube.com')) {
+                        if (urlObj.pathname.startsWith('/watch')) {
+                            videoId = urlObj.searchParams.get('v') || '';
+                        } else if (urlObj.pathname.startsWith('/embed/')) {
+                            videoId = urlObj.pathname.split('/').pop() || '';
+                        }
+                    }
+
+                    const tParam = urlObj.searchParams.get('t') || urlObj.searchParams.get('start');
+                    start = parseYouTubeStart(tParam);
+                } catch (e) {
+                    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{6,})/);
+                    if (!match) return '';
+                    videoId = match[1];
+                }
+
+                if (!videoId) return '';
+                const startParam = start > 0 ? `&start=${start}` : '';
+                return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=${videoId}${startParam}`;
+            }
+
+            const trailerEmbed = getYouTubeEmbedUrl(project.cardVideoUrl);
+            const mediaHtml = trailerEmbed
+                ? `<div class="card-bg card-media" aria-hidden="true"><iframe src="${trailerEmbed}" title="${project.title} preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`
+                : `<div class="card-bg" style="background-image: url('${project.imageSrc}');" aria-hidden="true"></div>`;
+
             // Render project with a background image div; content sits on top
             const projectHTML = `
             <div class="project_summary">
-            <div class="card-bg" style="background-image: url('${project.imageSrc}');" aria-hidden="true"></div>
+            ${mediaHtml}
 
             ${renderToolbar(project.links || {})}
 

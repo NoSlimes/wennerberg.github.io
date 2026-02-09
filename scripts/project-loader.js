@@ -195,7 +195,26 @@ function markdownToHtml(markdown) {
     }
     
     const placeholder = `::CODEBLOCK_${i}::`;
-    const codeHtml = `<pre><code class="language-${block.lang}">${highlighted}</code></pre>`;
+    const langKey = (block.lang || '').toString().toLowerCase();
+    const langLabel = block.lang ? `Code (${block.lang.toUpperCase()})` : 'Code';
+    const logoMap = {
+      csharp: 'Logo_C_sharp.svg',
+      cs: 'Logo_C_sharp.svg',
+      cpp: 'ISO_C++_Logo.svg',
+      cplusplus: 'ISO_C++_Logo.svg',
+      c: 'ISO_C++_Logo.svg'
+    };
+    const logoFile = logoMap[langKey];
+    const summaryInner = logoFile
+      ? `<span class="code-dropdown__icon" aria-hidden="true"><img src="/assets/images/logos/${logoFile}" alt=""></span>${langLabel}`
+      : langLabel;
+    const summaryAttrs = '';
+    const codeHtml = `
+      <details class="code-dropdown">
+        <summary${summaryAttrs}>${summaryInner}</summary>
+        <pre><code class="language-${block.lang}">${highlighted}</code></pre>
+      </details>
+    `;
     // Replace placeholder wrapped by <p> with optional whitespace/newlines
     const paragraphRegex = new RegExp(`<p[^>]*>\\s*${placeholder}\\s*<\/p>`, 'g');
     html = html.replace(paragraphRegex, codeHtml);
@@ -293,11 +312,51 @@ async function loadProject() {
     
     const flairsContainer = document.getElementById('project-flairs');
     flairsContainer.innerHTML = '';
-    project.flairs.forEach(flairText => {
+    const renderFlair = (flair) => {
+      const name = (flair || '').toString();
+      const key = name.toLowerCase().replace(/[^a-z0-9+#]+/g, '').replace(/[0-9]/g, '');
+
+      const map = {
+        'unity': {file: 'U_Cube_1C_Black.svg', label: 'U', bg: '#222'},
+        'c#': {file: 'Logo_C_sharp.svg'},
+        'csharp': {file: 'Logo_C_sharp.svg'},
+        'c++': {file: 'ISO_C++_Logo.svg'},
+        'cplusplus': {file: 'ISO_C++_Logo.svg'},
+        'unrealengine': {file: 'unreal-engine.svg'},
+        'github': {file: 'logo-github.png'},
+        'linkedin': {file: 'logo-linkedin.png'},
+        'futuregames': {file: 'fg_logo.png', label: 'FG', bg: '#ff6b6b'}
+      };
+
+      const info = map[key];
       const el = document.createElement('span');
       el.className = 'skill-tag';
-      el.textContent = flairText;
-      flairsContainer.appendChild(el);
+
+      if (info && info.file) {
+        const img = document.createElement('img');
+        img.src = `/assets/images/logos/${info.file}`;
+        img.alt = `${name} logo`;
+        img.width = 18;
+        img.height = 18;
+        img.style.marginRight = '8px';
+        el.appendChild(img);
+        el.appendChild(document.createTextNode(name));
+        return el;
+      }
+
+      if (info && info.label) {
+        el.textContent = info.label;
+        el.style.background = info.bg || '#333';
+        el.style.color = info.fg || '#fff';
+        return el;
+      }
+
+      el.textContent = name;
+      return el;
+    };
+
+    project.flairs.forEach(flairText => {
+      flairsContainer.appendChild(renderFlair(flairText));
     });
 
     // Inject action buttons (GitHub, Demo, Trello, Website, etc.) under the flairs

@@ -14,7 +14,7 @@ projectInfo:
   Duration: ""
 galleryImages:
   - /assets/projects/dead_sector/dead_sector.jpg
-  - https://picsum.photos/id/62/600/400
+  - https://img.itch.zone/aW1hZ2UvMzM3OTAxMS8yMDE3NzQ1MS5wbmc=/original/gtnvjO.png
 videoURL: ""
 ---
 

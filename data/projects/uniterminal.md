@@ -2,7 +2,7 @@
 pageTitle: Project - UniTerminal
 heroImage: /assets/projects/uniterminal/hero.png
 projectName: UniTerminal
-projectType: "IN-GAME COMMAND CONSOLE | SOLO PROJECT | [MIT](https://github.com/NoSlimes/UniTerminal/tree/main)"
+projectType: "IN-GAME COMMAND CONSOLE - SOLO PROJECT"
 flairs:
   - Unity
   - C#
@@ -11,7 +11,7 @@ flairs:
 projectInfo:
     Language: C#
     Engine: Unity
-    License: MIT
+    License: "<a href=\"https://github.com/NoSlimes/UniTerminal/tree/main\" target=\"_blank\" rel=\"noopener noreferrer\">MIT</a>"
     Dependencies: Unity
 galleryImages: []
 videoURL: ""

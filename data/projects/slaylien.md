@@ -26,7 +26,7 @@ galleryImages:
 videoURL: "https://youtu.be/BY15e9aDYMk?t=3"
 ---
 
-Slaylien is a third-person wave-defense game where players control a team of three characters to fend off hordes of insectoid aliens. Developed in Unreal Engine 5, it features a unique character switching mechanic where players can switch between characters in real-time to utilize their unique abilities.
+Slaylien is a third-person wave-defense game where players control a team of three characters to fend off hordes of insectoid aliens. The game features a unique character switching mechanic with AI handover where players can switch between characters in real-time to utilize their unique abilities.
 
 ## My Role
 

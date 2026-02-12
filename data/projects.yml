@@ -48,25 +48,6 @@ summaries:
     description: "Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion."
     links:
       github: "https://github.com/NoSlimes/uniterminal"
-      
-  - id: dead_sector
-    title: "DEAD SECTOR"
-    hidden: false
-    flairs:
-      - Unity 6
-      - C#
-      - Group Project
-      - FUTUREGAMES
-    duration: "4 weeks"
-    detailPageUrl: "/project.html?id=dead_sector"
-    cardVideoUrl: "https://youtu.be/NRYq1QncCZc?t=12"
-    imageSrc: "/assets/projects/dead_sector/dead_sector.jpg"
-    imageCaption: "Splash screen for Dead Sector"
-    projectType: "GAME PROJECT 2 - FUTUREGAMES"
-    description: "Top-down sci-fi shooter in Unity. I handled all UI programming and implemented the quest system."
-    links:
-      github: ""
-      demo: "https://futuregames.itch.io/dead-sector"
 
   - id: slaylien
     title: "SLAYLIEN"
@@ -87,6 +68,25 @@ summaries:
     links:
       github: ""
       demo: "https://futuregames.itch.io/slaylien"
+
+  - id: dead_sector
+    title: "DEAD SECTOR"
+    hidden: true
+    flairs:
+      - Unity 6
+      - C#
+      - Group Project
+      - FUTUREGAMES
+    duration: "4 weeks"
+    detailPageUrl: "/project.html?id=dead_sector"
+    cardVideoUrl: "https://youtu.be/NRYq1QncCZc?t=12"
+    imageSrc: "/assets/projects/dead_sector/dead_sector.jpg"
+    imageCaption: "Splash screen for Dead Sector"
+    projectType: "GAME PROJECT 2 - FUTUREGAMES"
+    description: "Top-down sci-fi shooter in Unity. I handled all UI programming and implemented the quest system."
+    links:
+      github: ""
+      demo: "https://futuregames.itch.io/dead-sector"
 
   - id: tamashii
     title: "TAMASHII"

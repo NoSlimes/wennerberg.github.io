@@ -71,7 +71,7 @@ summaries:
 
   - id: dead_sector
     title: "DEAD SECTOR"
-    hidden: true
+    hidden: false
     flairs:
       - Unity 6
       - C#

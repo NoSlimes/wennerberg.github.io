@@ -90,7 +90,7 @@ summaries:
 
   - id: tamashii
     title: "TAMASHII"
-    hidden: true
+    hidden: false
     flairs:
       - Unreal Engine 5
       - Blueprints
@@ -99,6 +99,7 @@ summaries:
       - FUTUREGAMES
     duration: "4 weeks"
     detailPageUrl: "/project.html?id=tamashii"
+    cardVideoUrl: "https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4"
     imageSrc: "/assets/projects/tamashii/tamashii.png"
     imageCaption: "Splash screen for Tamashii"
     projectType: "GAME PROJECT 4 - FUTUREGAMES"

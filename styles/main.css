@@ -470,7 +470,6 @@ section#hero.hero_wide {
   align-items: center;
   min-height: calc(100vh - 70px);
   /* let hero wrapper grow wider than default site wrapper */
-  /* slightly increase portrait cap on the wide hero */
 }
 section#hero.hero_wide .wrapper {
   max-width: 1600px;
@@ -480,6 +479,9 @@ section#hero.hero_wide .wrapper {
 }
 section#hero.hero_wide .hero_content {
   padding: 0;
+}
+section#hero.hero_wide {
+  /* slightly increase portrait cap on the wide hero */
 }
 @media (min-width: 1200px) {
   section#hero.hero_wide .hero_portrait {
@@ -492,6 +494,59 @@ section#hero.hero_wide .hero_content {
     width: 540px;
     height: 540px;
   }
+}
+
+section#showreel {
+  color: var(--theme-text-primary);
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+section#showreel .showreel-subtitle {
+  margin-bottom: var(--space-m);
+  color: var(--theme-text-secondary);
+}
+section#showreel .showreel-frame {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--theme-border);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, rgba(var(--theme-bg-primary-rgb), 0.75), rgba(var(--theme-bg-primary-rgb), 0.4));
+}
+section#showreel .showreel-frame video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16/9;
+  -o-object-fit: cover;
+     object-fit: cover;
+  background: #000;
+}
+section#showreel .showreel-notes {
+  margin-top: var(--space-m);
+  padding: var(--space-s);
+  border: 1px solid var(--theme-border);
+  border-radius: 12px;
+  background: rgba(var(--theme-bg-primary-rgb), 0.45);
+}
+section#showreel .showreel-notes__title {
+  margin: 0 0 var(--space-xs) 0;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+}
+section#showreel .showreel-notes__list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--theme-text-secondary);
+}
+section#showreel .showreel-notes__list li {
+  margin-bottom: 0.25rem;
+}
+section#showreel .showreel-notes__list li:last-child {
+  margin-bottom: 0;
+}
+section#showreel .showreel-notes__list strong {
+  color: var(--theme-text-primary);
+  font-weight: 600;
 }
 
 /* Enhanced section styling */
@@ -611,8 +666,7 @@ main {
   width: 100%;
   z-index: 100;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(var(--theme-text-inverted), 0.1);
 }
 .site_header .wrapper {
@@ -2212,6 +2266,19 @@ textarea {
   height: 160%;
   transform: translate(-50%, -50%);
   border: 0;
+  pointer-events: none;
+}
+.card-media video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 102%;
+  height: 102%;
+  transform: translate(-50%, -50%);
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 0;
+  display: block;
   pointer-events: none;
 }
 

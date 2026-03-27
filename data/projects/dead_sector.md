@@ -24,7 +24,7 @@ Dead Sector is a top-down sci-fi shooter where the player must find their way of
 
 ## Modular UI System
 
-I built a scalable UI system using C# and Unity's UGUI. It was managed by a MenuViewManager which handled switching between different menus and HUD states. This modular approach allowed for easy addition of new UI elements as the project evolved.
+I built a scalable UI system using C# and Unity's gameobject-based UGUI. It was managed by a MenuViewManager which handled switching between different menus and HUD states. This modular approach allowed for easy addition of new UI elements as the project evolved.
 
 ## Quest System Implementation
 

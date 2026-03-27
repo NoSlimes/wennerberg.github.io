@@ -130,10 +130,39 @@ async function injectProjectSummaries() {
                 return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=${videoId}${startParam}`;
             }
 
-            const trailerEmbed = getYouTubeEmbedUrl(project.cardVideoUrl);
-            const mediaHtml = trailerEmbed
-                ? `<div class="card-bg card-media" aria-hidden="true"><iframe src="${trailerEmbed}" title="${project.title} preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`
-                : `<div class="card-bg" style="background-image: url('${project.imageSrc}');" aria-hidden="true"></div>`;
+            function getDirectVideoMimeType(url) {
+                if (!url) return '';
+
+                try {
+                    const pathname = new URL(url).pathname.toLowerCase();
+                    if (pathname.endsWith('.mp4')) return 'video/mp4';
+                    if (pathname.endsWith('.webm')) return 'video/webm';
+                    if (pathname.endsWith('.ogg') || pathname.endsWith('.ogv')) return 'video/ogg';
+                } catch (e) {
+                    const lower = url.toLowerCase();
+                    if (lower.includes('.mp4')) return 'video/mp4';
+                    if (lower.includes('.webm')) return 'video/webm';
+                    if (lower.includes('.ogg') || lower.includes('.ogv')) return 'video/ogg';
+                }
+
+                return '';
+            }
+
+            function getCardMediaHtml(videoUrl, title, imageSrc) {
+                const trailerEmbed = getYouTubeEmbedUrl(videoUrl);
+                if (trailerEmbed) {
+                    return `<div class="card-bg card-media" aria-hidden="true"><iframe src="${trailerEmbed}" title="${title} preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
+                }
+
+                const mimeType = getDirectVideoMimeType(videoUrl);
+                if (mimeType) {
+                    return `<div class="card-bg card-media" aria-hidden="true"><video autoplay muted loop playsinline preload="metadata" poster="${imageSrc}"><source src="${videoUrl}" type="${mimeType}"/></video></div>`;
+                }
+
+                return `<div class="card-bg" style="background-image: url('${imageSrc}');" aria-hidden="true"></div>`;
+            }
+
+            const mediaHtml = getCardMediaHtml(project.cardVideoUrl, project.title, project.imageSrc);
 
             // Render project with a background image div; content sits on top
             const projectHTML = `

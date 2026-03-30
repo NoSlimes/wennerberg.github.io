@@ -381,6 +381,8 @@ async function loadProject() {
         'csharp': {file: 'Logo_C_sharp.svg'},
         'c++': {file: 'ISO_C++_Logo.svg'},
         'cplusplus': {file: 'ISO_C++_Logo.svg'},
+        'networking': {file: 'logo-network.svg'},
+        'networkingngo': {file: 'logo-network.svg'},
         'tooling': {file: 'wrench_hammer.svg'},
         'unrealengine': {file: 'unreal-engine.svg'},
         'github': {file: 'logo-github.png'},

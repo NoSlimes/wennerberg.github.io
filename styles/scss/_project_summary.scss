@@ -185,6 +185,8 @@
   /* use a smaller offset so cards don't grow too tall */
   /* push the subcard slightly lower to reveal more background and make it compact */
   margin-top: calc(var(--space-l) + 0.2rem);
+  width: min(100%, 42rem);
+  justify-self: start;
   padding: var(--space-s);
   display: flex;
   flex-direction: column;
@@ -384,8 +386,18 @@
   margin-left: 0.25rem;
 }
 
-/* Grid layout for project cards on homepage */
+/* Project cards container (supports grouped sections) */
 #project-card-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+/* Grid layout used both with and without sections */
+.project-card-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   /* smaller vertical gap (row-gap) but keep generous horizontal gap */
@@ -393,8 +405,32 @@
   /* let grid items stretch to the height of the tallest item in the row */
   align-items: stretch;
   width: 100%;
-  max-width: 1800px;
+  grid-auto-rows: 1fr;
+}
+
+.project-card-grid > .summary_container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.project-card-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.project-card-section__title {
+  margin: 0;
+  text-align: center;
+  color: var(--theme-text-primary);
+}
+
+.project-card-section__description {
   margin: 0 auto;
+  max-width: 50rem;
+  text-align: center;
+  color: var(--theme-text-secondary);
 }
 
 /* Keep section color minimal; avoid forcing a background from SCSS so site themes stay consistent */
@@ -438,7 +474,7 @@ section#work {
 }
 
 @media (max-width: 900px) {
-  #project-card-container {
+  .project-card-grid {
     grid-template-columns: 1fr;
   }
   .summary_container.highlighted .project-card__image {

@@ -223,9 +223,23 @@ async function injectProjectSummaries() {
                 }
             }
 
-            const durationText = formatProjectDuration(project.duration);
+            const rawDuration = project.duration && typeof project.duration === 'object'
+                ? project.duration.value
+                : project.duration;
+            const rawStatus = project.duration && typeof project.duration === 'object'
+                ? project.duration.status
+                : project.status;
+
+            const durationText = formatProjectDuration(rawDuration);
             if (durationText) {
                 parts.push(durationText);
+            }
+
+            const statusText = rawStatus === null || rawStatus === undefined
+                ? ''
+                : String(rawStatus).trim();
+            if (statusText) {
+                parts.push(statusText);
             }
 
             return parts.join(' • ');

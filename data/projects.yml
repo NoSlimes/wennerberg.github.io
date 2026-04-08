@@ -49,6 +49,7 @@ summaries:
       - C#
       - Tooling
     duration: "30/9-2025 -"
+    status: "intermittent development"
     teamSize: 1
     detailPageUrl: "/project.html?id=uniterminal"
     imageSrc: "/assets/projects/uniterminal/hero.png"

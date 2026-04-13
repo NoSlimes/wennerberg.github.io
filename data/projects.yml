@@ -36,7 +36,7 @@ summaries:
     imageSrc: "assets/projects/uniterminal/nuke_command.webp"
     imageCaption: "In-progress image"
     projectType: "PVP FACTORY BUILDER"
-    description: "A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative and optimized for minimal network footprint."
+    description: "A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative."
     links:
       github: ""
       demo: "https://download.noslimes.com/My%20Games/PlanetFactory/PlanetFactory_v0.0.0.5.zip"

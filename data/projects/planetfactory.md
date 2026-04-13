@@ -50,9 +50,9 @@ public abstract class Database<TDatabase, TKey, TValue, TWrapper> : ScriptableOb
 }
 ```
 
-## Networking: 2-Byte Identifiers
+## Networking item references: 2-Byte ItemIDs
 
-In a multiplayer RTS, bandwidth is the enemy. Syncing a string like `heavy_industrial_nuclear_battery` every time a drone moves is a waste. I built a wrapper around a `ushort` that handles all item networking. 
+In a multiplayer, bandwidth is the enemy. Syncing a string like `heavy_industrial_nuclear_battery` every time a player presses a button is a waste. I built a wrapper around a `ushort` that handles all item networking. 
 
 The system uses a reverse-lookup dictionary, so I can still use human-readable names in my terminal (`give_item iron_ore`), but the network only ever sees a 2-byte ID. It's fast, clean, and keeps the packets tiny.
 
@@ -97,9 +97,9 @@ private IEnumerator ProcessAttackCoroutine(AttackArguments args, WeaponItemData 
 
 ## Planetary Destruction & State Sync
 
-Blowing things up in multiplayer is easy; keeping 1,000+ hex tiles in sync across the network is hard. I implemented the `PlanetDamageManager` using a `NetworkList<TileStatusInfo>`. 
+Keeping 1,000+ damageable hex tiles in sync across the network is hard. I implemented the `PlanetDamageManager` using a `NetworkList<TileStatusInfo>`. 
 
-By wrapping tile state into a custom bit-serializable struct, I can synchronize health and destruction states efficiently. The system is entirely event-driven—visuals only refresh when the network list actually reports a delta, keeping CPU overhead low even during heavy orbital bombardments.
+By wrapping tile state into a custom network-serializable struct, I can synchronize health and destruction states efficiently. The system is entirely event-driven—visuals only refresh when the network list actually reports a delta, keeping CPU overhead low even during heavy orbital bombardments.
 
 ```csharp
 public struct TileStatusInfo : INetworkSerializable, IEquatable<TileStatusInfo>
@@ -113,27 +113,6 @@ public struct TileStatusInfo : INetworkSerializable, IEquatable<TileStatusInfo>
         serializer.SerializeValue(ref TileId);
         serializer.SerializeValue(ref CurrentHealth);
         serializer.SerializeValue(ref IsDestroyed);
-    }
-}
-```
-
-## AOE Damage Falloff
-
-I wrote a custom Area-of-Effect (AOE) system that calculates damage falloff based on hex-grid depth. This ensures that a nuke is most devastating at the impact point while tapering off naturally across the spherical surface using a customizable falloff curve.
-
-```csharp
-private void DealDamageToTiles(AttackArguments args, WeaponItemData weaponData, NetworkPlanet targetPlanet)
-{
-    int aoeDepth = weaponData.WeaponAOE;
-    var aoeTiles = targetPlanet.HexSphere.GetNeighborsWithDepth(targetTile, aoeDepth);
-
-    foreach (var kvp in aoeTiles)
-    {
-        // Calculate falloff: 1.0 at center, tapering to 0 at max AOE depth
-        float falloffMultiplier = Mathf.Pow(1f - (kvp.Value / (float)(aoeDepth + 1)), weaponData.FalloffStrength);
-        int damageToDeal = Mathf.RoundToInt(weaponData.Damage * falloffMultiplier);
-
-        damageManager.ApplyDamageToTile(kvp.Key.Data.Id, damageToDeal);
     }
 }
 ```

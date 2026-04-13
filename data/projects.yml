@@ -39,7 +39,7 @@ summaries:
     description: "A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative and optimized for minimal network footprint."
     links:
       github: ""
-      trello: ""
+      demo: "https://download.noslimes.com/My%20Games/PlanetFactory/PlanetFactory_v0.0.0.5.zip"
 
   - id: uniterminal
     title: "UNITERMINAL"

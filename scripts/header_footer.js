@@ -14,6 +14,7 @@ async function loadHeaderFooter() {
     document.getElementById('footer-container').innerHTML = footerHtml;
 
     ensureBodyTextures();
+    setupParallaxTextures();
 
     // Now that header is loaded, set up the menu toggle
     setupMenuToggle();
@@ -43,6 +44,33 @@ function ensureBodyTextures() {
     right.className = 'texture-right';
     document.body.appendChild(right);
   }
+}
+
+function setupParallaxTextures() {
+  const left = document.querySelector('.texture-left');
+  const right = document.querySelector('.texture-right');
+  if (!left || !right) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const FACTOR = 0.3;
+  let ticking = false;
+
+  const update = () => {
+    const y = Math.round(window.scrollY * FACTOR);
+    left.style.backgroundPosition = `left ${y}px`;
+    right.style.backgroundPosition = `right ${y}px`;
+    ticking = false;
+  };
+
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  update();
 }
 
 function ensureImageModal() {

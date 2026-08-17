@@ -269,6 +269,18 @@ section#hero {
     filter: var(--theme-social-icon-filter);
   }
 
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--theme-hero-text-primary);
+    opacity: 0.9;
+    transition: all 0.2s ease;
+  }
+
+  &:hover svg {
+    opacity: 1;
+  }
+
   &:hover img {
     opacity: 1;
   }

@@ -73,6 +73,20 @@ function setupParallaxTextures() {
   update();
 }
 
+function setupEmailReveal() {
+  const email = String.fromCharCode(
+    101, 108, 105, 97, 115, 46, 119, 101, 110, 110, 101, 114, 98, 101, 114, 103,
+    64, 103, 109, 97, 105, 108, 46, 99, 111, 109
+  );
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('.email-link');
+    if (!link) return;
+    event.preventDefault();
+    window.location.href = `mailto:${email}`;
+  });
+}
+
 function ensureImageModal() {
   if (document.getElementById('image-modal')) return;
 
@@ -199,3 +213,4 @@ function setupMenuToggle() {
 loadHeaderFooter();
 
 document.addEventListener('DOMContentLoaded', setupImageModal);
+document.addEventListener('DOMContentLoaded', setupEmailReveal);

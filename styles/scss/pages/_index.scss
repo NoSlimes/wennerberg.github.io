@@ -118,11 +118,11 @@ section#about {
 .hero_portrait {
   width: 240px;
   height: 240px;
+  max-width: none;
   object-fit: cover;
   border-radius: 18px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.35);
   border: 3px solid rgba(255,255,255,0.06);
-  margin-right: var(--space-3xl);
 }
 
 @media (max-width: 900px) {
@@ -172,17 +172,37 @@ section#hero.hero_wide {
 
   .hero_content {
     padding: 0;
+    max-width: none;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .hero_intro,
+  .hero_meta {
+    grid-column: 2;
+  }
+
+  /* stack into a single column on smaller screens */
+  @media (max-width: 900px) {
+    .hero_content {
+      grid-template-columns: 1fr;
+    }
+    .hero_intro,
+    .hero_meta {
+      grid-column: auto;
+    }
   }
 
   /* slightly increase portrait cap on the wide hero */
   .hero_portrait {
     @media (min-width: 1200px) {
-      width: 420px;
-      height: 420px;
+      width: 360px;
+      height: 360px;
     }
     @media (min-width: 1600px) {
-      width: 540px;
-      height: 540px;
+      width: 400px;
+      height: 400px;
     }
   }
 }

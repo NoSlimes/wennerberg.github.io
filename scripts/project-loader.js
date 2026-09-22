@@ -134,7 +134,7 @@ function parseMarkdownProject(mdText, projectId) {
     projectName: frontmatter.projectName,
     projectType: frontmatter.projectType,
     flairs: frontmatter.flairs || [],
-    projectInfo: frontmatter.projectInfo || {},
+    projectInfo: normalizeInfo(frontmatter.projectInfo) || {},
     galleryImages: frontmatter.galleryImages || [],
     videoURL: frontmatter.videoURL || '',
     codeLanguage: frontmatter.codeLanguage,
@@ -146,6 +146,19 @@ function parseMarkdownProject(mdText, projectId) {
     detailedSections: detailedSections,
     links: frontmatter.links || {}
   };
+}
+
+// Project info can be a map ({Key: value}) or a list ([{label, value}]).
+// Normalize to a map so both old and CMS-saved files render.
+function normalizeInfo(info) {
+  if (Array.isArray(info)) {
+    const map = {};
+    info.forEach(row => {
+      if (row && row.label) map[row.label] = row.value ?? '';
+    });
+    return map;
+  }
+  return info;
 }
 
 // Convert markdown to HTML using marked.js library

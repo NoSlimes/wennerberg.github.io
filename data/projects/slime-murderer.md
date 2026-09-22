@@ -1,27 +1,32 @@
 ---
 pageTitle: Project - Slime Murderer
 heroImage: /assets/projects/slime-murderer/slime-murderer-oob.gif
-heroVideoUrl: ""
+heroVideoUrl: ''
 projectName: SLIME MURDERER
-projectType: "COURSE PROJECT FUTUREGAMES: C# UNITY COURSE"
+projectType: 'COURSE PROJECT FUTUREGAMES: C# UNITY COURSE'
 flairs:
-  - Unity
-  - C#
+- Unity
+- C#
 projectInfo:
-  Team Size: 1
-  Engine: Unity
-  Language: C#
-  Duration: ""
-  Key Features: Endless | Abilities | Upgrades
+- label: Team Size
+  value: 1
+- label: Engine
+  value: Unity
+- label: Language
+  value: C#
+- label: Duration
+  value: ''
+- label: Key Features
+  value: Endless | Abilities | Upgrades
 highlights:
-  - Developed the entire game from scratch as a solo project in Unity.
-  - Procedural enemy spawning and wave management
-  - An extendable player ability and upgrade system
-  - A custom status effect system
+- Developed the entire game from scratch as a solo project in Unity.
+- Procedural enemy spawning and wave management
+- An extendable player ability and upgrade system
+- A custom status effect system
 galleryImages:
-  - /assets/projects/slime-murderer/slime-murderer-00.gif
-  - /assets/projects/slime-murderer/slime-murderer-01.gif
-videoURL: ""
+- /assets/projects/slime-murderer/slime-murderer-00.gif
+- /assets/projects/slime-murderer/slime-murderer-01.gif
+videoURL: ''
 ---
 
 During my first C# course at Futuregames, we were tasked with making a clone of the game "Vampire Survivors". The goal was to replicate the core gameplay loop of surviving endless waves of enemies with auto-attacking weapons and a robust power-up system.

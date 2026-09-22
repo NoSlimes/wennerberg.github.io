@@ -1,29 +1,34 @@
 ---
 pageTitle: Project - SLAYLIEN
 heroImage: /assets/projects/slaylien/slaylien.png
-heroVideoUrl: "https://youtu.be/BY15e9aDYMk?t=3"
+heroVideoUrl: https://youtu.be/BY15e9aDYMk?t=3
 projectName: SLAYLIEN
-projectType: "[GAME PROJECT 3 - FUTUREGAMES]"
+projectType: '[GAME PROJECT 3 - FUTUREGAMES]'
 flairs:
-  - Unreal Engine 5
-  - Blueprints
-  - C++
-  - Group Project
+- Unreal Engine 5
+- Blueprints
+- C++
+- Group Project
 projectInfo:
-  Team Size: 11
-  Engine: Unreal Engine 5
-  Language: C++ & Blueprints
-  Duration: "7 weeks"
-  Key Features: Wave Defense, Character Switching
+- label: Team Size
+  value: 11
+- label: Engine
+  value: Unreal Engine 5
+- label: Language
+  value: C++ & Blueprints
+- label: Duration
+  value: 7 weeks
+- label: Key Features
+  value: Wave Defense, Character Switching
 highlights:
-  - Implemented character switching with AI handoff in Unreal C++
-  - Built data-driven wave configs for rapid showcase tuning
-  - Designed multi-point generator damage to fix enemy targeting
+- Implemented character switching with AI handoff in Unreal C++
+- Built data-driven wave configs for rapid showcase tuning
+- Designed multi-point generator damage to fix enemy targeting
 galleryImages:
-  - https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk2MS5wbmc=/original/3EpW29.png
-  - https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk1OS5wbmc=/original/UQBgmH.png
-  - https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk1Ny5wbmc=/original/h7Q0By.png
-videoURL: "https://youtu.be/BY15e9aDYMk?t=3"
+- https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk2MS5wbmc=/original/3EpW29.png
+- https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk1OS5wbmc=/original/UQBgmH.png
+- https://img.itch.zone/aW1hZ2UvMzc4NzU5My8yMjU4Mzk1Ny5wbmc=/original/h7Q0By.png
+videoURL: https://youtu.be/BY15e9aDYMk?t=3
 ---
 
 Slaylien is a third-person wave-defense game where players control a team of three characters to fend off hordes of insectoid aliens. The game features a unique character switching mechanic with AI handover where players can switch between characters in real-time to utilize their unique abilities.

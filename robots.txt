@@ -3,3 +3,4 @@
 
 User-agent: *
 Disallow: /assets/code/
+Disallow: /admin/

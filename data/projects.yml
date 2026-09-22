@@ -1,143 +1,137 @@
-﻿# Project Summaries (for project cards)
+# GENERATED FILE – do not edit.
+# Source: content/. Built by scripts/combine_projects.py
 sectionDescriptions:
-  "Featured projects - Network and tools": "Networking systems, tooling, and technical solo work."
-  "Game projects - Collaborative": "Team-based game projects built during my time at Futuregames. These projects were made in groups of up to 16 people over the course of 4-7 weeks, with varying scopes and themes."
-
+  Featured projects - Network and tools: Networking systems, tooling, and technical solo work.
+  Game projects - Collaborative: Team-based game projects built during my time at Futuregames. These projects were made in groups of up to 16 people over the course of 4-7 weeks, with varying scopes and themes.
 summaries:
-  - id: slime-murderer
-    title: "SLIME MURDERER"
-    flairs:
-      - Unity 
-      - C#
-      - FUTUREGAMES
-    duration: ""
-    teamSize: 1
-    hidden: true
-    detailPageUrl: "/project.html?id=slime-murderer"
-    imageSrc: "/assets/projects/slime-murderer/slime-murderer-00.gif"
-    imageCaption: "SLIME MURDERER gameplay"
-    projectType: "COURSE PROJECT FUTUREGAMES: C# UNITY COURSE"
-    description: "\"Slime Murderer\" is a <a href=\"https://store.steampowered.com/app/1794680/Vampire_Survivors/\">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities."
-    links:
-      github: ""
-      demo: "https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip"
-  
-  - id: planetfactory
-    title: "PlanetFactory [Working Title]"
-    highlighted: true
-    section: "Featured projects - Network and tools"
-    flairs:
-      - Unity 6
-      - C#
-      - Networking (NGO)
-    duration: "13/11-2025 - 5/3-2026"
-    teamSize: 1
-    detailPageUrl: "/project.html?id=planetfactory"
-    imageSrc: "assets/projects/uniterminal/nuke_command.webp"
-    imageCaption: "In-progress image"
-    projectType: "PVP FACTORY BUILDER"
-    description: "A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative."
-    links:
-      github: ""
-      demo: "https://download.noslimes.com/My%20Games/PlanetFactory/PlanetFactory_v0.0.0.5.zip"
-
-  - id: uniterminal
-    title: "UNITERMINAL"
-    section: "Featured projects - Network and tools"
-    flairs:
-      - Unity
-      - C#
-      - Tooling
-    duration: "30/9-2025 -"
-    status: "intermittent development"
-    teamSize: 1
-    detailPageUrl: "/project.html?id=uniterminal"
-    imageSrc: "/assets/projects/uniterminal/hero.png"
-    imageCaption: "UniTerminal — in-game developer console"
-    projectType: "IN-GAME COMMAND CONSOLE"
-    description: "Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion."
-    links:
-      github: "https://github.com/NoSlimes/uniterminal"
-
-  - id: cat-survival-craft
-    title: "CAT SURVIVAL CRAFT"
-    section: "Featured projects - Network and tools"
-    flairs:
-      - Unity 6
-      - C#
-      - Networking (NGO)
-    duration: ""
-    teamSize: 1
-    detailPageUrl: "/project.html?id=cat-survival-craft"
-    imageSrc: "/assets/projects/planetfactory/cat-survival-00.gif"
-    imageCaption: "Cat Survival Craft prototype"
-    projectType: "SURVIVAL CRAFT PROTOTYPE"
-    description: "Prototype focused on survival-crafting systems, inventory flow, and cats."
-    links:
-      github: ""
-
-  - id: slaylien
-    title: "SLAYLIEN"
-    hidden: false
-    section: "Game projects - Collaborative"
-    flairs:
-      - Unreal Engine 5
-      - Blueprints
-      - C++
-      - Group Project
-      - FUTUREGAMES
-    duration: "7 weeks"
-    teamSize: 11
-    detailPageUrl: "/project.html?id=slaylien"
-    cardVideoUrl: "https://youtu.be/BY15e9aDYMk?t=5"
-    imageSrc: "/assets/projects/slaylien/slaylien.png"
-    imageCaption: "Slaylien"
-    projectType: "GAME PROJECT 3 - FUTUREGAMES"
-    description: "Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics."
-    links:
-      github: ""
-      demo: "https://futuregames.itch.io/slaylien"
-
-  - id: dead_sector
-    title: "DEAD SECTOR"
-    hidden: false
-    section: "Game projects - Collaborative"
-    flairs:
-      - Unity 6
-      - C#
-      - Group Project
-      - FUTUREGAMES
-    duration: "4 weeks"
-    teamSize: 16
-    detailPageUrl: "/project.html?id=dead_sector"
-    cardVideoUrl: "https://youtu.be/NRYq1QncCZc?t=12"
-    imageSrc: "/assets/projects/dead_sector/dead_sector.jpg"
-    imageCaption: "Splash screen for Dead Sector"
-    projectType: "GAME PROJECT 2 - FUTUREGAMES"
-    description: "Top-down sci-fi shooter in Unity. I implemented most UI and the quest system."
-    links:
-      github: ""
-      demo: "https://futuregames.itch.io/dead-sector"
-
-  - id: tamashii
-    title: "TAMASHII"
-    highlighted: true
-    hidden: false
-    section: "Game projects - Collaborative"
-    flairs:
-      - Unreal Engine 5
-      - Blueprints
-      - C++
-      - Group Project
-      - FUTUREGAMES
-    duration: "4 weeks"
-    teamSize: 11
-    detailPageUrl: "/project.html?id=tamashii"
-    cardVideoUrl: "https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4"
-    imageSrc: "/assets/projects/tamashii/tamashii.png"
-    imageCaption: "Splash screen for Tamashii"
-    projectType: "GAME PROJECT 4 - FUTUREGAMES"
-    description: "2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement."
-    links:
-      github: ""
-      demo: "https://futuregames.itch.io/tamashii"
+- id: slime-murderer
+  title: SLIME MURDERER
+  flairs:
+  - Unity
+  - C#
+  - FUTUREGAMES
+  duration: ''
+  teamSize: 1
+  hidden: true
+  detailPageUrl: /project.html?id=slime-murderer
+  imageSrc: /assets/projects/slime-murderer/slime-murderer-00.gif
+  imageCaption: SLIME MURDERER gameplay
+  projectType: 'COURSE PROJECT FUTUREGAMES: C# UNITY COURSE'
+  description: '"Slime Murderer" is a <a href="https://store.steampowered.com/app/1794680/Vampire_Survivors/">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities.'
+  links:
+    github: ''
+    demo: https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip
+- id: planetfactory
+  title: PlanetFactory [Working Title]
+  highlighted: true
+  section: Featured projects - Network and tools
+  flairs:
+  - Unity 6
+  - C#
+  - Networking (NGO)
+  duration: 13/11-2025 - 5/3-2026
+  teamSize: 1
+  detailPageUrl: /project.html?id=planetfactory
+  imageSrc: assets/projects/uniterminal/nuke_command.webp
+  imageCaption: In-progress image
+  projectType: PVP FACTORY BUILDER
+  description: A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative.
+  links:
+    github: ''
+    demo: https://download.noslimes.com/My%20Games/PlanetFactory/PlanetFactory_v0.0.0.5.zip
+- id: uniterminal
+  title: UNITERMINAL
+  section: Featured projects - Network and tools
+  flairs:
+  - Unity
+  - C#
+  - Tooling
+  duration: 30/9-2025 -
+  status: intermittent development
+  teamSize: 1
+  detailPageUrl: /project.html?id=uniterminal
+  imageSrc: /assets/projects/uniterminal/hero.png
+  imageCaption: UniTerminal — in-game developer console
+  projectType: IN-GAME COMMAND CONSOLE
+  description: Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion.
+  links:
+    github: https://github.com/NoSlimes/uniterminal
+- id: cat-survival-craft
+  title: CAT SURVIVAL CRAFT
+  section: Featured projects - Network and tools
+  flairs:
+  - Unity 6
+  - C#
+  - Networking (NGO)
+  duration: ''
+  teamSize: 1
+  detailPageUrl: /project.html?id=cat-survival-craft
+  imageSrc: /assets/projects/planetfactory/cat-survival-00.gif
+  imageCaption: Cat Survival Craft prototype
+  projectType: SURVIVAL CRAFT PROTOTYPE
+  description: Prototype focused on survival-crafting systems, inventory flow, and cats.
+  links:
+    github: ''
+- id: slaylien
+  title: SLAYLIEN
+  hidden: false
+  section: Game projects - Collaborative
+  flairs:
+  - Unreal Engine 5
+  - Blueprints
+  - C++
+  - Group Project
+  - FUTUREGAMES
+  duration: 7 weeks
+  teamSize: 11
+  detailPageUrl: /project.html?id=slaylien
+  cardVideoUrl: https://youtu.be/BY15e9aDYMk?t=5
+  imageSrc: /assets/projects/slaylien/slaylien.png
+  imageCaption: Slaylien
+  projectType: GAME PROJECT 3 - FUTUREGAMES
+  description: Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics.
+  links:
+    github: ''
+    demo: https://futuregames.itch.io/slaylien
+- id: dead_sector
+  title: DEAD SECTOR
+  hidden: false
+  section: Game projects - Collaborative
+  flairs:
+  - Unity 6
+  - C#
+  - Group Project
+  - FUTUREGAMES
+  duration: 4 weeks
+  teamSize: 16
+  detailPageUrl: /project.html?id=dead_sector
+  cardVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
+  imageSrc: /assets/projects/dead_sector/dead_sector.jpg
+  imageCaption: Splash screen for Dead Sector
+  projectType: GAME PROJECT 2 - FUTUREGAMES
+  description: Top-down sci-fi shooter in Unity. I implemented most UI and the quest system.
+  links:
+    github: ''
+    demo: https://futuregames.itch.io/dead-sector
+- id: tamashii
+  title: TAMASHII
+  highlighted: true
+  hidden: false
+  section: Game projects - Collaborative
+  flairs:
+  - Unreal Engine 5
+  - Blueprints
+  - C++
+  - Group Project
+  - FUTUREGAMES
+  duration: 4 weeks
+  teamSize: 11
+  detailPageUrl: /project.html?id=tamashii
+  cardVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4
+  imageSrc: /assets/projects/tamashii/tamashii.png
+  imageCaption: Splash screen for Tamashii
+  projectType: GAME PROJECT 4 - FUTUREGAMES
+  description: 2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement.
+  links:
+    github: ''
+    demo: https://futuregames.itch.io/tamashii

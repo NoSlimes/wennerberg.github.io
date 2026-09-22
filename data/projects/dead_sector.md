@@ -1,22 +1,26 @@
 ---
 pageTitle: Project - DEAD SECTOR
 heroImage: /assets/projects/dead_sector/dead_sector.jpg
-heroVideoUrl: "https://youtu.be/NRYq1QncCZc?t=12"
+heroVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
 projectName: DEAD SECTOR
-projectType: "[GAME PROJECT 2 - FUTUREGAMES]"
+projectType: '[GAME PROJECT 2 - FUTUREGAMES]'
 flairs:
-  - Unity
-  - C#
-  - Group Project
+- Unity
+- C#
+- Group Project
 projectInfo:
-  Team Size: 16
-  Engine: Unity
-  Language: C#
-  Duration: "4 weeks"
+- label: Team Size
+  value: 16
+- label: Engine
+  value: Unity
+- label: Language
+  value: C#
+- label: Duration
+  value: 4 weeks
 galleryImages:
-  - /assets/projects/dead_sector/dead_sector.jpg
-  - https://img.itch.zone/aW1hZ2UvMzM3OTAxMS8yMDE3NzQ1MS5wbmc=/original/gtnvjO.png
-videoURL: ""
+- /assets/projects/dead_sector/dead_sector.jpg
+- https://img.itch.zone/aW1hZ2UvMzM3OTAxMS8yMDE3NzQ1MS5wbmc=/original/gtnvjO.png
+videoURL: ''
 ---
 
 Dead Sector is a top-down sci-fi shooter where the player must find their way off their alien-infested space ship.

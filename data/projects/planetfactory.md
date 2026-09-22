@@ -1,25 +1,29 @@
 ---
 pageTitle: Project - PlanetFactory
 heroImage: /assets/projects/planetfactory/planetfactoryplanets.webp
-heroVideoUrl: ""
+heroVideoUrl: ''
 projectName: PlanetFactory
-projectType: "[PVP FACTORY BUILDER]"
+projectType: '[PVP FACTORY BUILDER]'
 flairs:
-  - Unity
-  - C#
-  - Networking (NGO)
-  - Systems Architecture
+- Unity
+- C#
+- Networking (NGO)
+- Systems Architecture
 projectInfo:
-    Status: In Development
-    Engine: Unity 6 (Addressables + NGO)
-    Language: C#
-    Duration: "IN PROGRESS"
+- label: Status
+  value: In Development
+- label: Engine
+  value: Unity 6 (Addressables + NGO)
+- label: Language
+  value: C#
+- label: Duration
+  value: IN PROGRESS
 codeLanguage: csharp
 highlights:
-  - Scalable, Addressables-powered data architecture built for modular asset management.
-  - Squeezed networking down to 2-byte identifiers because syncing strings is a crime.
-  - Implemented an event-driven destruction system using NetworkLists to sync 1,000+ hex tiles.
-  - Developed an authoritative combat system with deterministic projectile path reconstruction.
+- Scalable, Addressables-powered data architecture built for modular asset management.
+- Squeezed networking down to 2-byte identifiers because syncing strings is a crime.
+- Implemented an event-driven destruction system using NetworkLists to sync 1,000+ hex tiles.
+- Developed an authoritative combat system with deterministic projectile path reconstruction.
 ---
 
 PlanetFactory is an RTS factory builder set on a spherical hexagonal grid, focusing on automation, resource management, and real-time PVP combat. 

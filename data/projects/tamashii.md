@@ -1,23 +1,27 @@
 ---
 pageTitle: Project - TAMASHII
 heroImage: /assets/projects/tamashii/tamashii.png
-heroVideoUrl: "https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4"
+heroVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4
 projectName: TAMASHII
-projectType: "[GAME PROJECT 4 - FUTUREGAMES]"
+projectType: '[GAME PROJECT 4 - FUTUREGAMES]'
 flairs:
-  - Unreal Engine 5
-  - Blueprints
-  - C++
-  - Group Project
-  - Futuregames
+- Unreal Engine 5
+- Blueprints
+- C++
+- Group Project
+- Futuregames
 projectInfo:
-  Team Size: 11
-  Engine: Unreal Engine 5
-  Language: C++, Blueprints
-  Duration: "4 weeks"
+- label: Team Size
+  value: 11
+- label: Engine
+  value: Unreal Engine 5
+- label: Language
+  value: C++, Blueprints
+- label: Duration
+  value: 4 weeks
 highlights:
-  - Implemented the tether system and 3D movement bounds volumes for the players.
-  - Built and tuned player movement features including wall jump and double jump.
+- Implemented the tether system and 3D movement bounds volumes for the players.
+- Built and tuned player movement features including wall jump and double jump.
 ---
 
 Tamashii is a 2.5D co-op platformer built in Unreal Engine 5 where both players are linked by a tether. The main technical challenge was balancing physical coupling with responsive controls so the tether creates meaningful cooperation without making traversal feel unstable.

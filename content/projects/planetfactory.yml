@@ -1,0 +1,19 @@
+ordning: 20
+id: planetfactory
+title: PlanetFactory [Working Title]
+highlighted: true
+section: Featured projects - Network and tools
+flairs:
+- Unity 6
+- C#
+- Networking (NGO)
+duration: 13/11-2025 - 5/3-2026
+teamSize: 1
+detailPageUrl: /project.html?id=planetfactory
+imageSrc: assets/projects/uniterminal/nuke_command.webp
+imageCaption: In-progress image
+projectType: PVP FACTORY BUILDER
+description: A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative.
+links:
+  github: ''
+  demo: https://download.noslimes.com/My%20Games/PlanetFactory/PlanetFactory_v0.0.0.5.zip

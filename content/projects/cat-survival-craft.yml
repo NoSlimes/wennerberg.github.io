@@ -1,0 +1,17 @@
+ordning: 40
+id: cat-survival-craft
+title: CAT SURVIVAL CRAFT
+section: Featured projects - Network and tools
+flairs:
+- Unity 6
+- C#
+- Networking (NGO)
+duration: ''
+teamSize: 1
+detailPageUrl: /project.html?id=cat-survival-craft
+imageSrc: /assets/projects/planetfactory/cat-survival-00.gif
+imageCaption: Cat Survival Craft prototype
+projectType: SURVIVAL CRAFT PROTOTYPE
+description: Prototype focused on survival-crafting systems, inventory flow, and cats.
+links:
+  github: ''

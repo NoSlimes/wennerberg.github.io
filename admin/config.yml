@@ -1,0 +1,135 @@
+# Decap CMS content editor (wennerberg.dev/admin).
+# Project cards: one file per project under content/projects/.
+# Saving triggers a GitHub Action rebuilding data/projects.yml (generated).
+# Detail pages (data/projects/*.md) are edited in place (frontmatter + body).
+# Keep all fields listed here or they get wiped on save.
+# Never change an existing "id".
+
+backend:
+  name: github
+  repo: NoSlimes/wennerberg.github.io
+  branch: main
+  # Self-hosted OAuth (VPS nginx -> decap-oauth).
+  base_url: https://decap.auth.noslimes.com
+  auth_endpoint: /auth
+
+# Local dev: run "npx decap-server".
+local_backend: true
+
+site_url: https://wennerberg.dev
+display_url: https://wennerberg.dev
+
+media_folder: "assets/projects"
+public_folder: "/assets/projects"
+
+collections:
+  - name: "projekt"
+    label: "Projektkort"
+    label_singular: "Projekt"
+    description: "Cards on the front page. Rebuilt into data/projects.yml on save."
+    folder: "content/projects"
+    extension: "yml"
+    format: "yml"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["ordning", "title"]
+    fields:
+      - { name: "title", label: "Title", widget: "string" }
+      - name: "ordning"
+        label: "Order"
+        widget: "number"
+        default: 100
+        hint: "Lower shows first."
+      - name: "id"
+        label: "ID"
+        widget: "string"
+        hint: "NEVER change on existing projects! Links cards to detail pages."
+      - name: "section"
+        label: "Section"
+        widget: "string"
+        required: false
+        hint: "Existing: 'Featured projects - Network and tools', 'Game projects - Collaborative'. Empty = ungrouped."
+      - name: "flairs"
+        label: "Flairs"
+        widget: "list"
+        required: false
+        field: { name: "flair", label: "Flair", widget: "string" }
+      - { name: "projectType", label: "Type line", widget: "string", required: false }
+      - { name: "description", label: "Card text", widget: "text", required: false }
+      - { name: "imageSrc", label: "Card image", widget: "image", required: false, allow_multiple: false }
+      - { name: "imageCaption", label: "Image caption", widget: "string", required: false }
+      - { name: "cardVideoUrl", label: "Card video URL", widget: "string", required: false }
+      - { name: "duration", label: "Duration", widget: "string", required: false }
+      - { name: "teamSize", label: "Team size", widget: "number", required: false }
+      - { name: "status", label: "Status line", widget: "string", required: false }
+      - { name: "detailPageUrl", label: "Detail page URL", widget: "string", required: false }
+      - name: "links"
+        label: "Links"
+        widget: "object"
+        required: false
+        fields:
+          - { name: "github", label: "GitHub URL", widget: "string", required: false }
+          - { name: "demo", label: "Demo URL", widget: "string", required: false }
+      - { name: "highlighted", label: "Highlighted", widget: "boolean", required: false, default: false }
+      - { name: "hidden", label: "Hidden", widget: "boolean", required: false, default: false }
+
+  - name: "projektsidor"
+    label: "Projektsidor"
+    label_singular: "Sida"
+    description: "Detail pages (project.html). Saved in place, no build step."
+    folder: "data/projects"
+    extension: "md"
+    format: "yaml-frontmatter"
+    create: true
+    slug: "{{projectName}}"
+    summary: "{{projectName}}"
+    fields:
+      - { name: "projectName", label: "Project name", widget: "string" }
+      - { name: "pageTitle", label: "Page title", widget: "string", required: false }
+      - { name: "projectType", label: "Type line", widget: "string", required: false }
+      - name: "flairs"
+        label: "Flairs"
+        widget: "list"
+        required: false
+        field: { name: "flair", label: "Flair", widget: "string" }
+      - { name: "heroImage", label: "Hero image", widget: "image", required: false, allow_multiple: false }
+      - { name: "heroVideoUrl", label: "Hero video URL", widget: "string", required: false }
+      - { name: "videoURL", label: "Video URL", widget: "string", required: false }
+      - { name: "codeLanguage", label: "Code language", widget: "string", required: false }
+      - name: "projectInfo"
+        label: "Info rows"
+        widget: "list"
+        required: false
+        summary: "{{fields.label}}: {{fields.value}}"
+        fields:
+          - { name: "label", label: "Label", widget: "string" }
+          - { name: "value", label: "Value", widget: "text", required: false }
+      - name: "highlights"
+        label: "Highlights"
+        widget: "list"
+        required: false
+        field: { name: "highlight", label: "Highlight", widget: "string" }
+      - name: "galleryImages"
+        label: "Gallery images"
+        widget: "list"
+        required: false
+        field: { name: "image", label: "Image URL", widget: "string" }
+      - { name: "body", label: "Body", widget: "markdown", required: false }
+
+  - name: "meta"
+    label: "Sections"
+    label_singular: "File"
+    description: "Category descriptions above the card groups."
+    files:
+      - name: "sections"
+        label: "Sections"
+        file: "content/meta.yml"
+        fields:
+          - name: "sections"
+            label: "Sections"
+            widget: "list"
+            summary: "{{fields.section}}"
+            fields:
+              - { name: "section", label: "Section name", widget: "string", hint: "Must match the Section on the cards exactly." }
+              - { name: "text", label: "Description", widget: "text" }

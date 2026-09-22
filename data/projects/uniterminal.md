@@ -1,26 +1,30 @@
 ---
 pageTitle: Project - UniTerminal
 heroImage: /assets/projects/uniterminal/hero.png
-heroVideoUrl: ""
+heroVideoUrl: ''
 projectName: UniTerminal
-projectType: "IN-GAME COMMAND CONSOLE"
+projectType: IN-GAME COMMAND CONSOLE
 flairs:
-  - Unity
-  - C#
-  - Tooling
-  - Reflection
+- Unity
+- C#
+- Tooling
+- Reflection
 projectInfo:
-    Language: C#
-    Engine: Unity
-    License: "<a href=\"https://github.com/NoSlimes/UniTerminal/tree/main\" target=\"_blank\" rel=\"noopener noreferrer\">MIT</a>"
-    Dependencies: Unity
+- label: Language
+  value: C#
+- label: Engine
+  value: Unity
+- label: License
+  value: <a href="https://github.com/NoSlimes/UniTerminal/tree/main" target="_blank" rel="noopener noreferrer">MIT</a>
+- label: Dependencies
+  value: Unity
 galleryImages: []
-videoURL: ""
+videoURL: ''
 highlights:
-  - Optimizes developer velocity by providing a project-agnostic debug bridge.
-  - Implements a metadata baking system for zero-cost runtime command discovery.
-  - Supports complex argument parsing (Vectors, Enums, Quaternions) out of the box.
-  - Features a declarative API with bitwise flags for granular permission control.
+- Optimizes developer velocity by providing a project-agnostic debug bridge.
+- Implements a metadata baking system for zero-cost runtime command discovery.
+- Supports complex argument parsing (Vectors, Enums, Quaternions) out of the box.
+- Features a declarative API with bitwise flags for granular permission control.
 ---
 
 UniTerminal is a high-performance in-game developer console designed to eliminate slow iteration loops. It serves as a project-agnostic bridge to game logic, enabling real-time state manipulation and testing without the need for constant recompilation or custom debug UIs.

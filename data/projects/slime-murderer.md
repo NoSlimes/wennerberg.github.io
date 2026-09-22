@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - Slime Murderer
-heroImage: /assets/projects/slime-murderer/slime-murderer-oob.gif
+heroImage: /assets/uploads/slime-murderer-oob.gif
 heroVideoUrl: ''
 projectName: SLIME MURDERER
 projectType: 'COURSE PROJECT FUTUREGAMES: C# UNITY COURSE'
@@ -24,8 +24,8 @@ highlights:
 - An extendable player ability and upgrade system
 - A custom status effect system
 galleryImages:
-- /assets/projects/slime-murderer/slime-murderer-00.gif
-- /assets/projects/slime-murderer/slime-murderer-01.gif
+- /assets/uploads/slime-murderer-00.gif
+- /assets/uploads/slime-murderer-01.gif
 videoURL: ''
 ---
 

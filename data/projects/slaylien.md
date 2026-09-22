@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - SLAYLIEN
-heroImage: /assets/projects/slaylien/slaylien.png
+heroImage: /assets/uploads/slaylien.png
 heroVideoUrl: https://youtu.be/BY15e9aDYMk?t=3
 projectName: SLAYLIEN
 projectType: '[GAME PROJECT 3 - FUTUREGAMES]'

@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - PlanetFactory
-heroImage: /assets/projects/planetfactory/planetfactoryplanets.webp
+heroImage: /assets/uploads/planetfactoryplanets.webp
 heroVideoUrl: ''
 projectName: PlanetFactory
 projectType: '[PVP FACTORY BUILDER]'
@@ -125,4 +125,4 @@ public struct TileStatusInfo : INetworkSerializable, IEquatable<TileStatusInfo>
 
 PlanetFactory is the primary testing ground for **UniTerminal**. Whether I'm launching a `nuke_planet` command to stress-test the `NetworkList` synchronization or forcing network edge cases by manipulating planetary state, having a tool that speaks directly to my custom databases makes iteration actually fun instead of a chore.
 
-![PlanetFactory stress test](/assets/projects/uniterminal/nuke_command.webp)
+![PlanetFactory stress test](/assets/uploads/nuke_command.webp)

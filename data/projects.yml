@@ -14,7 +14,7 @@ summaries:
   teamSize: 1
   hidden: true
   detailPageUrl: /project.html?id=slime-murderer
-  imageSrc: /assets/projects/slime-murderer/slime-murderer-00.gif
+  imageSrc: /assets/uploads/slime-murderer-00.gif
   imageCaption: SLIME MURDERER gameplay
   projectType: 'COURSE PROJECT FUTUREGAMES: C# UNITY COURSE'
   description: '"Slime Murderer" is a <a href="https://store.steampowered.com/app/1794680/Vampire_Survivors/">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities.'
@@ -32,7 +32,7 @@ summaries:
   duration: 13/11-2025 - 5/3-2026
   teamSize: 1
   detailPageUrl: /project.html?id=planetfactory
-  imageSrc: assets/projects/uniterminal/nuke_command.webp
+  imageSrc: assets/uploads/nuke_command.webp
   imageCaption: In-progress image
   projectType: PVP FACTORY BUILDER
   description: A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative.
@@ -50,7 +50,7 @@ summaries:
   status: intermittent development
   teamSize: 1
   detailPageUrl: /project.html?id=uniterminal
-  imageSrc: /assets/projects/uniterminal/hero.png
+  imageSrc: /assets/uploads/hero.png
   imageCaption: UniTerminal — in-game developer console
   projectType: IN-GAME COMMAND CONSOLE
   description: Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion.
@@ -66,7 +66,7 @@ summaries:
   duration: ''
   teamSize: 1
   detailPageUrl: /project.html?id=cat-survival-craft
-  imageSrc: /assets/projects/planetfactory/cat-survival-00.gif
+  imageSrc: /assets/uploads/cat-survival-00.gif
   imageCaption: Cat Survival Craft prototype
   projectType: SURVIVAL CRAFT PROTOTYPE
   description: Prototype focused on survival-crafting systems, inventory flow, and cats.
@@ -86,7 +86,7 @@ summaries:
   teamSize: 11
   detailPageUrl: /project.html?id=slaylien
   cardVideoUrl: https://youtu.be/BY15e9aDYMk?t=5
-  imageSrc: /assets/projects/slaylien/slaylien.png
+  imageSrc: /assets/uploads/slaylien.png
   imageCaption: Slaylien
   projectType: GAME PROJECT 3 - FUTUREGAMES
   description: Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics.
@@ -106,7 +106,7 @@ summaries:
   teamSize: 16
   detailPageUrl: /project.html?id=dead_sector
   cardVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
-  imageSrc: /assets/projects/dead_sector/dead_sector.jpg
+  imageSrc: /assets/uploads/dead_sector.jpg
   imageCaption: Splash screen for Dead Sector
   projectType: GAME PROJECT 2 - FUTUREGAMES
   description: Top-down sci-fi shooter in Unity. I implemented most UI and the quest system.
@@ -128,7 +128,7 @@ summaries:
   teamSize: 11
   detailPageUrl: /project.html?id=tamashii
   cardVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4
-  imageSrc: /assets/projects/tamashii/tamashii.png
+  imageSrc: /assets/uploads/tamashii.png
   imageCaption: Splash screen for Tamashii
   projectType: GAME PROJECT 4 - FUTUREGAMES
   description: 2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement.

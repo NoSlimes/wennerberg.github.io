@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - TAMASHII
-heroImage: /assets/projects/tamashii/tamashii.png
+heroImage: /assets/uploads/tamashii.png
 heroVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4
 projectName: TAMASHII
 projectType: '[GAME PROJECT 4 - FUTUREGAMES]'

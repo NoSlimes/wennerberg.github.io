@@ -9,7 +9,7 @@ flairs:
 duration: ''
 teamSize: 1
 detailPageUrl: /project.html?id=cat-survival-craft
-imageSrc: /assets/projects/planetfactory/cat-survival-00.gif
+imageSrc: /assets/uploads/cat-survival-00.gif
 imageCaption: Cat Survival Craft prototype
 projectType: SURVIVAL CRAFT PROTOTYPE
 description: Prototype focused on survival-crafting systems, inventory flow, and cats.

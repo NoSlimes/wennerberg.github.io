@@ -19,8 +19,8 @@ local_backend: true
 site_url: https://wennerberg.dev
 display_url: https://wennerberg.dev
 
-media_folder: "assets/projects"
-public_folder: "/assets/projects"
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: "projects"
@@ -114,7 +114,7 @@ collections:
         label: "Gallery images"
         widget: "list"
         required: false
-        field: { name: "image", label: "Image URL", widget: "string" }
+        field: { name: "image", label: "Image", widget: "image" }
       - { name: "body", label: "Body", widget: "markdown", required: false }
 
   - name: "meta"

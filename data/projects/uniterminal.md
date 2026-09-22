@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - UniTerminal
-heroImage: /assets/projects/uniterminal/hero.png
+heroImage: /assets/uploads/hero.png
 heroVideoUrl: ''
 projectName: UniTerminal
 projectType: IN-GAME COMMAND CONSOLE
@@ -66,10 +66,10 @@ public static void LoadCache()
 }
 ```
 Here's the load time using the cache and no runtime discovery:
-![Fast runtime loading](/assets/projects/uniterminal/supafast.png)
+![Fast runtime loading](/assets/uploads/supafast.png)
 
 Aaaand, here's without
-![Slow runtime loading w/ discovery](/assets/projects/uniterminal/supaslow.png)
+![Slow runtime loading w/ discovery](/assets/uploads/supaslow.png)
 
 ## Flexible API & Command Configuration
 
@@ -119,7 +119,7 @@ private static IEnumerable<string> TestAttackAutoComplete(int argIndex)
 }
 ```
 
-![UniTerminal autocomplete showcase](/assets/projects/uniterminal/auto_complete.webp)
+![UniTerminal autocomplete showcase](/assets/uploads/auto_complete.webp)
 
 ### Help and Overloads
 
@@ -147,12 +147,12 @@ If you have multiple overloads for a single command, it will even aggregate the 
 ### Zero-Maintenance Documentation
 The best part is that the developer don't have to manually write or update documentation. Since the system "bakes" everything directly from the source code, the help command is always 100% accurate. If the developer changes a parameter name or add a default value in the C# code, the console reflects that change immediately after the next compilation—no manual updates required. The obvious exception for this is the command description.
 
-![Help command showcase](/assets/projects/uniterminal/help_overloads.webp)
+![Help command showcase](/assets/uploads/help_overloads.webp)
 
 ## Error Handling
 Everyone runs into some issues once in a while while coding. It's unavoidable. To prevent said issues crashing the whole program - UniTerminal wraps all command execution in try/catch blocks. In debug builds It outputs the full stack trace so the developer can track down what actually went wrong. They are displayed visually distinct in the console window. 
 
-![UniTerminal errors](/assets/projects/uniterminal/errors.webp)
+![UniTerminal errors](/assets/uploads/errors.webp)
 
 ## Workflow Features
 *   **Hot-Reload Support:** Automatically rebuilds the command cache on assembly reload, ensuring the console is always in sync with the latest code changes.
@@ -167,7 +167,7 @@ UniTerminal has become the backbone of development iteration on **PlanetFactory*
 - **Network State Injection:** Instantly simulate edge cases and force specific game states to validate networking logic under controlled conditions.
 - **Early Testing:** Bypass UI scaffolding entirely, allowing deep-system testing and balance tuning before front-end implementation begins.
 
-![PlanetFactory nuke command for stress test](/assets/projects/uniterminal/nuke_command.webp)
+![PlanetFactory nuke command for stress test](/assets/uploads/nuke_command.webp)
 
 ### Collaborative Development
 

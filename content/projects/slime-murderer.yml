@@ -9,7 +9,7 @@ duration: ''
 teamSize: 1
 hidden: true
 detailPageUrl: /project.html?id=slime-murderer
-imageSrc: /assets/projects/slime-murderer/slime-murderer-00.gif
+imageSrc: /assets/uploads/slime-murderer-00.gif
 imageCaption: SLIME MURDERER gameplay
 projectType: 'COURSE PROJECT FUTUREGAMES: C# UNITY COURSE'
 description: '"Slime Murderer" is a <a href="https://store.steampowered.com/app/1794680/Vampire_Survivors/">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities.'

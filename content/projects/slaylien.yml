@@ -13,7 +13,7 @@ duration: 7 weeks
 teamSize: 11
 detailPageUrl: /project.html?id=slaylien
 cardVideoUrl: https://youtu.be/BY15e9aDYMk?t=5
-imageSrc: /assets/projects/slaylien/slaylien.png
+imageSrc: /assets/uploads/slaylien.png
 imageCaption: Slaylien
 projectType: GAME PROJECT 3 - FUTUREGAMES
 description: Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics.

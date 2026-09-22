@@ -14,7 +14,7 @@ duration: 4 weeks
 teamSize: 11
 detailPageUrl: /project.html?id=tamashii
 cardVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4
-imageSrc: /assets/projects/tamashii/tamashii.png
+imageSrc: /assets/uploads/tamashii.png
 imageCaption: Splash screen for Tamashii
 projectType: GAME PROJECT 4 - FUTUREGAMES
 description: 2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement.

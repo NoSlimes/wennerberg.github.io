@@ -718,7 +718,7 @@ function processInlineImages(text, project, projectId) {
       ? imagePath 
       : imagePath.startsWith('/') 
         ? imagePath 
-        : `/assets/projects/${projectId}/${imagePath}`;
+        : `/assets/uploads/${imagePath}`;
     const altText = caption || `${project.projectName} image`;
     
     // Determine positioning class - check if caption is actually a position keyword
@@ -765,7 +765,7 @@ function processInlineImages(text, project, projectId) {
     galleryHtml += `<div class="inline-gallery" id="${galleryId}">`;
     
     images.forEach((imagePath, index) => {
-      const fullPath = imagePath.startsWith('/') ? imagePath : `/assets/projects/${projectId}/${imagePath}`;
+      const fullPath = imagePath.startsWith('/') ? imagePath : `/assets/uploads/${imagePath}`;
       const altText = `${project.projectName} gallery image ${index + 1}`;
       galleryHtml += `<img src="${fullPath}" alt="${altText}" class="gallery-image">`;
     });
@@ -776,7 +776,7 @@ function processInlineImages(text, project, projectId) {
   
   // Process video embeds: {{video:path/to/video.mp4|Caption}}
   text = text.replace(/\{\{video:([^|]+)(?:\|([^}]+))?\}\}/g, (match, videoPath, caption) => {
-    const fullPath = videoPath.startsWith('/') ? videoPath : `/assets/projects/${projectId}/${videoPath}`;
+    const fullPath = videoPath.startsWith('/') ? videoPath : `/assets/uploads/${videoPath}`;
     return `<div class="inline-video-container">
               <video controls class="inline-video">
                 <source src="${fullPath}" type="video/mp4">

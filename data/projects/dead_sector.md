@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - DEAD SECTOR
-heroImage: /assets/projects/dead_sector/dead_sector.jpg
+heroImage: /assets/uploads/dead_sector.jpg
 heroVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
 projectName: DEAD SECTOR
 projectType: '[GAME PROJECT 2 - FUTUREGAMES]'
@@ -18,7 +18,7 @@ projectInfo:
 - label: Duration
   value: 4 weeks
 galleryImages:
-- /assets/projects/dead_sector/dead_sector.jpg
+- /assets/uploads/dead_sector.jpg
 - https://img.itch.zone/aW1hZ2UvMzM3OTAxMS8yMDE3NzQ1MS5wbmc=/original/gtnvjO.png
 videoURL: ''
 ---

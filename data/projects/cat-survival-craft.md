@@ -1,6 +1,6 @@
 ---
 pageTitle: Project - Cat Survival Craft
-heroImage: /assets/projects/planetfactory/cat-survival.png
+heroImage: /assets/uploads/cat-survival.png
 heroVideoUrl: ''
 projectName: CAT SURVIVAL CRAFT
 projectType: '[SURVIVAL CRAFT PROTOTYPE]'
@@ -19,10 +19,10 @@ projectInfo:
 - label: Duration
   value: ''
 galleryImages:
-- /assets/projects/planetfactory/cat-survival-00.gif
-- /assets/projects/planetfactory/cat-survival-inventory-00.png
-- /assets/projects/planetfactory/cat-survival-inventory-01.png
-videoURL: /assets/projects/planetfactory/cat-survival.mp4
+- /assets/uploads/cat-survival-00.gif
+- /assets/uploads/cat-survival-inventory-00.png
+- /assets/uploads/cat-survival-inventory-01.png
+videoURL: /assets/uploads/cat-survival.mp4
 ---
 
 Cat Survival Craft is a solo prototype focused on survival-crafting systems, inventory flow, and cats.

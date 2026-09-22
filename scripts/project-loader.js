@@ -161,6 +161,51 @@ function normalizeInfo(info) {
   return info;
 }
 
+// Per-project meta tags for search and link previews (dynamic page).
+function updateProjectMeta(project, summary) {
+  const setMeta = (attr, key, value) => {
+    if (!value) return;
+    let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(attr, key);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', value);
+  };
+  const stripHtml = (html) => {
+    const div = document.createElement('div');
+    div.innerHTML = html || '';
+    return (div.textContent || '').trim().replace(/\s+/g, ' ');
+  };
+  const absUrl = (src) => {
+    if (!src) return '';
+    try { return new URL(src, window.location.origin).href; } catch (e) { return src; }
+  };
+  let desc = (project.overview || '').trim().replace(/\s+/g, ' ');
+  if (!desc && summary && summary.description) desc = stripHtml(summary.description);
+  if (desc.length > 160) desc = desc.slice(0, 157) + '...';
+  const title = `${project.projectName} – Elias Wennerberg`;
+  const image = absUrl(project.heroImage);
+
+  document.title = project.pageTitle || title;
+  setMeta('name', 'description', desc);
+  setMeta('property', 'og:title', title);
+  setMeta('property', 'og:description', desc);
+  setMeta('property', 'og:url', window.location.href);
+  setMeta('property', 'og:image', image);
+  setMeta('name', 'twitter:title', title);
+  setMeta('name', 'twitter:description', desc);
+  setMeta('name', 'twitter:image', image);
+  let canon = document.head.querySelector('link[rel="canonical"]');
+  if (!canon) {
+    canon = document.createElement('link');
+    canon.setAttribute('rel', 'canonical');
+    document.head.appendChild(canon);
+  }
+  canon.setAttribute('href', window.location.href);
+}
+
 // Convert markdown to HTML using marked.js library
 function markdownToHtml(markdown) {
   if (!markdown) return '';
@@ -366,6 +411,7 @@ async function loadProject() {
     console.log('Found project:', project);
 
     document.title = project.pageTitle;
+    updateProjectMeta(project, summaryEntry);
     document.getElementById('project-name').textContent = project.projectName;
     document.getElementById('project-type').innerHTML = marked.parseInline(project.projectType);
     document.getElementById('hero').style.setProperty('--hero-bg-image', `url('${project.heroImage}')`);

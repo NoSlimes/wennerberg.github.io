@@ -2,7 +2,7 @@
 """Combine content/ fragments into data/projects.yml.
 
 Source of truth: content/. Run locally or via .github/workflows/content.yml.
-"ordning" sets sort order (lowest first) and is stripped from output.
+"order" sets sort order (lowest first) and is stripped from output.
 """
 
 from pathlib import Path
@@ -34,7 +34,7 @@ def ordered(items):
     def sort_key(pair):
         name, obj = pair
         try:
-            order = float(obj.get("ordning", 9999))
+            order = float(obj.get("order", 9999))
         except (TypeError, ValueError):
             order = 9999
         return (order, name)
@@ -44,7 +44,7 @@ def ordered(items):
 
 def main():
     summaries = [
-        {k: v for k, v in item.items() if k != "ordning"}
+        {k: v for k, v in item.items() if k != "order"}
         for item in ordered(load_fragments("projects"))
     ]
     with open(CONTENT / "meta.yml", encoding="utf-8") as fh:

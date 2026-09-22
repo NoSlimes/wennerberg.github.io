@@ -4,3 +4,5 @@
 User-agent: *
 Disallow: /assets/code/
 Disallow: /admin/
+
+Sitemap: https://wennerberg.dev/sitemap.xml

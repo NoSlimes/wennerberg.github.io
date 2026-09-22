@@ -23,9 +23,9 @@ media_folder: "assets/projects"
 public_folder: "/assets/projects"
 
 collections:
-  - name: "projekt"
-    label: "Projektkort"
-    label_singular: "Projekt"
+  - name: "projects"
+    label: "Project cards"
+    label_singular: "Project"
     description: "Cards on the front page. Rebuilt into data/projects.yml on save."
     folder: "content/projects"
     extension: "yml"
@@ -33,10 +33,10 @@ collections:
     create: true
     slug: "{{slug}}"
     summary: "{{title}}"
-    sortable_fields: ["ordning", "title"]
+    sortable_fields: ["order", "title"]
     fields:
       - { name: "title", label: "Title", widget: "string" }
-      - name: "ordning"
+      - name: "order"
         label: "Order"
         widget: "number"
         default: 100
@@ -74,9 +74,9 @@ collections:
       - { name: "highlighted", label: "Highlighted", widget: "boolean", required: false, default: false }
       - { name: "hidden", label: "Hidden", widget: "boolean", required: false, default: false }
 
-  - name: "projektsidor"
-    label: "Projektsidor"
-    label_singular: "Sida"
+  - name: "project-pages"
+    label: "Project pages"
+    label_singular: "Page"
     description: "Detail pages (project.html). Saved in place, no build step."
     folder: "data/projects"
     extension: "md"

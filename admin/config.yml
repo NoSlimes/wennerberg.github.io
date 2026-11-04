@@ -133,3 +133,53 @@ collections:
             fields:
               - { name: "section", label: "Section name", widget: "string", hint: "Must match the Section on the cards exactly." }
               - { name: "text", label: "Description", widget: "text" }
+
+  - name: "experience"
+    label: "Experience"
+    label_singular: "Experience"
+    description: "Experience entries (experience.html). Saved in place, no build step."
+    folder: "data/experience"
+    extension: "md"
+    format: "yaml-frontmatter"
+    create: true
+    slug: "{{experienceName}}"
+    summary: "{{experienceName}}"
+    fields:
+      - { name: "experienceName", label: "Company / Experience name", widget: "string" }
+      - { name: "pageTitle", label: "Page title", widget: "string", required: false }
+      - { name: "experienceType", label: "Type line", widget: "string", required: false }
+      - name: "flairs"
+        label: "Flairs"
+        widget: "list"
+        required: false
+        field: { name: "flair", label: "Flair", widget: "string" }
+      - { name: "heroImage", label: "Hero image", widget: "image", required: false, allow_multiple: false }
+      - { name: "heroVideoUrl", label: "Hero video URL", widget: "string", required: false }
+      - { name: "videoURL", label: "Video URL", widget: "string", required: false }
+      - { name: "codeLanguage", label: "Code language", widget: "string", required: false }
+      - name: "experienceInfo"
+        label: "Info rows"
+        widget: "list"
+        required: false
+        summary: "{{fields.label}}: {{fields.value}}"
+        fields:
+          - { name: "label", label: "Label", widget: "string" }
+          - { name: "value", label: "Value", widget: "text", required: false }
+      - name: "highlights"
+        label: "Highlights"
+        widget: "list"
+        required: false
+        field: { name: "highlight", label: "Highlight", widget: "string" }
+      - name: "galleryImages"
+        label: "Gallery images"
+        widget: "list"
+        required: false
+        field: { name: "image", label: "Image", widget: "image" }
+      - { name: "body", label: "Body", widget: "markdown", required: false }
+      - name: "links"
+        label: "Links"
+        widget: "object"
+        required: false
+        fields:
+          - { name: "github", label: "GitHub URL", widget: "string", required: false }
+          - { name: "website", label: "Website URL", widget: "string", required: false }

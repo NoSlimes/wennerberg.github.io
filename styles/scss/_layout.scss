@@ -51,20 +51,17 @@ main {
   z-index: 1;
 }
 
-/* Custom Scrollbars for both the Sidebar and the Main Page */
-.sidebar_nav,
-html {
-  // For Firefox
+/* Reusable Scrollbar Mixin */
+@mixin custom-scrollbar($track-bg: transparent) {
   scrollbar-width: thin;
-  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) transparent;
+  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) $track-bg;
 
-  // For Chrome, Edge, and Safari
   &::-webkit-scrollbar {
     width: 6px;
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent;
+    background: $track-bg;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -76,6 +73,10 @@ html {
       background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.6);
     }
   }
+}
+
+html {
+  @include custom-scrollbar(variables.$color-background-dark);
 }
 
 /* Enhanced Wrappers */
@@ -226,6 +227,7 @@ html {
         }
       }
     }
+    @include custom-scrollbar(transparent); // transparent track for sidebar
   }
 
   .sidebar_brand_container {

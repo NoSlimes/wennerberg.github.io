@@ -581,28 +581,23 @@ main {
   z-index: 1;
 }
 
-/* Custom Scrollbars for both the Sidebar and the Main Page */
-.sidebar_nav,
+/* Reusable Scrollbar Mixin */
 html {
   scrollbar-width: thin;
-  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) transparent;
+  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) #170d0b;
 }
-.sidebar_nav::-webkit-scrollbar,
 html::-webkit-scrollbar {
   width: 6px;
 }
-.sidebar_nav::-webkit-scrollbar-track,
 html::-webkit-scrollbar-track {
-  background: transparent;
+  background: #170d0b;
 }
-.sidebar_nav::-webkit-scrollbar-thumb,
 html::-webkit-scrollbar-thumb {
   background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3);
   border-radius: 4px;
   -webkit-transition: background 0.2s ease;
   transition: background 0.2s ease;
 }
-.sidebar_nav::-webkit-scrollbar-thumb:hover,
 html::-webkit-scrollbar-thumb:hover {
   background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.6);
 }
@@ -749,6 +744,25 @@ html::-webkit-scrollbar-thumb:hover {
   color: var(--theme-accent);
   border-left: 3px solid var(--theme-accent);
   padding-left: calc(var(--space-s) - 3px);
+}
+.site_sidebar .sidebar_nav {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) transparent;
+}
+.site_sidebar .sidebar_nav::-webkit-scrollbar {
+  width: 6px;
+}
+.site_sidebar .sidebar_nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+.site_sidebar .sidebar_nav::-webkit-scrollbar-thumb {
+  background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3);
+  border-radius: 4px;
+  -webkit-transition: background 0.2s ease;
+  transition: background 0.2s ease;
+}
+.site_sidebar .sidebar_nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.6);
 }
 .site_sidebar .sidebar_brand_container {
   padding: var(--space-l);

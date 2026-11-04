@@ -38,7 +38,7 @@ summaries:
   description: A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative.
   links:
     github: ''
-    demo: https://download.noslimes.com/My%20Games/PlanetFactory/PlanetFactory_v0.0.0.5.zip
+    demo: ''
 - id: uniterminal
   title: UNITERMINAL
   section: Featured projects - Network and tools

@@ -116,46 +116,5 @@ $header-height: 70px;
     // Social icon filter for dark mode (no inversion needed - icons are light)
     --theme-social-icon-filter: none;
     
-    // Theme toggle colors (what the button shows)
-    --theme-toggle-color: #f8f8f8; // Light color for button (opposite of current theme)
-    --theme-toggle-border: #170d0b; // Dark border for dark mode
 }
 
-// Light theme overrides
-[data-theme="light"] {
-    --theme-bg-primary: #ddd5ca; // Beige background
-    --theme-bg-primary-rgb: 221, 213, 202;
-    --theme-bg-secondary: #f8f8f8; // White for cards
-    --theme-bg-tertiary: #ffffff;
-    --theme-text-primary: #170d0b;
-    --theme-text-secondary: rgba(23, 13, 11, 0.7);
-    --theme-text-inverted: #170d0b;
-    --theme-accent: #83c114; // Keep same green color as dark mode
-    --theme-accent-hover: #a0d142;
-    --theme-accent-soft: #a0d142;
-    --theme-border: rgba(131, 193, 20, 0.2);
-    --theme-footer-bg: linear-gradient(135deg, #ddd5ca 0%, #d0c7bc 100%);
-    
-    // Hero overlay for light mode (later fade to prevent washout)
-    --theme-hero-overlay-start: rgba(23, 13, 11, 0.3); // Much lighter start overlay
-    --theme-hero-overlay-end: rgba(221, 213, 202, 0.9); // Fade to beige background
-    
-    // Hero text colors for light mode
-    --theme-hero-text-primary: #170d0b; // Dark text on light hero
-    --theme-hero-text-primary-rgb: 23, 13, 11;
-    --theme-hero-text-gradient-start: #170d0b;
-    --theme-hero-text-gradient-end: #83c114;
-    --theme-accent-rgb: 131, 193, 20;
-    
-    // Flair colors for light mode (darker for better contrast)
-    --theme-flair-bg: rgba(23, 13, 11, 0.1);
-    --theme-flair-border: rgba(23, 13, 11, 0.3);
-    --theme-flair-text: #170d0b;
-    
-    // Social icon filter for light mode (invert to make light icons dark)
-    --theme-social-icon-filter: invert(1) brightness(0.2);
-    
-    // Theme toggle shows dark color when in light mode
-    --theme-toggle-color: #170d0b;
-    --theme-toggle-border: #f8f8f8; // White border for light mode
-}

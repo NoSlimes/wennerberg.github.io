@@ -18,11 +18,6 @@ async function loadHeaderFooter() {
 
     // Now that header is loaded, set up the menu toggle
     setupMenuToggle();
-    
-    // Also set up theme toggle if the theme manager exists
-    if (window.themeManager) {
-      window.themeManager.attachToggleListener();
-    }
 
   } catch (error) {
     console.error("Error loading header/footer:", error);
@@ -144,7 +139,7 @@ function setupImageModal() {
     const img = event.target.closest('img');
     if (!img) return;
     if (img.closest('.modal-overlay') || img.closest('.code-modal-overlay')) return;
-    if (img.closest('button, [role="button"], .button, .tool-btn, .social_link, .theme-toggle-btn')) return;
+    if (img.closest('button, [role="button"], .button, .tool-btn, .social_link')) return;
     if (img.closest('header, footer') && img.closest('a')) return;
     if (img.dataset.noImageModal === 'true') return;
 
@@ -155,7 +150,7 @@ function setupImageModal() {
 
   const shouldSkipImage = (img) => {
     if (img.dataset.noImageModal === 'true') return true;
-    if (img.closest('button, [role="button"], .button, .tool-btn, .social_link, .theme-toggle-btn')) return true;
+    if (img.closest('button, [role="button"], .button, .tool-btn, .social_link')) return true;
     if (img.closest('header, footer') && img.closest('a')) return true;
     return false;
   };

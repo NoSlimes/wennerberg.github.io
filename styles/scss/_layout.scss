@@ -288,36 +288,6 @@ main {
     letter-spacing: 0.05em;
   }
   
-  // Theme Toggle Button
-  .theme-toggle-container {
-    margin-left: var(--space-s);
-    flex-shrink: 0; // Prevent container from shrinking
-    display: flex;
-    align-items: center;
-  }
-  
-  .theme-toggle-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--theme-toggle-border);
-    background: var(--theme-toggle-color);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    flex-shrink: 0; // Prevent squishing in flex container
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-    &:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 10px var(--theme-accent);
-    }
-    
-    .theme-toggle-indicator {
-      display: none; // Not needed anymore since button itself has the color
-    }
-  }
-
   // --- MOBILE STYLES ---
   @media (max-width: 900px  ) {
     .wrapper {

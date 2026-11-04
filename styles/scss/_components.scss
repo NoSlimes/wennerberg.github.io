@@ -346,14 +346,14 @@ section#hero {
     background:
       linear-gradient(var(--theme-hero-overlay-start), var(--theme-hero-overlay-end)),
       var(--hero-bg-image);
-    padding-top: variables.$header-height;
+    padding-top: var(--space-xl);
     padding-bottom: var(--space-xl);
     background-size: 100% auto;
     background-position: center top;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
-    min-height: calc(100vh - variables.$header-height);
+    min-height: 100vh;
     position: relative;
     overflow: hidden;
     

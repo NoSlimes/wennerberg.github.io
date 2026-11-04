@@ -186,22 +186,36 @@ function setupImageModal() {
 
 function setupMenuToggle() {
   const toggle = document.querySelector(".menu-toggle");
-  const nav = document.querySelector(".header__nav ul.flex");
-  const navLinks = nav ? nav.querySelectorAll("a") : [];
+  const sidebar = document.querySelector(".site_sidebar");
+  const overlay = document.querySelector(".sidebar_overlay");
+  const navLinks = document.querySelectorAll(".sidebar_link");
 
-  if (toggle && nav) {
-    // Toggle menu open/close on burger button click
-    toggle.addEventListener("click", () => {
-      nav.classList.toggle("show");
-    });
-
-    // Close menu when any nav link is clicked
-    navLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("show");
-      });
-    });
+  function toggleSidebar() {
+    const isOpen = document.body.classList.toggle("sidebar-open");
+    sidebar?.classList.toggle("sidebar-open", isOpen);
+    overlay?.classList.toggle("sidebar-open", isOpen);
+    document.body.style.overflow = isOpen ? "hidden" : "";
   }
+
+  if (toggle) {
+    toggle.addEventListener("click", toggleSidebar);
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", toggleSidebar);
+  }
+
+  // Close sidebar when any nav link is clicked
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
+        document.body.classList.remove("sidebar-open");
+        sidebar?.classList.remove("sidebar-open");
+        overlay?.classList.remove("sidebar-open");
+        document.body.style.overflow = "";
+      }
+    });
+  });
 }
 
 

@@ -1,39 +1,70 @@
-<header class="site_header">
-  <div class="wrapper">
-    <a class="header__brand" href="/" aria-label="Go to homepage">
-      <h3>Elias Wennerberg</h3>
-      <h5>Game Programming Student</h5>
-    </a>
-    <nav class="header__nav">
-      <ul role="list" class="flex">
+<aside class="site_sidebar" id="site_sidebar">
 
-        <li><a class="hover_underline" href="/">HOME</a></li>
-        <li><a class="hover_underline" href="/#work">PROJECTS</a></li>
-        <li><a class="hover_underline" href="/about.html">ABOUT</a></li>
-        <li><a class="hover_underline" href="/resume.html">RESUME</a></li>
-        
-        <li class="social-icons-container">
-          <ul role="list">
-            <li>
-              <a href="https://github.com/noslimes" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                <img src="/assets/images/logos/logo-github.png" alt="GitHub logo" width="20" height="20" />
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/elias-wennerberg/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                <img src="/assets/images/logos/logo-linkedin.png" alt="LinkedIn logo" width="20" height="20" />
-              </a>
-            </li>
-            <li>
-              <a href="https://noslimes.com/" target="_blank" rel="noopener noreferrer" aria-label="Personal Website">
-                <img src="/assets/images/NSJC Mono INV.svg" alt="Personal brand logo" width="24" height="24" />
-              </a>
-            </li>
-          </ul>
-        </li>
-        
-      </ul>
-    </nav>
-    <button class="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
+  <nav class="sidebar_nav" aria-label="Main navigation">
+    <div class="sidebar_brand_container">
+      <a class="sidebar_brand" href="/" aria-label="Go to homepage">
+        <h3>Elias Wennerberg</h3>
+      </a>
+    </div>
+    <ul class="sidebar_list">
+
+      <!-- PROJECTS SECTION -->
+      <li class="sidebar_section">
+        <h6 class="sidebar_section_title">Projects</h6>
+        <ul class="sidebar_links">
+          <li><a class="sidebar_link" href="/#work">All Projects</a></li>
+          <li><a class="sidebar_link" href="/project.html?id=planetfactory">PlanetFactory</a></li>
+          <li><a class="sidebar_link" href="/project.html?id=tamashii">Tamashii</a></li>
+          <li><a class="sidebar_link" href="/project.html?id=slaylien">Slaylien</a></li>
+          <li><a class="sidebar_link" href="/project.html?id=dead_sector">Dead Sector</a></li>
+          <li><a class="sidebar_link" href="/project.html?id=cat-survival-craft">Cat Survival Craft</a></li>
+          <li><a class="sidebar_link" href="/project.html?id=uniterminal">UniTerminal</a></li>
+          <li><a class="sidebar_link" href="/project.html?id=slime-murderer">Slime Murderer</a></li>
+        </ul>
+      </li>
+
+      <!-- EXPERIENCE SECTION -->
+      <li class="sidebar_section">
+        <h6 class="sidebar_section_title">Experience</h6>
+        <ul class="sidebar_links">
+          <li><a class="sidebar_link" href="/experience.html">Evergreen Internship</a></li>
+        </ul>
+      </li>
+
+      <!-- MORE SECTION -->
+      <li class="sidebar_section">
+        <h6 class="sidebar_section_title">More</h6>
+        <ul class="sidebar_links">
+          <li><a class="sidebar_link" href="/about.html">About</a></li>
+          <li><a class="sidebar_link" href="/resume.html">Resume</a></li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+  <div class="sidebar_socials">
+    <ul class="social_list">
+      <li>
+        <a href="https://github.com/noslimes" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+          <img src="/assets/images/logos/logo-github.png" alt="GitHub logo" width="20" height="20" />
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/elias-wennerberg/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+          <img src="/assets/images/logos/logo-linkedin.png" alt="LinkedIn logo" width="20" height="20" />
+        </a>
+      </li>
+      <li>
+        <a href="https://noslimes.com/" target="_blank" rel="noopener noreferrer" aria-label="Personal Website">
+          <img src="/assets/images/NSJC Mono INV.svg" alt="Personal brand logo" width="24" height="24" />
+        </a>
+      </li>
+    </ul>
   </div>
-</header>
+</aside>
+
+<!-- Mobile menu toggle -->
+<button class="menu-toggle" aria-label="Toggle navigation" id="menu_toggle">☰</button>
+
+<div class="sidebar_overlay" id="sidebar_overlay"></div>

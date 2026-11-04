@@ -157,11 +157,11 @@ section#about {
 /* Main page: wider hero variant */
 section#hero.hero_wide {
   /* reduce the large top gap so the heading sits closer to the top */
-  padding-top: variables.$header-height;
+  padding-top: var(--space-xl);
   padding-bottom: var(--space-xl);
   display: flex;
   align-items: center;
-  min-height: calc(100vh - variables.$header-height);
+  min-height: 100vh;
   /* let hero wrapper grow wider than default site wrapper */
   .wrapper {
     max-width: 1600px;

@@ -581,6 +581,32 @@ main {
   z-index: 1;
 }
 
+/* Custom Scrollbars for both the Sidebar and the Main Page */
+.sidebar_nav,
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) transparent;
+}
+.sidebar_nav::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar_nav::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar_nav::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb {
+  background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3);
+  border-radius: 4px;
+  -webkit-transition: background 0.2s ease;
+  transition: background 0.2s ease;
+}
+.sidebar_nav::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.6);
+}
+
 /* Enhanced Wrappers */
 .wrapper {
   width: 100%;

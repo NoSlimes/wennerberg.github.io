@@ -51,6 +51,33 @@ main {
   z-index: 1;
 }
 
+/* Custom Scrollbars for both the Sidebar and the Main Page */
+.sidebar_nav,
+html {
+  // For Firefox
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) transparent;
+
+  // For Chrome, Edge, and Safari
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3);
+    border-radius: 4px;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.6);
+    }
+  }
+}
+
 /* Enhanced Wrappers */
 .wrapper {
   width: 100%;

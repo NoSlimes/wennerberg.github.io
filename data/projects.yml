@@ -20,7 +20,7 @@ summaries:
   description: '"Slime Murderer" is a <a href="https://store.steampowered.com/app/1794680/Vampire_Survivors/">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities.'
   links:
     github: ''
-    demo: https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip
+    demo: https://download.noslimes.com/Projects/Games/SLIME%20MURDERER/SLIME%20MURDERER.zip
 - id: planetfactory
   title: PlanetFactory [Working Title]
   highlighted: true

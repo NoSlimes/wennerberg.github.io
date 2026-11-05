@@ -80,6 +80,12 @@ section#about-page {
   }
 }
 
+.about-card__fact-level {
+  margin-left: 0.3em;
+  font-size: 0.75rem;
+  color: var(--theme-text-secondary);
+}
+
 .about-card__links {
   display: flex;
   flex-direction: column;

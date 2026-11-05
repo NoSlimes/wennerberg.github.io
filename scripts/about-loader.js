@@ -48,16 +48,27 @@ function groupTimelineEntries(sectionEl) {
 function renderAboutFacts(list, about) {
   const facts = [
     ['Based in', about.location],
-    ['Languages', Array.isArray(about.languages) ? about.languages.join(', ') : about.languages]
+    ['Languages', about.languages]
   ];
   list.innerHTML = '';
   facts.forEach(([label, value]) => {
-    if (!value) return;
+    if (!value || (Array.isArray(value) && !value.length)) return;
     const dt = document.createElement('dt');
     dt.textContent = label;
-    const dd = document.createElement('dd');
-    dd.textContent = value;
-    list.append(dt, dd);
+    list.append(dt);
+    // One row per list item; "Swedish (native)" shows the part in brackets as a muted level
+    (Array.isArray(value) ? value : [value]).forEach(item => {
+      const dd = document.createElement('dd');
+      const match = String(item).match(/^(.*?)\s*\((.+)\)$/);
+      dd.textContent = match ? match[1] : item;
+      if (match) {
+        const level = document.createElement('span');
+        level.className = 'about-card__fact-level';
+        level.textContent = match[2];
+        dd.append(' ', level);
+      }
+      list.append(dd);
+    });
   });
 }
 

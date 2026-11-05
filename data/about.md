@@ -30,7 +30,7 @@ I'm Elias, a game programmer from Växjö. I'm in the last stretch of the Game P
 ### Futuregames Malmö · Game Programming (YH)
 *Sep 2024 – Dec 2026*
 
-- Started in C# and Unity, then moved on to C++ and Unreal Engine 5.
+- C# and Unity first, then C++ and Unreal Engine 5 on top of that.
 - Four team game projects together with artists and designers, in teams of up to 16 people.
 
 > "Your coding skills are excellent. You're at the stage where you can focus on overall system architecture and a specialization path—gameplay, tools, or engine development. I see you having no issue succeeding in any of them."
@@ -47,14 +47,14 @@ I'm Elias, a game programmer from Växjö. I'm in the last stretch of the Game P
 
 ## Skills
 
-- **Programming:** C++, C#
-- **Engines:** Unreal Engine 5, Unity
+- **Programming:** C#, C++
+- **Engines:** Unity, Unreal Engine 5
 - **Networking:** Netcode for GameObjects, Mirror
 - **Tools:** Git, GitHub, Perforce, Azure DevOps, Visual Studio, VS Code
 
 ## How I got here
 
-I started out making small games in GameMaker Studio as a teenager, took a break for a while, and came back to it a few years later. Since then I've gone from Unity and C# towards C++ and engine work, and somewhere along the way networking became my favourite kind of problem: getting separate systems to talk to each other properly.
+I started out making small games in GameMaker Studio when I was around ten, took a break for a while, and came back to it a few years later. Unity and C# are still home base, and most of my own projects are built with them. Along the way I've added C++, through Unreal at Futuregames and engine work at Evergreen, and networking has become my favourite kind of problem: getting separate systems to talk to each other properly.
 
 ## Outside of code
 

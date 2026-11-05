@@ -29,13 +29,13 @@ experienceInfo:
   value: Malmö, Sweden
 highlights:
 - Built gameplay systems in team projects of 11-16 people, in both Unity and Unreal Engine 5.
-- Started out in C# and Unity, then moved over to C++ and Unreal Engine 5.
+- Learned C# and Unity first, then added C++ and Unreal Engine 5.
 - Worked closely with artists and designers on every game project, from first pitch to shipped build.
 links:
   github: ''
   website: 'https://futuregames.se/'
 ---
-A bit over two years of game programming at Futuregames in Malmö. It started with a lot of C# and Unity, moved on to C++ and Unreal, and in between there were a bunch of team projects where I got to make actual (small) games together with artists and designers.
+A bit over two years of game programming at Futuregames in Malmö. It started with a lot of C# and Unity, then added C++ and Unreal, and in between there were a bunch of team projects where I got to make actual (small) games together with artists and designers.
 
 ## Game Projects
 
@@ -47,6 +47,6 @@ Every few months the whole class gets split into teams with artists and designer
 
 There was also a racing game where I ended up as a generalist and kind of unofficial lead. All of them are in the showreel below.
 
-## From C# to C++
+## C# and C++
 
-The first course was C# in Unity, where we made a Vampire Survivors clone. After that the programme went deeper into C++ and Unreal Engine 5, which is what the later game projects were built in.
+The first course was C# in Unity, where we made a Vampire Survivors clone. After that the programme added C++ and Unreal Engine 5, which the later game projects were built in. C# and Unity are still what I use most for my own projects.

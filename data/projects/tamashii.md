@@ -1,9 +1,9 @@
 ---
 pageTitle: Project - TAMASHII
-heroImage: /assets/uploads/tamashii.png
+heroImage: /assets/uploads/tamashii.webp
 heroVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4
 projectName: TAMASHII
-projectType: '[GAME PROJECT 4 - FUTUREGAMES]'
+projectType: 'Game Project 4 · Futuregames'
 flairs:
 - Unreal Engine 5
 - Blueprints

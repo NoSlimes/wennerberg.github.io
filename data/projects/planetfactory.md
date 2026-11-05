@@ -3,7 +3,7 @@ pageTitle: Project - PlanetFactory
 heroImage: /assets/uploads/planetfactoryplanets.webp
 heroVideoUrl: ''
 projectName: PlanetFactory
-projectType: '[PVP FACTORY BUILDER]'
+projectType: 'PvP Factory Builder · Solo Project'
 flairs:
 - Unity
 - C#

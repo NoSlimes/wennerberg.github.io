@@ -25,6 +25,7 @@ body {
   color: var(--theme-text-primary);
   position: relative;
   isolation: isolate;
+  overflow-wrap: break-word;
 }
 
 /* Remove list styles */
@@ -67,6 +68,10 @@ pre {
   white-space: pre !important;
   overflow-x: auto !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+:not(pre) > code {
+  overflow-wrap: anywhere;
 }
 
 code {

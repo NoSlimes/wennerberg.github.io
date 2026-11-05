@@ -99,14 +99,12 @@ $sidebar-width: 280px;
     --theme-footer-bg: linear-gradient(135deg, #170d0b 0%, #1a0f0d 100%);
     
     // Hero overlay for dark mode (earlier fade works fine)
-    --theme-hero-overlay-start: rgba(93, 86, 57, 0.8); // variables.$color-background-medium-1 with opacity
+    --theme-hero-overlay-start: rgba(23, 13, 11, 0.6); // same tone as --theme-bg-primary so hero and page match
     --theme-hero-overlay-end: rgba(23, 13, 11, 1.0);
     
     // Hero text colors for dark mode
     --theme-hero-text-primary: #c8b6aa; // Light text on dark hero
     --theme-hero-text-primary-rgb: 200, 182, 170;
-    --theme-hero-text-gradient-start: #c8b6aa;
-    --theme-hero-text-gradient-end: #a0d142;
     --theme-accent-rgb: 131, 193, 20;
     
     // Flair colors for dark mode

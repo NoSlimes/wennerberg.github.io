@@ -102,55 +102,57 @@ section#about {
   }
 }
 
-/* Hero layout: portrait left, intro/meta on the right */
-.hero_content {
+/* Home page hero only (section#hero.hero_wide); project/experience heroes use
+   the generic rules in _components.scss.
+   Layout: portrait left, intro/meta on the right.
+   Sized from the space next to the sidebar (not the window width), so the
+   text column never gets squeezed. Scoped to the home hero so it beats the
+   generic single-column .hero_content rule in _components.scss. */
+section#hero.hero_wide .hero_content {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--space-3xl);
+  width: 100%; // the text column sizes from this, so it must not shrink-to-fit
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: clamp(var(--space-l), 5vw, var(--space-3xl));
   align-items: center;
 }
 
-.hero_intro,
-.hero_meta {
+section#hero.hero_wide .hero_intro,
+section#hero.hero_wide .hero_meta {
   grid-column: 2;
+  container-type: inline-size;
 }
 
-.hero_portrait {
-  width: 240px;
-  height: 240px;
-  max-width: none;
+// The name shrinks to fit its column instead of breaking mid-word
+section#hero.hero_wide .hero_intro h1 {
+  font-size: min(var(--step-5), 14cqi);
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+section#hero.hero_wide .hero_portrait {
+  grid-row: span 2;
+  justify-self: end;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 18px;
+  border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.35);
   border: 3px solid rgba(255,255,255,0.06);
 }
 
-@media (max-width: 900px) {
-  .hero_content {
-    grid-template-columns: 1fr;
+// Stack while the sidebar still leaves too little room for portrait + text
+@media (max-width: 1100px) {
+  section#hero.hero_wide .hero_content {
+    grid-template-columns: minmax(0, 1fr);
   }
-  .hero_portrait {
+  section#hero.hero_wide .hero_portrait {
     display: none;
   }
-  .hero_intro,
-  .hero_meta {
+  section#hero.hero_wide .hero_intro,
+  section#hero.hero_wide .hero_meta {
     grid-column: auto;
-  }
-}
-
-/* Make hero portrait larger on wider viewports */
-@media (min-width: 1200px) {
-  .hero_portrait {
-    width: 340px;
-    height: 340px;
-    border-radius: 24px;
-  }
-}
-
-@media (min-width: 1600px) {
-  .hero_portrait {
-    width: 420px;
-    height: 420px;
   }
 }
 
@@ -170,60 +172,56 @@ section#hero.hero_wide {
     padding-right: var(--space-l);
   }
 
+  // On phones the section and wrapper padding stacked up and squeezed the name;
+  // keep just one gutter there
+  @media (max-width: 768px) {
+    padding-left: 0;
+    padding-right: 0;
+
+    .wrapper {
+      padding-left: var(--space-s);
+      padding-right: var(--space-s);
+    }
+  }
+
   .hero_content {
     padding: 0;
     max-width: none;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-3xl);
-    align-items: center;
-  }
-
-  .hero_intro,
-  .hero_meta {
-    grid-column: 2;
-  }
-
-  /* stack into a single column on smaller screens */
-  @media (max-width: 900px) {
-    .hero_content {
-      grid-template-columns: 1fr;
-    }
-    .hero_intro,
-    .hero_meta {
-      grid-column: auto;
-    }
-  }
-
-  /* slightly increase portrait cap on the wide hero */
-  .hero_portrait {
-    @media (min-width: 1200px) {
-      width: 360px;
-      height: 360px;
-    }
-    @media (min-width: 1600px) {
-      width: 400px;
-      height: 400px;
-    }
   }
 }
 
 section#showreel {
   color: var(--theme-text-primary);
   padding-top: var(--space-xl);
-  padding-bottom: var(--space-xl);
+  // No bottom padding: section#work's top padding is the gap, so showreel ->
+  // projects matches the gap between project groups (both --space-3xl)
+  padding-bottom: 0;
 
-  .showreel-subtitle {
-    margin-bottom: var(--space-m);
-    color: var(--theme-text-secondary);
+  // Same header style as the project sections, lined up with the video's left edge
+  .showreel-header {
+    max-width: 1100px;
+    margin: 0 auto var(--space-m);
+  }
+
+  // Big video with the clip breakdown underneath
+  .showreel-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
   .showreel-frame {
     position: relative;
-    border-radius: 14px;
+    border-radius: 16px;
     overflow: hidden;
-    border: 1px solid var(--theme-border);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(135deg, rgba(var(--theme-bg-primary-rgb), 0.75), rgba(var(--theme-bg-primary-rgb), 0.4));
+    border: 1px solid rgba(var(--theme-accent-rgb), 0.35);
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.4),
+      0 24px 60px rgba(0, 0, 0, 0.45),
+      0 0 80px rgba(var(--theme-accent-rgb), 0.12);
+    background: #000;
 
     video {
       width: 100%;
@@ -235,35 +233,90 @@ section#showreel {
   }
 
   .showreel-notes {
-    margin-top: var(--space-m);
-    padding: var(--space-s);
+    padding: var(--space-s) var(--space-m) var(--space-m);
     border: 1px solid var(--theme-border);
-    border-radius: 12px;
-    background: rgba(var(--theme-bg-primary-rgb), 0.45);
+    border-radius: 16px;
+    background: linear-gradient(160deg, rgba(var(--theme-accent-rgb), 0.07), rgba(var(--theme-bg-primary-rgb), 0.6) 60%);
   }
 
   .showreel-notes__title {
-    margin: 0 0 var(--space-xs) 0;
+    margin: 0 0 var(--space-s) 0;
+    font-size: var(--step-0);
     font-weight: 600;
     color: var(--theme-text-primary);
   }
 
   .showreel-notes__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+    gap: var(--space-s) var(--space-m);
     margin: 0;
-    padding-left: 1.2rem;
-    color: var(--theme-text-secondary);
+    padding: 0;
+    list-style: none;
+    counter-reset: clip;
+  }
 
-    li {
-      margin-bottom: 0.25rem;
+  // Numbered row: accent badge, project name (linked when it has a page), role tags
+  .showreel-clip {
+    counter-increment: clip;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space-xs);
+    row-gap: 0.1rem;
+    align-items: center;
 
-      &:last-child {
-        margin-bottom: 0;
+    &::before {
+      content: counter(clip, decimal-leading-zero);
+      grid-row: span 2;
+      align-self: center;
+      min-width: 2.1rem;
+      padding: 0.2rem 0;
+      border-radius: 8px;
+      text-align: center;
+      font-size: var(--step--2);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--theme-accent);
+      background: var(--theme-flair-bg);
+      border: 1px solid var(--theme-flair-border);
+    }
+  }
+
+  .showreel-clip__name {
+    font-weight: 600;
+    color: var(--theme-text-primary);
+    text-decoration: none;
+  }
+
+  a.showreel-clip__name {
+    width: fit-content;
+    transition: color 0.2s ease;
+
+    &::after {
+      content: " →";
+      color: var(--theme-accent);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: var(--theme-accent-hover);
+
+      &::after {
+        opacity: 1;
       }
     }
+  }
 
-    strong {
-      color: var(--theme-text-primary);
-      font-weight: 600;
-    }
+  .showreel-clip__roles {
+    font-size: var(--step--1);
+    line-height: 1.4;
+    color: var(--theme-text-secondary);
+  }
+
+  .showreel-clip__role + .showreel-clip__role::before {
+    content: " · ";
+    color: var(--theme-accent);
   }
 }

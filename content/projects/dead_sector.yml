@@ -1,6 +1,7 @@
 order: 60
 id: dead_sector
 title: DEAD SECTOR
+navTitle: Dead Sector
 hidden: false
 section: Game projects - Collaborative
 flairs:
@@ -14,7 +15,7 @@ detailPageUrl: /project.html?id=dead_sector
 cardVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
 imageSrc: /assets/uploads/dead_sector.jpg
 imageCaption: Splash screen for Dead Sector
-projectType: GAME PROJECT 2 - FUTUREGAMES
+projectType: 'Game Project 2 · Futuregames'
 description: Top-down sci-fi shooter in Unity. I implemented most UI and the quest system.
 links:
   github: ''

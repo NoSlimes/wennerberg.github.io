@@ -1,6 +1,8 @@
 order: 40
 id: cat-survival-craft
 title: CAT SURVIVAL CRAFT
+navTitle: Cat Survival Craft
+stub: true
 section: Featured projects - Network and tools
 flairs:
 - Unity 6
@@ -9,9 +11,9 @@ flairs:
 duration: ''
 teamSize: 1
 detailPageUrl: /project.html?id=cat-survival-craft
-imageSrc: /assets/uploads/cat-survival-00.gif
+imageSrc: /assets/uploads/cat-survival-00.webp
 imageCaption: Cat Survival Craft prototype
-projectType: SURVIVAL CRAFT PROTOTYPE
+projectType: 'Survival Craft Prototype'
 description: Prototype focused on survival-crafting systems, inventory flow, and cats.
 links:
   github: ''

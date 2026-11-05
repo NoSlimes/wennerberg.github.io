@@ -9,6 +9,9 @@
   <meta name="robots" content="index, follow" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Elias Wennerberg – Dev Portfolio" />
+  <!-- Hero videos: start connecting before the loader asks for them -->
+  <link rel="preconnect" href="https://www.youtube.com" />
+  <link rel="preconnect" href="https://download.noslimes.com" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
 
@@ -22,7 +25,7 @@
   <main class="project-detail-page">
     <section id="hero">
       <div class="wrapper">
-        <div class="hero_content project-hero">
+        <div class="hero_content">
           <div class="hero_intro">
             <h1 id="project-name" class="h1"></h1>
             <p id="project-type" class="hero_subtitle"></p>
@@ -65,8 +68,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
   <script src="/scripts/header_footer.js"></script>
+  <script src="/scripts/detail-page.js"></script>
   <script src="/scripts/project-loader.js"></script>
 </body>
 

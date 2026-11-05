@@ -36,6 +36,7 @@ collections:
     sortable_fields: ["order", "title"]
     fields:
       - { name: "title", label: "Title", widget: "string" }
+      - { name: "navTitle", label: "Sidebar name", widget: "string", required: false, hint: "Short name in the sidebar. Defaults to Title." }
       - name: "order"
         label: "Order"
         widget: "number"
@@ -73,6 +74,8 @@ collections:
           - { name: "demo", label: "Demo URL", widget: "string", required: false }
       - { name: "highlighted", label: "Highlighted", widget: "boolean", required: false, default: false }
       - { name: "hidden", label: "Hidden", widget: "boolean", required: false, default: false }
+      - { name: "locked", label: "Locked", widget: "boolean", required: false, default: false, hint: "Hides it everywhere AND blocks the page: visitors only see a locked notice. The data files stay public." }
+      - { name: "stub", label: "Stub / work in progress", widget: "boolean", required: false, default: false, hint: "Still listed everywhere, but the page shows a note that it's a work in progress and might be bare-bones." }
 
   - name: "project-pages"
     label: "Project pages"
@@ -146,6 +149,11 @@ collections:
     summary: "{{experienceName}}"
     fields:
       - { name: "experienceName", label: "Company / Experience name", widget: "string" }
+      - { name: "navTitle", label: "Sidebar name", widget: "string", required: false, hint: "Short name in the sidebar. Defaults to Company / Experience name." }
+      - { name: "order", label: "Order", widget: "number", required: false, default: 100, hint: "Lower shows first in the sidebar." }
+      - { name: "hidden", label: "Hidden", widget: "boolean", required: false, default: false, hint: "Hide from the sidebar. The page itself stays reachable by its link." }
+      - { name: "locked", label: "Locked", widget: "boolean", required: false, default: false, hint: "Hides it everywhere AND blocks the page: visitors only see a locked notice. The data files stay public." }
+      - { name: "stub", label: "Stub / work in progress", widget: "boolean", required: false, default: false, hint: "Still listed everywhere, but the page shows a note that it's a work in progress and might be bare-bones." }
       - { name: "pageTitle", label: "Page title", widget: "string", required: false }
       - { name: "experienceType", label: "Type line", widget: "string", required: false }
       - name: "flairs"

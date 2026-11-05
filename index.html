@@ -18,15 +18,14 @@
   <meta property="og:description"
     content="Unity C# gameplay and network programming, Unreal Engine 5 experience. Solo and team projects: Dead Sector, Slaylien, Tamashii, PlanetFactory and more." />
   <meta property="og:url" content="https://wennerberg.dev/" />
-  <meta property="og:image" content="https://wennerberg.dev/assets/images/portrait.jpg" />
+  <meta property="og:image" content="https://wennerberg.dev/assets/images/portrait.webp" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Elias Wennerberg – Game Programmer (Unity C#, Networking, UE5)" />
   <meta name="twitter:description"
     content="Gameplay and multiplayer programming in Unity C# and Unreal Engine 5. Portfolio of solo and team projects." />
-  <meta name="twitter:image" content="https://wennerberg.dev/assets/images/portrait.jpg" />
+  <meta name="twitter:image" content="https://wennerberg.dev/assets/images/portrait.webp" />
 
   <link rel="stylesheet" href="styles/main.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <script type="application/ld+json">
@@ -44,8 +43,7 @@
     "knowsAbout": ["Unity", "C#", "Netcode for GameObjects", "Mirror", "Unreal Engine 5", "C++", "Multiplayer", "Gameplay Programming"],
     "sameAs": [
       "https://github.com/noslimes",
-      "https://www.linkedin.com/in/elias-wennerberg/",
-      "https://noslimes.com/"
+      "https://www.linkedin.com/in/elias-wennerberg/"
     ]
   }
   </script>
@@ -58,7 +56,7 @@
     <section id="hero" class="hero_wide">
       <div class="wrapper">
         <div class="hero_content">
-          <img class="hero_portrait" src="./assets/images/portrait.jpg" alt="Portrait of Elias Wennerberg" width="260" height="260" />
+          <img class="hero_portrait" src="./assets/images/portrait.webp" alt="Portrait of Elias Wennerberg" width="260" height="260" />
           <div class="hero_intro">
             <h1 class="h1">Elias Wennerberg</h1>
             <p class="hero_subtitle">Game Programming Student</p>
@@ -96,9 +94,6 @@
                 <a href="https://www.linkedin.com/in/elias-wennerberg/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="social_link">
                   <img src="./assets/images/logos/logo-linkedin.png" alt="LinkedIn logo" width="20" height="20" />
                 </a>
-                <a href="https://noslimes.com/" target="_blank" rel="noopener noreferrer" aria-label="Personal Website" class="social_link">
-                  <img src="./assets/images/NSJC Mono INV.svg" alt="Personal brand logo" width="24" height="24" />
-                </a>
                 <a href="#" class="social_link email-link" aria-label="Email Elias Wennerberg">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
                 </a>
@@ -110,28 +105,47 @@
     </section>
 
     <section id="showreel" aria-labelledby="showreel-title">
-      <div class="wrapper_inner">
-        <div class="text_center">
-          <h2 id="showreel-title" class="h3">Showreel</h2>
-          <p class="showreel-subtitle">A quick look at selected work.</p>
-        </div>
+      <header class="showreel-header project-card-section__header">
+        <p class="project-card-section__label">Showreel</p>
+        <h2 id="showreel-title" class="h3 project-card-section__title">Selected work</h2>
+        <p class="project-card-section__description">Highlights from team and solo projects, with my role in each clip.</p>
+      </header>
+      <div class="showreel-layout">
         <div class="showreel-frame">
-          <video controls playsinline preload="metadata" poster="/assets/uploads/tamashii.png">
-            <source src="https://download.noslimes.com/Futuregames/Showreel/Showreel.mp4" type="video/mp4" />
+          <video controls playsinline preload="metadata" poster="/assets/uploads/tamashii.webp">
+            <source src="/assets/videos/futuregames-showreel.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
-        <div class="showreel-notes" aria-label="Showreel project contributions">
-          <p class="showreel-notes__title">My role in each featured clip:</p>
+        <aside class="showreel-notes" aria-labelledby="showreel-notes-title">
+          <h3 id="showreel-notes-title" class="showreel-notes__title">What I did</h3>
           <ol class="showreel-notes__list">
-            <li><strong>Dead Sector</strong> | UI, Quests</li>
-            <li><strong>Racing Game</strong> | Generalist, Unofficial lead</li>
-            <li><strong>Slaylien</strong> | AI, Character switching</li>
-            <li><strong>Slime Murderer</strong> | Solo</li>
-            <li><strong>Tamashii</strong> | Tether system, Character movement</li>
-            <li><strong>PlanetFactory</strong> | Solo</li>
+            <li class="showreel-clip">
+              <a class="showreel-clip__name" href="/project.html?id=dead_sector">Dead Sector</a>
+              <span class="showreel-clip__roles"><span class="showreel-clip__role">UI</span><span class="showreel-clip__role">Quests</span></span>
+            </li>
+            <li class="showreel-clip">
+              <span class="showreel-clip__name">Racing Game</span>
+              <span class="showreel-clip__roles"><span class="showreel-clip__role">Generalist</span><span class="showreel-clip__role">Unofficial lead</span></span>
+            </li>
+            <li class="showreel-clip">
+              <a class="showreel-clip__name" href="/project.html?id=slaylien">Slaylien</a>
+              <span class="showreel-clip__roles"><span class="showreel-clip__role">AI</span><span class="showreel-clip__role">Character switching</span></span>
+            </li>
+            <li class="showreel-clip">
+              <span class="showreel-clip__name">Slime Murderer</span>
+              <span class="showreel-clip__roles"><span class="showreel-clip__role">Solo</span></span>
+            </li>
+            <li class="showreel-clip">
+              <a class="showreel-clip__name" href="/project.html?id=tamashii">Tamashii</a>
+              <span class="showreel-clip__roles"><span class="showreel-clip__role">Tether system</span><span class="showreel-clip__role">Character movement</span></span>
+            </li>
+            <li class="showreel-clip">
+              <a class="showreel-clip__name" href="/project.html?id=planetfactory">PlanetFactory</a>
+              <span class="showreel-clip__roles"><span class="showreel-clip__role">Solo</span></span>
+            </li>
           </ol>
-        </div>
+        </aside>
       </div>
     </section>
     
@@ -153,13 +167,8 @@
   <footer id="footer-container"></footer>
 
   <!-- Scripts are placed at the end of the body for faster page loading -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="scripts/header_footer.js"></script>
   <script src="scripts/project_summary_inject.js"></script>
-  <script src="scripts/project-loader.js"></script>
 </body>
 
 </html>

@@ -1,9 +1,9 @@
 ---
 pageTitle: Project - Cat Survival Craft
-heroImage: /assets/uploads/cat-survival.png
+heroImage: /assets/uploads/cat-survival.webp
 heroVideoUrl: ''
 projectName: CAT SURVIVAL CRAFT
-projectType: '[SURVIVAL CRAFT PROTOTYPE]'
+projectType: 'Survival Craft Prototype · Solo Project'
 flairs:
 - Unity 6
 - C#
@@ -19,7 +19,7 @@ projectInfo:
 - label: Duration
   value: ''
 galleryImages:
-- /assets/uploads/cat-survival-00.gif
+- /assets/uploads/cat-survival-00.webp
 - /assets/uploads/cat-survival-inventory-00.png
 - /assets/uploads/cat-survival-inventory-01.png
 videoURL: /assets/uploads/cat-survival.mp4

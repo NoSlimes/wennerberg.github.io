@@ -11,3 +11,6 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+# IDE folders (JetBrains Rider / Visual Studio)
+.idea/
+.vs/

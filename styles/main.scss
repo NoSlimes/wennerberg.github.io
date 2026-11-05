@@ -2,7 +2,6 @@
 @use 'scss/variables';
 @use 'scss/base';
 @use 'scss/typography';
-//@use 'scss/style';
 
 // --- 2. PAGES ---
 @use 'scss/pages/pages';
@@ -16,6 +15,4 @@
 @use 'scss/project_summary';
 @use 'scss/modal';
 
-// --- 5. ANIMATIONS ---
-@use 'scss/animations';
 

@@ -16,45 +16,20 @@ async function injectProjectSummaries() {
         let projects = projectsData.summaries || [];
         const sectionDescriptions = projectsData.sectionDescriptions || {};
 
-        // Filter out hidden projects
-        projects = projects.filter(p => p.hidden !== true);
+        // Filter out hidden and locked projects
+        projects = projects.filter(p => p.hidden !== true && p.locked !== true);
 
         contentContainer.innerHTML = '';
 
+        // Round tag icons on the cards: the shared logo (flairIconFile in header_footer.js)
+        // when there is one, otherwise the tag's initials
         function renderFlair(flair) {
             const name = (flair || '').toString();
-            // normalize key: lowercase, remove non-alphanumerics except + and #, strip digits
-            const key = name.toLowerCase().replace(/[^a-z0-9+#]+/g, '').replace(/[0-9]/g, '');
-
-            // mapping of known flairs to logo files (in /assets/images/logos/) or fallback label/bg
-            const map = {
-                'unity': {file: 'U_Cube_1C_Black.svg', label: 'U', bg: '#222'},
-                'c#': {file: 'Logo_C_sharp.svg'},
-                'csharp': {file: 'Logo_C_sharp.svg'},
-                'c++': {file: 'ISO_C++_Logo.svg'},
-                'cplusplus': {file: 'ISO_C++_Logo.svg'},
-                'networking': {file: 'logo-network.svg'},
-                'networkingngo': {file: 'logo-network.svg'},
-                'tooling': {file: 'wrench_hammer.svg'},
-                'unrealengine': {file: 'unreal-engine.svg'},
-                'github': {file: 'logo-github.png'},
-                'linkedin': {file: 'logo-linkedin.png'},
-                'futuregames': {file: 'fg_logo.png', label: 'FG', bg: '#ff6b6b'}
-            };
-
-            const info = map[key];
-            if (info && info.file) {
-                const src = `/assets/images/logos/${info.file}`;
-                return `<span class="project-flair project-flair--icon project-flair--logo" title="${name}"><img src="${src}" alt="${name} logo" loading="lazy"/></span>`;
+            const file = flairIconFile(name);
+            if (file) {
+                return `<span class="project-flair project-flair--icon project-flair--logo" title="${name}"><img src="/assets/images/logos/${file}" alt="${name} logo" loading="lazy"/></span>`;
             }
 
-            if (info && info.label) {
-                const bg = info.bg || '#333';
-                const fg = info.fg || '#fff';
-                return `<span class="project-flair project-flair--icon" title="${name}" style="background:${bg};color:${fg};">${info.label}</span>`;
-            }
-
-            // fallback: use first two chars
             const initials = name.split(' ').map(s => s[0]).join('').slice(0,2).toUpperCase();
             return `<span class="project-flair project-flair--icon" title="${name}">${initials}</span>`;
         }
@@ -91,7 +66,7 @@ async function injectProjectSummaries() {
             let start = 0;
 
             try {
-                const urlObj = new URL(url);
+                const urlObj = new URL(url, window.location.href);
                 const host = urlObj.hostname.toLowerCase();
 
                 if (host.includes('youtu.be')) {
@@ -113,15 +88,14 @@ async function injectProjectSummaries() {
             }
 
             if (!videoId) return '';
-            const startParam = start > 0 ? `&start=${start}` : '';
-            return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=${videoId}${startParam}`;
+            return youTubeBackgroundSrc(videoId, start);
         }
 
         function getDirectVideoMimeType(url) {
             if (!url) return '';
 
             try {
-                const pathname = new URL(url).pathname.toLowerCase();
+                const pathname = new URL(url, window.location.href).pathname.toLowerCase();
                 if (pathname.endsWith('.mp4')) return 'video/mp4';
                 if (pathname.endsWith('.webm')) return 'video/webm';
                 if (pathname.endsWith('.ogg') || pathname.endsWith('.ogv')) return 'video/ogg';
@@ -138,12 +112,12 @@ async function injectProjectSummaries() {
         function getCardMediaHtml(videoUrl, title, imageSrc) {
             const trailerEmbed = getYouTubeEmbedUrl(videoUrl);
             if (trailerEmbed) {
-                return `<div class="card-bg card-media" aria-hidden="true"><iframe src="${trailerEmbed}" title="${title} preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
+                return `<div class="card-bg card-media" style="background-image: url('${imageSrc}');" aria-hidden="true"><iframe src="${trailerEmbed}" title="${title} preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>`;
             }
 
             const mimeType = getDirectVideoMimeType(videoUrl);
             if (mimeType) {
-                return `<div class="card-bg card-media" aria-hidden="true"><video autoplay muted loop playsinline preload="metadata" poster="${imageSrc}"><source src="${videoUrl}" type="${mimeType}"/></video></div>`;
+                return `<div class="card-bg card-media" style="background-image: url('${imageSrc}');" aria-hidden="true"><video autoplay muted loop playsinline preload="metadata" poster="${imageSrc}"><source src="${videoUrl}" type="${mimeType}"/></video></div>`;
             }
 
             return `<div class="card-bg" style="background-image: url('${imageSrc}');" aria-hidden="true"></div>`;
@@ -290,41 +264,8 @@ async function injectProjectSummaries() {
             return projectDiv;
         }
 
-        const hasSections = projects.some(project => {
-            return typeof project.section === 'string' && project.section.trim() !== '';
-        });
-
-        const groupedProjects = [];
-
-        if (hasSections) {
-            const sectionMap = new Map();
-
-            projects.forEach(project => {
-                const sectionName = typeof project.section === 'string' && project.section.trim()
-                    ? project.section.trim()
-                    : 'Other Projects';
-
-                if (!sectionMap.has(sectionName)) {
-                    sectionMap.set(sectionName, []);
-                }
-
-                sectionMap.get(sectionName).push(project);
-            });
-
-            sectionMap.forEach((sectionProjects, sectionName) => {
-                groupedProjects.push({ sectionName, projects: sectionProjects });
-            });
-        } else {
-            groupedProjects.push({ sectionName: '', projects });
-        }
-
-        groupedProjects.forEach(group => {
-            const highlightedIndex = group.projects.findIndex(p => p.highlighted === true);
-            if (highlightedIndex > 0) {
-                const [highlighted] = group.projects.splice(highlightedIndex, 1);
-                group.projects.unshift(highlighted);
-            }
-        });
+        // Shared with the sidebar (header_footer.js) so both list projects in the same order
+        const { hasSections, groups: groupedProjects } = groupProjectsForDisplay(projects);
 
         groupedProjects.forEach(group => {
             const sectionContainer = hasSections
@@ -333,10 +274,24 @@ async function injectProjectSummaries() {
 
             if (hasSections) {
                 sectionContainer.classList.add('project-card-section');
+                const header = document.createElement('header');
+                header.classList.add('project-card-section__header');
+
+                // "Featured projects - Network and tools" -> small label + heading
+                const [labelText, titleText] = group.sectionName.includes(' - ')
+                    ? group.sectionName.split(/ - (.+)/)
+                    : ['', group.sectionName];
+                if (labelText) {
+                    const label = document.createElement('p');
+                    label.classList.add('project-card-section__label');
+                    label.textContent = labelText;
+                    header.appendChild(label);
+                }
+
                 const heading = document.createElement('h2');
                 heading.classList.add('h3', 'project-card-section__title');
-                heading.textContent = group.sectionName;
-                sectionContainer.appendChild(heading);
+                heading.textContent = titleText;
+                header.appendChild(heading);
 
                 const rawDescription = sectionDescriptions[group.sectionName];
                 const sectionDescription = typeof rawDescription === 'string' ? rawDescription.trim() : '';
@@ -344,8 +299,9 @@ async function injectProjectSummaries() {
                     const description = document.createElement('p');
                     description.classList.add('project-card-section__description');
                     description.textContent = sectionDescription;
-                    sectionContainer.appendChild(description);
+                    header.appendChild(description);
                 }
+                sectionContainer.appendChild(header);
             }
 
             const grid = document.createElement('div');

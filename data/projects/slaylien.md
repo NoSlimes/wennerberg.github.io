@@ -3,7 +3,7 @@ pageTitle: Project - SLAYLIEN
 heroImage: /assets/uploads/slaylien.png
 heroVideoUrl: https://youtu.be/BY15e9aDYMk?t=3
 projectName: SLAYLIEN
-projectType: '[GAME PROJECT 3 - FUTUREGAMES]'
+projectType: 'Game Project 3 · Futuregames'
 flairs:
 - Unreal Engine 5
 - Blueprints

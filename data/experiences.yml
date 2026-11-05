@@ -1,0 +1,11 @@
+# GENERATED FILE – do not edit.
+# Source: data/experience/. Built by scripts/combine_projects.py
+experiences:
+- id: evergreen-internship
+  navTitle: Evergreen Internship
+  hidden: false
+  locked: false
+- id: futuregames
+  navTitle: Futuregames
+  hidden: false
+  locked: false

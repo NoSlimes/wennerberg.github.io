@@ -64,44 +64,6 @@
   }
 }
 
-/* 2. Dropdown Menu Component */
-.dropdown {
-  position: relative;
-  display: inline-block;
-
-  // The dropdown button uses the same styles as our main button!
-  .dropbtn {
-    @extend .button; // This SCSS feature reuses all the styles from .button
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: variables.$color-background-light;
-    min-width: 160px;
-    box-shadow: 0 8px 16px rgba(variables.$color-black, 0.2);
-    border-radius: 4px; // Add a radius to match the button
-    z-index: 10; // Ensure it's above other content
-    overflow: hidden; // Keep the corners rounded
-
-    a {
-      color: variables.$color-text-primary; // Use primary text color on light background
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-
-      &:hover {
-        background-color: color.adjust(variables.$color-background-light, $lightness: -5%);
-      }
-    }
-  }
-
-  // Show the dropdown on hover
-  &:hover .dropdown-content {
-    display: block;
-  }
-}
-
 
 /* ============================================= */
 /* == Page-Specific Component Sections == */
@@ -202,8 +164,11 @@ section#hero {
 
   @media (min-width: 768px) {
     flex-direction: row;
+    // Wrap the social group under the location instead of squeezing both
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-s) var(--space-l);
   }
 }
 
@@ -220,6 +185,7 @@ section#hero {
 
   address {
     font-style: normal;
+    white-space: nowrap;
   }
 }
 
@@ -236,6 +202,7 @@ section#hero {
 }
 
 .social-label {
+  white-space: nowrap;
   font-size: var(--step--1);
   opacity: 0.7;
   font-weight: 500;
@@ -286,70 +253,19 @@ section#hero {
   }
 }
 
-// Project page hero enhancements
-.project-hero {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  
-  .hero_intro {
-    text-align: center;
-    background: rgba(0, 0, 0, 0.35);
-    border-radius: 16px;
-    padding: var(--space-l) var(--space-l);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-
-    h1 {
-      margin-bottom: var(--space-m);
-      background: linear-gradient(135deg, variables.$color-text-inverted 0%, variables.$color-accent-soft 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      padding-bottom: 0.2em;
-      line-height: 1.2;
-    }
-  }
-  
-  .hero_subtitle {
-    font-size: var(--step-2);
-    color: var(--theme-accent);
-    font-weight: 600;
-    margin-bottom: var(--space-m);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  
-  .hero_description {
-    font-size: var(--step-1);
-    line-height: 1.6;
-    margin-bottom: var(--space-l);
-    opacity: 0.9;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .hero_skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: var(--space-l);
-  }
-}
+// Project heroes use the same left-aligned look as experience heroes (the
+// generic .hero_content rules above); only their height differs (100vh below).
 
 // Enhanced project page section backgrounds
 .project-detail-page {
   section#hero {
-    background:
-      linear-gradient(var(--theme-hero-overlay-start), var(--theme-hero-overlay-end)),
-      var(--hero-bg-image);
+    // Darkening comes from the ::before scrim below (it also covers hero videos)
+    background: var(--hero-bg-image);
     padding-top: var(--space-xl);
     padding-bottom: var(--space-xl);
-    background-size: 100% auto;
-    background-position: center top;
+    // Fill the whole (full-height) hero, like the hero videos do
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
@@ -364,9 +280,15 @@ section#hero {
       left: 0;
       right: 0;
       bottom: 0;
-      background: 
+      // Dark scrim above the hero video/image so the text stays readable
+      background:
         radial-gradient(circle at 30% 70%, rgba(variables.$color-accent, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 70% 30%, rgba(variables.$color-accent, 0.04) 0%, transparent 50%);
+        radial-gradient(circle at 70% 30%, rgba(variables.$color-accent, 0.04) 0%, transparent 50%),
+        linear-gradient(
+          rgba(var(--theme-bg-primary-rgb), 0.7) 0%,
+          rgba(var(--theme-bg-primary-rgb), 0.78) 75%,
+          rgba(var(--theme-bg-primary-rgb), 1) 100%
+        );
       z-index: 1;
       pointer-events: none;
     }
@@ -376,17 +298,24 @@ section#hero {
       inset: 0;
       z-index: 0;
       overflow: hidden;
+      container-type: size;
 
+      // Cover the hero like background-size: cover, at any aspect ratio.
+      // The extra 20% crops YouTube's title bar and controls.
       iframe,
       video {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 120%;
-        height: 120%;
+        width: max(120cqw, 120cqh * 16 / 9);
+        height: max(120cqh, 120cqw * 9 / 16);
         transform: translate(-50%, -50%);
         border: 0;
         pointer-events: none;
+      }
+
+      video {
+        object-fit: cover;
       }
     }
 
@@ -397,6 +326,12 @@ section#hero {
 
     .hero_content {
       padding: 0;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+
+      // Gradient-clipped title: a shadow would show through its transparent fill
+      .h1 {
+        text-shadow: none;
+      }
     }
   }
 }
@@ -406,42 +341,13 @@ section#work {
   color: var(--theme-text-primary);
 }
 
-/* Contact Form */
-.contact_form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form_group {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: variables.$color-text-inverted;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid variables.$color-light-gray;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(variables.$color-black, 0.1);
-  margin-bottom: 10px;
-  color: variables.$color-text-primary;
-}
-
 /* ============================================= */
 /* == Testimonials Section == */
 /* ============================================= */
 
 .testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: var(--space-l);
   margin-top: var(--space-xl);
 }
@@ -578,9 +484,15 @@ textarea {
   }
 }
 
+// Clear break between article sections (each section starts with its own h2)
+.project-detailed-section + .project-detailed-section {
+  margin-top: var(--space-2xl);
+}
+
 .project-detailed-section {
   h2 {
     margin-top: var(--space-m);
+    margin-bottom: var(--space-s);
     
     &:first-child {
       margin-top: 0;
@@ -612,7 +524,7 @@ textarea {
 
 .project-testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: var(--space-m);
   margin-top: var(--space-l);
 }
@@ -697,7 +609,7 @@ textarea {
 
 .project-testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: var(--space-m);
   margin-top: var(--space-l);
 }
@@ -915,13 +827,6 @@ textarea {
   }
 }
 
-// Clear floats utility and section clearing
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 // Ensure galleries and other major sections clear floats
 .inline-gallery-container,
 .gallery-grid,
@@ -1013,5 +918,73 @@ textarea {
     a img {
       height: 150px;
     }
+  }
+}
+// Embeds in project/experience content never get wider than the column
+.project-content :is(iframe, video) {
+  max-width: 100%;
+}
+
+// "You found something hidden" note at the top of a hidden page's hero
+.hidden-notice {
+  margin: 0 0 var(--space-m);
+  max-width: 34rem;
+  padding: var(--space-xs) var(--space-s);
+  border: 1px dashed rgba(var(--theme-accent-rgb), 0.55);
+  border-radius: 12px;
+  background: rgba(var(--theme-bg-primary-rgb), 0.75);
+  text-align: left;
+  text-shadow: none;
+
+  .hidden-notice__badge {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    font-size: var(--step--2);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent);
+    background: var(--theme-flair-bg);
+    border: 1px solid var(--theme-flair-border);
+  }
+
+  .hidden-notice__title {
+    margin: 0;
+    font-weight: 600;
+    color: var(--theme-text-primary);
+  }
+
+  .hidden-notice__text {
+    margin: 0.25rem 0 0;
+    font-size: var(--step--1);
+    color: var(--theme-text-secondary);
+  }
+}
+
+// Background videos fade in once they actually play (see setupBackgroundVideo)
+.bg-video {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.is-playing {
+    opacity: 1;
+  }
+}
+
+// Locked page: nothing else in the hero, so center the notice and the way home
+.hero_intro--locked {
+  text-align: center;
+
+  .hidden-notice {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .project-actions {
+    display: flex;
+    justify-content: center;
   }
 }

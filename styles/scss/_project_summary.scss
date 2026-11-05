@@ -26,6 +26,8 @@
     to match height with other cards in the same grid row */
   display: flex;
   flex-direction: column;
+  // Card internals respond to the card's own width (see @container below)
+  container-type: inline-size;
 
   // Add subtle gradient overlay
   &::before {
@@ -46,12 +48,6 @@
     &::before {
       opacity: 1;
       height: 4px;
-    }
-
-    .project-card__image {
-      filter: blur(2px);
-      transform: scale(1.02);
-      transition: filter 220ms ease, transform 220ms ease;
     }
 
     .card-bg {
@@ -80,39 +76,23 @@
   /* allow the inner grid to grow so its parent (.summary_container)
      can match heights with sibling cards */
   flex: 1 1 auto;
+}
 
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+// Narrow card: drop the empty image column so the panel gets the full width
+@container (max-width: 720px) {
+  .project_summary {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--space-m);
   }
 }
 
-.project-card__figure {
-  margin: 0;
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  height: 100%;
+// Very narrow card (phones): tighter panel padding so the text keeps its room
+@container (max-width: 420px) {
+  .summary_container .project_summary .project-card-content {
+    padding: var(--space-s);
+  }
 }
 
-.project-card__figure::after {
-  /* dark overlay to make blurred image readable behind text */
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.18));
-  pointer-events: none;
-}
-
-.project-card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 8px;
-  filter: blur(6px);
-  transform: scale(1.03);
-  transition: filter 0.25s ease, transform 0.25s ease;
-}
 
 .project_summary > div {
   padding: var(--space-l);
@@ -184,7 +164,6 @@
     the box (margin, not internal padding, so the panel background is pushed) */
   /* use a smaller offset so cards don't grow too tall */
   /* push the subcard slightly lower to reveal more background and make it compact */
-  margin-top: calc(var(--space-l) + 0.2rem);
   width: min(100%, 42rem);
   justify-self: start;
   padding: var(--space-s);
@@ -197,15 +176,13 @@
 /* Title sits relative to the summary container; use the container-qualified
   selector so it overrides the generic `.summary_container h2` padding rule. */
 .summary_container .project-card-title {
-  position: absolute;
-  /* place the title firmly in the top-left corner of the card container
-     with a small inset so it doesn't overlap the rounded corner. Using
-     smaller spacing keeps it clearly outside the content panel. */
-  top: var(--space-s);
-  left: var(--space-s);
+  // First row of the card (it comes last in the markup), in normal flow so a
+  // two-line title pushes the content panel down instead of overlapping it
+  position: relative;
+  order: -1;
   z-index: 20;
   margin: 0;
-  padding: 0; /* ensure no extra padding (override .summary_container h2) */
+  padding: var(--space-s) var(--space-s) 0;
   /* Match the title color to the content panel background so it visually
     relates to the text box (use same white tint as the panel) */
   color: rgba(255,255,255,0.88);
@@ -226,22 +203,10 @@
   background: rgba(255,255,255,0.95);
 }
 
-/* On small screens, image becomes a shorter block above content */
 @media (max-width: 900px) {
-  .project-card__image {
-    height: 220px;
-  }
   .summary_container .project-card-content {
-    margin-top: calc(var(--space-s) + 0.3rem);
     padding: var(--space-l);
   }
-}
-
-.project-card__caption {
-  color: variables.$color-text-secondary;
-  font-size: 0.9rem;
-  text-align: center;
-  margin-top: 0.5rem;
 }
 
 .project-card__description {
@@ -256,19 +221,20 @@
   overflow: hidden;
 }
 
+// Name with "Solo • 16w" beside it; the meta wraps under the name when there
+// isn't room, instead of squeezing both into narrow columns
 .project-card__title {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
   color: variables.$color-text-primary;
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5rem;
+  gap: 0.15rem 0.6rem;
 }
 
 .project-meta { gap: 6px; }
-
-.project-duration { font-size: 0.8rem; padding: 4px 8px; }
 
 .project-card__description strong {
   display: block;
@@ -369,21 +335,11 @@
 
 .project-toolbar .tool-btn:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
 
-.project-duration {
-  font-size: 0.85rem;
-  color: variables.$color-text-secondary;
-  background: rgba(0,0,0,0.06);
-  padding: 6px 10px;
-  border-radius: 10px;
-  align-self: center;
-}
-
 /* Inline duration shown to the right of the project title */
 .project-card__duration {
   font-size: 0.85rem;
   color: variables.$color-text-secondary;
   font-weight: 500;
-  margin-left: 0.25rem;
 }
 
 /* Project cards container (supports grouped sections) */
@@ -393,13 +349,15 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-s);
+  // Space between card groups ("Featured projects", "Game projects", ...)
+  gap: var(--space-3xl);
 }
 
 /* Grid layout used both with and without sections */
 .project-card-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  // Two per row only when each card gets at least 30rem (the sidebar eats into the width)
+  grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
   /* smaller vertical gap (row-gap) but keep generous horizontal gap */
   gap: var(--space-s) var(--space-l);
   /* let grid items stretch to the height of the tallest item in the row */
@@ -420,16 +378,42 @@
   gap: var(--space-s);
 }
 
+// Section header: small green label, heading with an accent bar, muted description.
+// Left-aligned with the cards (like the project/experience heroes).
+.project-card-section__header {
+  max-width: 48rem;
+  margin-bottom: var(--space-s);
+}
+
+.project-card-section__label {
+  margin: 0 0 0.35rem;
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--theme-accent);
+}
+
 .project-card-section__title {
   margin: 0;
-  text-align: center;
+  text-align: left;
   color: var(--theme-text-primary);
+
+  &::after {
+    content: '';
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    margin-top: var(--space-xs);
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--theme-accent), rgba(var(--theme-accent-rgb), 0));
+  }
 }
 
 .project-card-section__description {
-  margin: 0 auto;
-  max-width: 50rem;
-  text-align: center;
+  margin: var(--space-xs) 0 0;
+  max-width: 44rem;
+  text-align: left;
   color: var(--theme-text-secondary);
 }
 
@@ -465,21 +449,5 @@ section#work {
   z-index: 10;
 }
 
-/* Slightly larger image for highlighted cards */
-.summary_container.highlighted .project-card__image {
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-@media (max-width: 900px) {
-  .project-card-grid {
-    grid-template-columns: 1fr;
-  }
-  .summary_container.highlighted .project-card__image {
-    height: 260px;
-  }
-}
 /* No additional background or padding applied here to avoid visual clutter.
    The compiled CSS is the source of truth for the live site; keep SCSS neutral. */

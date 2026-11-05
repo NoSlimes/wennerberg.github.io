@@ -3,7 +3,7 @@ pageTitle: Project - DEAD SECTOR
 heroImage: /assets/uploads/dead_sector.jpg
 heroVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
 projectName: DEAD SECTOR
-projectType: '[GAME PROJECT 2 - FUTUREGAMES]'
+projectType: 'Game Project 2 · Futuregames'
 flairs:
 - Unity
 - C#

@@ -1,6 +1,7 @@
 order: 20
 id: planetfactory
 title: PlanetFactory [Working Title]
+navTitle: PlanetFactory
 highlighted: true
 section: Featured projects - Network and tools
 flairs:
@@ -12,7 +13,7 @@ teamSize: 1
 detailPageUrl: /project.html?id=planetfactory
 imageSrc: assets/uploads/nuke_command.webp
 imageCaption: In-progress image
-projectType: PVP FACTORY BUILDER
+projectType: 'PvP Factory Builder'
 description: A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative.
 links:
   github: ''

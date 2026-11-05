@@ -2,8 +2,12 @@
 
   <nav class="sidebar_nav" aria-label="Main navigation">
     <div class="sidebar_brand_container">
-      <a class="sidebar_brand" href="/" aria-label="Go to homepage">
-        <h3>Elias Wennerberg</h3>
+      <a class="sidebar_brand" href="/" aria-label="Elias Wennerberg, go to homepage">
+        <img class="sidebar_brand__avatar" src="/assets/images/portrait.webp" alt="" width="48" height="48" />
+        <span class="sidebar_brand__text">
+          <span class="sidebar_brand__name">Elias Wennerberg</span>
+          <span class="sidebar_brand__role">Game Programmer</span>
+        </span>
       </a>
     </div>
     <ul class="sidebar_list">
@@ -11,24 +15,17 @@
       <!-- PROJECTS SECTION -->
       <li class="sidebar_section">
         <h6 class="sidebar_section_title">Projects</h6>
-        <ul class="sidebar_links">
+        <!-- Filled from /data/projects.yml by header_footer.js -->
+        <ul class="sidebar_links" id="sidebar-projects">
           <li><a class="sidebar_link" href="/#work">All Projects</a></li>
-          <li><a class="sidebar_link" href="/project.html?id=planetfactory">PlanetFactory</a></li>
-          <li><a class="sidebar_link" href="/project.html?id=tamashii">Tamashii</a></li>
-          <li><a class="sidebar_link" href="/project.html?id=slaylien">Slaylien</a></li>
-          <li><a class="sidebar_link" href="/project.html?id=dead_sector">Dead Sector</a></li>
-          <li><a class="sidebar_link" href="/project.html?id=cat-survival-craft">Cat Survival Craft</a></li>
-          <li><a class="sidebar_link" href="/project.html?id=uniterminal">UniTerminal</a></li>
-          <li><a class="sidebar_link" href="/project.html?id=slime-murderer">Slime Murderer</a></li>
         </ul>
       </li>
 
       <!-- EXPERIENCE SECTION -->
       <li class="sidebar_section">
         <h6 class="sidebar_section_title">Experience</h6>
-        <ul class="sidebar_links">
-          <li><a class="sidebar_link" href="/experience.html">Evergreen Internship</a></li>
-        </ul>
+        <!-- Filled from /data/experiences.yml by header_footer.js -->
+        <ul class="sidebar_links" id="sidebar-experience"></ul>
       </li>
 
       <!-- MORE SECTION -->
@@ -56,8 +53,8 @@
         </a>
       </li>
       <li>
-        <a href="https://noslimes.com/" target="_blank" rel="noopener noreferrer" aria-label="Personal Website">
-          <img src="/assets/images/NSJC Mono INV.svg" alt="Personal brand logo" width="24" height="24" />
+        <a href="#" class="email-link" aria-label="Email Elias Wennerberg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </a>
       </li>
     </ul>

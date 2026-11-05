@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Combine content/ fragments into data/projects.yml.
+"""Combine content/ fragments into data/projects.yml, and index
+data/experience/*.md into data/experiences.yml for the sidebar.
 
 Source of truth: content/. Run locally or via .github/workflows/content.yml.
 "order" sets sort order (lowest first) and is stripped from output.
@@ -66,6 +67,46 @@ def main():
             default_flow_style=False,
         )
     print(f"projects.yml: {len(summaries)} summaries, {len(sections)} sections")
+
+    build_experiences()
+
+
+def read_frontmatter(path):
+    text = path.read_text(encoding="utf-8")
+    parts = text.split("---", 2)
+    if len(parts) < 3 or parts[0].strip():
+        return {}
+    return yaml.safe_load(parts[1]) or {}
+
+
+def build_experiences():
+    """Index data/experience/*.md for the sidebar (the browser can't list folders)."""
+    items = []
+    for path in sorted((DATA / "experience").glob("*.md")):
+        meta = read_frontmatter(path)
+        items.append((path.name, {
+            "order": meta.get("order", 9999),
+            "id": path.stem,
+            "navTitle": meta.get("navTitle") or meta.get("experienceName") or path.stem,
+            "hidden": meta.get("hidden") is True,
+            "locked": meta.get("locked") is True,
+        }))
+    experiences = [
+        {k: v for k, v in item.items() if k != "order"}
+        for item in ordered(items)
+    ]
+    out = DATA / "experiences.yml"
+    with open(out, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(HEADER.replace("Source: content/.", "Source: data/experience/."))
+        yaml.safe_dump(
+            {"experiences": experiences},
+            fh,
+            allow_unicode=True,
+            width=1000,
+            sort_keys=False,
+            default_flow_style=False,
+        )
+    print(f"experiences.yml: {len(experiences)} experiences")
 
 
 if __name__ == "__main__":

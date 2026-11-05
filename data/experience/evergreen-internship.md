@@ -3,6 +3,11 @@ pageTitle: Experience - Evergreen IT Internship
 heroImage: 
 heroVideoUrl: 'https://www.youtube.com/watch?v=CqtJ_wnnvRw'
 experienceName: Evergreen IT AB
+navTitle: Evergreen Internship
+order: 10
+stub: true
+hidden: false
+locked: false
 experienceType: 'Internship · Evergreen Game Engine'
 flairs:
 - C++

@@ -18,11 +18,11 @@ summaries:
   detailPageUrl: /project.html?id=slime-murderer
   imageSrc: /assets/uploads/slime-murderer-00.webp
   imageCaption: SLIME MURDERER gameplay
-  projectType: 'Course Project · Futuregames C# Unity Course'
+  projectType: Course Project · Futuregames C# Unity Course
   description: '"Slime Murderer" is a <a href="https://store.steampowered.com/app/1794680/Vampire_Survivors/">Vampire Survivors</a> clone I made during my first course at FUTUREGAMES, the C# course. The game features procedural enemy waves and a variety of active and passive abilities.'
   links:
     github: ''
-    demo: https://download.noslimes.com/Projects/Games/SLIME%20MURDERER/SLIME%20MURDERER.zip
+    demo: https://download.noslimes.com/My%20Games/SLIME%20MURDERER/SLIME%20MURDERER.zip
 - id: planetfactory
   title: PlanetFactory [Working Title]
   navTitle: PlanetFactory
@@ -37,7 +37,7 @@ summaries:
   detailPageUrl: /project.html?id=planetfactory
   imageSrc: assets/uploads/nuke_command.webp
   imageCaption: In-progress image
-  projectType: 'PvP Factory Builder'
+  projectType: PvP Factory Builder
   description: A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative.
   links:
     github: ''
@@ -56,7 +56,7 @@ summaries:
   detailPageUrl: /project.html?id=uniterminal
   imageSrc: /assets/uploads/hero.webp
   imageCaption: UniTerminal — in-game developer console
-  projectType: 'In-Game Command Console'
+  projectType: In-Game Command Console
   description: Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion.
   links:
     github: https://github.com/NoSlimes/uniterminal
@@ -74,7 +74,7 @@ summaries:
   detailPageUrl: /project.html?id=cat-survival-craft
   imageSrc: /assets/uploads/cat-survival-00.webp
   imageCaption: Cat Survival Craft prototype
-  projectType: 'Survival Craft Prototype'
+  projectType: Survival Craft Prototype
   description: Prototype focused on survival-crafting systems, inventory flow, and cats.
   links:
     github: ''
@@ -95,7 +95,7 @@ summaries:
   cardVideoUrl: https://youtu.be/BY15e9aDYMk?t=5
   imageSrc: /assets/uploads/slaylien.png
   imageCaption: Slaylien
-  projectType: 'Game Project 3 · Futuregames'
+  projectType: Game Project 3 · Futuregames
   description: Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics.
   links:
     github: ''
@@ -116,7 +116,7 @@ summaries:
   cardVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
   imageSrc: /assets/uploads/dead_sector.jpg
   imageCaption: Splash screen for Dead Sector
-  projectType: 'Game Project 2 · Futuregames'
+  projectType: Game Project 2 · Futuregames
   description: Top-down sci-fi shooter in Unity. I implemented most UI and the quest system.
   links:
     github: ''
@@ -139,7 +139,7 @@ summaries:
   cardVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4
   imageSrc: /assets/uploads/tamashii.webp
   imageCaption: Splash screen for Tamashii
-  projectType: 'Game Project 4 · Futuregames'
+  projectType: Game Project 4 · Futuregames
   description: 2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement.
   links:
     github: ''

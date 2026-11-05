@@ -40,7 +40,7 @@ async function loadProject() {
     document.getElementById('project-name').textContent = name;
     document.getElementById('project-type').innerHTML = marked.parseInline(frontmatter.projectType || '');
     applyHeroMedia({ image: frontmatter.heroImage, videoUrl: frontmatter.heroVideoUrl, title: `${name} trailer` });
-    document.getElementById('project-overview').textContent = overview;
+    renderInlineMarkdown(document.getElementById('project-overview'), overview);
 
     if (summaryEntry && summaryEntry.hidden === true) showPageNotice('hidden', 'project');
     if (summaryEntry && summaryEntry.stub === true) showPageNotice('stub', 'project');

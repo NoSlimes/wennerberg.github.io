@@ -98,7 +98,8 @@ function updateDetailMeta({ name, pageTitle, overview, heroImage, fallbackDescri
     try { return new URL(src, window.location.origin).href; } catch (e) { return src; }
   };
 
-  let desc = (overview || '').trim().replace(/\s+/g, ' ');
+  // The overview may contain inline markdown (links); search snippets get plain text
+  let desc = stripHtml(marked.parseInline(overview || ''));
   if (!desc && fallbackDescription) desc = stripHtml(fallbackDescription);
   if (desc.length > 160) desc = desc.slice(0, 157) + '...';
   const title = `${name} – Elias Wennerberg`;
@@ -120,6 +121,15 @@ function updateDetailMeta({ name, pageTitle, overview, heroImage, fallbackDescri
     document.head.appendChild(canon);
   }
   canon.setAttribute('href', window.location.href);
+}
+
+// Hero intro text: inline markdown (e.g. links) rendered, external links in a new tab
+function renderInlineMarkdown(el, markdown) {
+  el.innerHTML = marked.parseInline(markdown || '');
+  el.querySelectorAll('a[href^="http"]').forEach(a => {
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+  });
 }
 
 const escapeHtml = (text) => text

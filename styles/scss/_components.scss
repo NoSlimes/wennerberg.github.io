@@ -121,6 +121,21 @@ section#hero {
   line-height: 1.6;
   margin-bottom: var(--space-l);
   opacity: 0.9;
+
+  // Links in the intro, styled like article links
+  a {
+    color: var(--theme-accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--theme-accent-rgb), 0.35);
+    text-underline-offset: 3px;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--theme-accent-hover);
+      text-decoration-color: currentColor;
+    }
+  }
 }
 
 .hero_skills {

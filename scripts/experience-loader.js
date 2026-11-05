@@ -42,7 +42,7 @@ async function loadExperience() {
     document.getElementById('experience-name').textContent = name;
     document.getElementById('experience-type').innerHTML = marked.parseInline(frontmatter.experienceType || '');
     applyHeroMedia({ image: frontmatter.heroImage, videoUrl: frontmatter.heroVideoUrl, title: `${name} video` });
-    document.getElementById('experience-overview').textContent = overview;
+    renderInlineMarkdown(document.getElementById('experience-overview'), overview);
 
     if (frontmatter.hidden === true) showPageNotice('hidden', 'experience');
     if (frontmatter.stub === true) showPageNotice('stub', 'experience');

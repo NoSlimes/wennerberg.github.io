@@ -36,6 +36,7 @@ links:
   github: ''
   website: 'https://iterum.gg/'
 ---
+I'm doing my internship at Evergreen IT, the studio behind [Iterum](https://iterum.gg/), a historically researched real-time strategy and city-builder set in Caesar's Gallic Wars, currently in Early Access on Steam. I work remotely with the team, mostly in C++ on Evergreen's own in-house engine, with some C# on the side for team tooling.
 
 ## Engine Systems in C++
 
@@ -45,4 +46,8 @@ links:
 
 ## Azure DevOps & GitHub
 
+The team runs its day-to-day work through Azure DevOps and GitHub. Tasks are planned and tracked as work items, every change goes up as a pull request, and code gets reviewed by the team before it is merged. It's the same loop for everyone, interns included.
+
 ## C# Tooling
+
+Next to the C++ work I built bot tools in C# that hook into GitHub and Azure DevOps and automate parts of the team's workflow, so routine steps happen on their own instead of by hand.

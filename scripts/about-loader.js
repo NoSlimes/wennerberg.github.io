@@ -1,0 +1,82 @@
+// About page: profile card from data/about.md's frontmatter, CV sections from its body.
+// Uses parseDetailMarkdown/markdownToHtml from detail-page.js.
+
+async function loadAbout() {
+  const sectionsEl = document.getElementById('about-sections');
+  try {
+    const response = await fetch('/data/about.md');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const { frontmatter: about, overview, sections } = parseDetailMarkdown(await response.text(), 'about');
+
+    if (about.pageTitle) document.title = about.pageTitle;
+    if (about.portrait) document.getElementById('about-portrait').src = about.portrait;
+    document.getElementById('about-name').textContent = about.name || 'Elias Wennerberg';
+    document.getElementById('about-role').textContent = about.role || '';
+    document.getElementById('about-intro').textContent = overview;
+
+    renderAboutFacts(document.getElementById('about-facts'), about);
+    renderAboutLinks(document.getElementById('about-links'), about.links || {});
+
+    sectionsEl.innerHTML = '';
+    sections.forEach(section => {
+      const el = document.createElement('section');
+      el.className = 'about-section';
+      el.innerHTML = `<h2>${section.heading}</h2>${markdownToHtml(section.body)}`;
+      groupTimelineEntries(el);
+      sectionsEl.appendChild(el);
+    });
+  } catch (error) {
+    console.error('Failed to load about page:', error);
+    sectionsEl.innerHTML = '<p>Could not load this page right now. Please try again later.</p>';
+  }
+}
+
+// Each "### Place · Role" heading and everything up to the next one becomes one
+// .about-entry, so the timeline line can run unbroken down the whole entry.
+function groupTimelineEntries(sectionEl) {
+  let entry = null;
+  [...sectionEl.children].forEach(child => {
+    if (child.tagName === 'H3') {
+      entry = document.createElement('div');
+      entry.className = 'about-entry';
+      child.before(entry);
+    }
+    if (entry && child.tagName !== 'H2') entry.appendChild(child);
+  });
+}
+
+function renderAboutFacts(list, about) {
+  const facts = [
+    ['Based in', about.location],
+    ['Languages', Array.isArray(about.languages) ? about.languages.join(', ') : about.languages]
+  ];
+  list.innerHTML = '';
+  facts.forEach(([label, value]) => {
+    if (!value) return;
+    const dt = document.createElement('dt');
+    dt.textContent = label;
+    const dd = document.createElement('dd');
+    dd.textContent = value;
+    list.append(dt, dd);
+  });
+}
+
+// Resume as the main button, then icon links (GitHub, LinkedIn, email)
+function renderAboutLinks(container, links) {
+  const icons = {
+    github: '<img src="/assets/images/logos/logo-github.png" alt="" width="18" height="18" />',
+    linkedin: '<img src="/assets/images/logos/logo-linkedin.png" alt="" width="18" height="18" />'
+  };
+  const labels = { github: 'GitHub', linkedin: 'LinkedIn' };
+  let html = links.resume ? `<a class="button about-card__resume" href="${links.resume}">View resume</a>` : '';
+  html += '<div class="about-card__icons">';
+  Object.entries(icons).forEach(([key, icon]) => {
+    if (links[key]) html += `<a class="social_link" href="${links[key]}" target="_blank" rel="noopener noreferrer" aria-label="${labels[key]}">${icon}</a>`;
+  });
+  // Same hidden-address email link as the rest of the site (handled in header_footer.js)
+  html += '<a href="#" class="social_link email-link" aria-label="Email Elias Wennerberg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>';
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', loadAbout);

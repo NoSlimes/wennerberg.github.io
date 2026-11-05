@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="Resume of Elias Wennerberg – game programmer (Unity C#, networking, Unreal Engine 5)." />
+    content="Resume of Elias Wennerberg – game programmer: C++ engine work, Unity and Unreal Engine 5, multiplayer networking." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://wennerberg.dev/resume.html" />
   <link rel="stylesheet" href="/styles/main.css" />
@@ -18,65 +18,29 @@
   <header id="header-container"></header>
 
   <main class="resume-page">
-    <section id="hero" style="--hero-bg-image: url('');">
-      <div class="wrapper">
-        <div class="hero_content text_center">
-          <h1 class="h2">My Resume</h1>
-          <p class="h5" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
-            Feel free to view my resume below or download a copy for your records.
-          </p>
-          <a id="download-pdf" class="button" download>
-            Download PDF
-          </a>
-        </div>
-      </div>
-    </section>
+    <section class="resume-section">
+      <div class="wrapper resume-wrapper">
+        <header class="resume-header">
+          <div class="project-card-section__header">
+            <p class="project-card-section__label">Resume</p>
+            <h1 class="h3 project-card-section__title">Elias Wennerberg</h1>
+            <p class="project-card-section__description">Game programmer. Experience, projects, education and skills on one page.</p>
+          </div>
+          <div class="resume-actions">
+            <a id="resume-download" class="button button--secondary" download>Download PDF</a>
+            <a id="resume-open" class="button button--ghost" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+          </div>
+        </header>
 
-    <section class="resume-viewer-container">
-      <div id="pdf-viewer" class="resume-viewer"></div>
+        <!-- The PDF is drawn here by scripts/resume.js -->
+        <div id="pdf-viewer" class="resume-paper is-loading" aria-label="Resume of Elias Wennerberg"></div>
+      </div>
     </section>
   </main>
 
   <footer id="footer-container"></footer>
   <script src="/scripts/header_footer.js"></script>
-
-  <script>
-    const pdfUrl = '/assets/documents/Elias Wennerberg_Resume_2026_Q4.pdf';
-    document.getElementById('download-pdf').href = pdfUrl;
-
-    const pdfjsLib = window['pdfjs-dist/build/pdf'];
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-    const viewer = document.getElementById('pdf-viewer');
-
-    pdfjsLib.getDocument(pdfUrl).promise.then(function (pdfDoc) {
-      for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-        pdfDoc.getPage(pageNum).then(function (page) {
-          const canvas = document.createElement('canvas');
-          canvas.style.display = 'block';
-          canvas.style.margin = '0 auto 1.5rem';
-          const context = canvas.getContext('2d');
-
-          const scale = 1.5;
-          const viewport = page.getViewport({ scale: scale });
-
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-
-          const renderContext = {
-            canvasContext: context,
-            viewport: viewport,
-          };
-
-          viewer.appendChild(canvas);
-          page.render(renderContext);
-        });
-      }
-    }).catch(function (err) {
-      viewer.innerHTML = `<p style="color: red;">Failed to load PDF: ${err.message}</p>`;
-    });
-  </script>
-
+  <script src="/scripts/resume.js"></script>
 </body>
 
 </html>

@@ -590,7 +590,8 @@ section#footer {
       width: 100%;
       max-height: none;
       order: -1;
-      margin: 0 0 var(--space-m);
+      // Room below the hero line, and a bit less above the info boxes
+      margin: var(--space-l) 0 0;
       padding: 0;
 
       h3 {
@@ -637,36 +638,35 @@ section#footer {
     max-width: 1800px;
     flex-wrap: wrap;
     gap: var(--space-s);
-    padding: var(--space-l);
+    // No side padding: the boxes share the left edge with the section text and TOC
+    padding: var(--space-l) 0;
 
+    // Highlights / Info boxes: dark cards like the About profile card
     .project-info__box {
       flex: 1 1 320px;
       min-width: 0;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--space-xs);
       width: 100%;
-      padding: var(--space-s);
-      min-height: 150px;
-      background-color: variables.$color-white;
-      color: variables.$color-text-primary;
-      border-radius: 6px;
-      border: 1px solid rgba(variables.$color-text-primary, 0.15);
-      box-shadow: 0 1px 4px rgba(variables.$color-black, 0.08);
-      transition: box-shadow 0.2s ease;
+      padding: var(--space-m);
+      border: 1px solid var(--theme-border);
+      border-radius: 14px;
+      background:
+        radial-gradient(120% 70% at 0% 0%, rgba(var(--theme-accent-rgb), 0.08), transparent 70%),
+        rgba(var(--theme-bg-primary-rgb), 0.6);
+      color: var(--theme-text-primary);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
 
-      &:hover {
-        box-shadow: 0 2px 8px rgba(variables.$color-black, 0.12);
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-        text-align: left;
-        margin: 0 0 var(--space-xs) 0;
+      // Small green label, like the section labels on the home page
+      h3 {
+        margin: 0 0 var(--space-s);
         width: 100%;
-        color: variables.$color-text-primary;
-        font-weight: 600;
-        font-size: 1rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--theme-accent);
       }
 
       ul {
@@ -676,15 +676,25 @@ section#footer {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: var(--space-s);
-        
+        gap: var(--space-xs);
+
         li {
-          padding: 0;
-          color: variables.$color-text-primary;
+          position: relative;
+          padding-left: 1.1rem;
           font-size: 0.95rem;
-          text-align: left;
-          line-height: 1.5;
-          
+          line-height: 1.55;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6em;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--theme-accent);
+          }
+
           strong {
             font-weight: 600;
           }
@@ -697,7 +707,7 @@ section#footer {
         margin: 0;
 
         tbody tr {
-          border-bottom: 1px solid rgba(variables.$color-text-primary, 0.1);
+          border-bottom: 1px solid var(--theme-border);
 
           &:last-child {
             border-bottom: none;
@@ -705,22 +715,24 @@ section#footer {
         }
 
         td {
-          padding: var(--space-xs) var(--space-s);
-          color: variables.$color-text-primary;
+          padding: var(--space-xs) 0;
           font-size: 0.95rem;
           line-height: 1.5;
           vertical-align: top;
         }
 
         .project-info-table__key {
-          font-weight: 600;
           width: 40%;
-          text-align: left;
+          padding-right: var(--space-s);
+          font-size: 0.8rem;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          color: var(--theme-text-secondary);
         }
 
         .project-info-table__value {
           width: 60%;
-          text-align: left;
+          color: var(--theme-text-primary);
         }
       }
     }
@@ -731,6 +743,8 @@ section#footer {
       text-align: left;
 
       .project-info__box {
+        // Stacked: the 320px flex-basis would otherwise become a minimum height
+        flex: none;
         min-width: 100%;
         width: 100%;
 
@@ -750,7 +764,6 @@ section#footer {
       .project-info__box {
         .project-info-table {
           td {
-            padding: var(--space-xs);
             font-size: 0.9rem;
           }
 

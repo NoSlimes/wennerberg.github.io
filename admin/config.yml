@@ -191,3 +191,30 @@ collections:
         fields:
           - { name: "github", label: "GitHub URL", widget: "string", required: false }
           - { name: "website", label: "Website URL", widget: "string", required: false }
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "about"
+        label: "About"
+        file: "data/about.md"
+        format: "yaml-frontmatter"
+        fields:
+          - { name: "pageTitle", label: "Page title", widget: "string", required: false }
+          - { name: "name", label: "Name", widget: "string" }
+          - { name: "role", label: "Role", widget: "string", hint: "Shown under your name on the profile card." }
+          - { name: "location", label: "Location", widget: "string", required: false }
+          - { name: "portrait", label: "Portrait", widget: "image", required: false }
+          - name: "languages"
+            label: "Languages"
+            widget: "list"
+            required: false
+            field: { name: "language", label: "Language", widget: "string" }
+          - name: "links"
+            label: "Links"
+            widget: "object"
+            required: false
+            fields:
+              - { name: "resume", label: "Resume page", widget: "string", required: false }
+              - { name: "github", label: "GitHub URL", widget: "string", required: false }
+              - { name: "linkedin", label: "LinkedIn URL", widget: "string", required: false }
+          - { name: "body", label: "Content", widget: "markdown", hint: "Text before the first ## heading is the intro. Each ## starts a section. Inside a section, '### Place · Role' starts a timeline entry and the *italic* line right under it is its date." }

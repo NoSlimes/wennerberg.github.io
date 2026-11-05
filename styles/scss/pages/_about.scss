@@ -1,0 +1,240 @@
+// About page: profile card beside a CV-style column (content from data/about.md)
+
+section#about-page {
+  color: var(--theme-text-primary);
+  padding-top: var(--space-2xl);
+}
+
+.wrapper.about-layout {
+  display: grid;
+  grid-template-columns: 18rem minmax(0, 1fr);
+  gap: var(--space-2xl);
+  align-items: start;
+  max-width: 1100px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-l);
+  }
+}
+
+// --- Profile card ---
+.about-card {
+  position: sticky;
+  top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-l) var(--space-m);
+  border: 1px solid var(--theme-border);
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(var(--theme-accent-rgb), 0.09), transparent 70%),
+    rgba(var(--theme-bg-primary-rgb), 0.6);
+
+  @media (max-width: 1100px) {
+    position: static;
+  }
+}
+
+.about-card__portrait {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  box-shadow: 0 0 0 3px rgba(var(--theme-accent-rgb), 0.6), 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.about-card__name {
+  margin: var(--space-s) 0 0;
+  font-size: var(--step-2);
+  line-height: 1.2;
+}
+
+.about-card__role {
+  margin: 0.25rem 0 0;
+  font-weight: 600;
+  color: var(--theme-accent);
+}
+
+.about-card__facts {
+  width: 100%;
+  margin: var(--space-m) 0 0;
+  padding-top: var(--space-s);
+  border-top: 1px solid var(--theme-border);
+  font-size: var(--step--1);
+
+  dt {
+    margin-top: var(--space-xs);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--theme-text-secondary);
+  }
+
+  dd {
+    margin: 0.15rem 0 0;
+  }
+}
+
+.about-card__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+  width: 100%;
+  margin-top: var(--space-m);
+
+  .about-card__resume {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.about-card__icons {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+// --- CV column ---
+.about-intro {
+  margin: 0 0 var(--space-xl);
+  font-size: var(--step-1);
+  line-height: 1.6;
+}
+
+.about-section {
+  // These are <section>s, so drop the site-wide section padding
+  padding: 0;
+
+  & + & {
+    margin-top: var(--space-2xl);
+  }
+
+  // Same header treatment as the home page sections: heading with a short accent bar
+  > h2 {
+    margin: 0 0 var(--space-m);
+    font-size: var(--step-3);
+
+    &::after {
+      content: '';
+      display: block;
+      width: 3.5rem;
+      height: 3px;
+      margin-top: var(--space-xs);
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--theme-accent), rgba(var(--theme-accent-rgb), 0));
+    }
+  }
+
+  p,
+  li {
+    line-height: 1.65;
+    color: var(--theme-text-primary);
+  }
+
+  ul {
+    margin: var(--space-xs) 0 0;
+    padding-left: 1.2rem;
+  }
+
+  li + li {
+    margin-top: 0.3rem;
+  }
+
+  li::marker {
+    color: var(--theme-accent);
+  }
+
+  strong {
+    color: var(--theme-text-primary);
+  }
+
+  a {
+    color: var(--theme-accent);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+  }
+
+  // Each "### Place · Role" entry (grouped by about-loader.js) is a stop on a
+  // timeline: a dot at the heading, one unbroken line down the whole entry
+  .about-entry {
+    position: relative;
+    padding-left: var(--space-m);
+
+    + .about-entry {
+      margin-top: var(--space-l);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1.1em;
+      bottom: 0;
+      width: 2px;
+      background: rgba(var(--theme-accent-rgb), 0.18);
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  h3 {
+    position: relative;
+    margin: 0;
+    font-size: var(--step-1);
+    line-height: 1.3;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--space-m));
+      top: 0.4em;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--theme-accent);
+      box-shadow: 0 0 0 4px rgba(var(--theme-accent-rgb), 0.18);
+    }
+
+    // The date line right under an entry heading
+    + p {
+      margin-top: 0.2rem;
+      font-size: var(--step--1);
+      color: var(--theme-text-secondary);
+    }
+  }
+
+  // Quotes (e.g. instructor feedback)
+  blockquote {
+    margin: var(--space-s) 0 var(--space-s);
+    padding: var(--space-s) var(--space-m);
+    border-radius: 0 12px 12px 0;
+    background: rgba(var(--theme-accent-rgb), 0.06);
+    border-left-color: var(--theme-accent);
+
+    p {
+      margin: 0;
+      font-style: italic;
+    }
+
+    p + p {
+      margin-top: var(--space-2xs);
+      font-style: normal;
+      font-size: var(--step--1);
+      color: var(--theme-text-secondary);
+    }
+  }
+}

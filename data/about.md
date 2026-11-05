@@ -32,6 +32,7 @@ I'm Elias, a game programmer from Växjö. I'm in the last stretch of the Game P
 
 - C# and Unity first, then C++ and Unreal Engine 5 on top of that.
 - Four team game projects together with artists and designers, in teams of up to 16 people.
+- A solo graduation project, [Cat Survival Craft](/project.html?id=cat-survival-craft), a networked survival-crafting prototype in Unity 6.
 
 > "Your coding skills are excellent. You're at the stage where you can focus on overall system architecture and a specialization path—gameplay, tools, or engine development. I see you having no issue succeeding in any of them."
 >

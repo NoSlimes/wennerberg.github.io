@@ -69,13 +69,14 @@ summaries:
   - Unity 6
   - C#
   - Networking (NGO)
+  - Futuregames
   duration: ''
   teamSize: 1
   detailPageUrl: /project.html?id=cat-survival-craft
   imageSrc: /assets/uploads/cat-survival-00.webp
   imageCaption: Cat Survival Craft prototype
   projectType: Survival Craft Prototype
-  description: Prototype focused on survival-crafting systems, inventory flow, and cats.
+  description: My Futuregames graduation project, a solo prototype focused on survival-crafting systems, inventory flow, and cats.
   links:
     github: ''
 - id: slaylien
@@ -104,6 +105,7 @@ summaries:
   title: DEAD SECTOR
   navTitle: Dead Sector
   hidden: false
+  stub: true
   section: Game projects - Collaborative
   flairs:
   - Unity 6

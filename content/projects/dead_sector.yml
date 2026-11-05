@@ -3,6 +3,7 @@ id: dead_sector
 title: DEAD SECTOR
 navTitle: Dead Sector
 hidden: false
+stub: true
 section: Game projects - Collaborative
 flairs:
 - Unity 6

@@ -47,6 +47,10 @@ Every few months the whole class gets split into teams with artists and designer
 
 There was also a racing game where I ended up as a generalist and kind of unofficial lead. All of them are in the showreel below.
 
+## Graduation Project
+
+For my graduation project I worked solo on [Cat Survival Craft](/project.html?id=cat-survival-craft), a survival-crafting prototype in Unity 6 and C# with networking through Netcode for GameObjects. The focus was on the systems: the crafting loop, inventory and item flow. And cats.
+
 ## C# and C++
 
 The first course was C# in Unity, where we made a Vampire Survivors clone. After that the programme added C++ and Unreal Engine 5, which the later game projects were built in. C# and Unity are still what I use most for my own projects.

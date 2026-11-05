@@ -3,13 +3,16 @@ pageTitle: Project - Cat Survival Craft
 heroImage: /assets/uploads/cat-survival.webp
 heroVideoUrl: ''
 projectName: CAT SURVIVAL CRAFT
-projectType: 'Survival Craft Prototype · Solo Project'
+projectType: 'Survival Craft Prototype · Futuregames Graduation Project'
 flairs:
 - Unity 6
 - C#
 - Networking NGO
 - Systems Architecture
+- Futuregames
 projectInfo:
+- label: Project
+  value: Graduation project, Futuregames
 - label: Team Size
   value: 1
 - label: Engine
@@ -25,7 +28,7 @@ galleryImages:
 videoURL: /assets/uploads/cat-survival.mp4
 ---
 
-Cat Survival Craft is a solo prototype focused on survival-crafting systems, inventory flow, and cats.
+Cat Survival Craft is my graduation project at Futuregames: a solo prototype focused on survival-crafting systems, inventory flow, and cats.
 
 ## Overview
 

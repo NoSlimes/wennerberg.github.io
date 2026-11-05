@@ -1,10 +1,18 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Deploys the site to GitHub Pages.
+# Only the files the site actually serves are published (see "Collect site files");
+# SCSS sources, content/ (CMS source), build scripts and docs stay in the repo only.
 name: Deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
+
+  # Pushes made by the "Build content data" workflow (CMS saves) use the built-in
+  # token, which doesn't trigger other workflows; redeploy once it has finished.
+  workflow_run:
+    workflows: ["Build content data"]
+    types: [completed]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,8 +30,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
+    # After a content build, only deploy if that build succeeded
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -31,13 +40,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # On workflow_run, take the latest main (including the rebuilt data)
+          ref: main
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Collect site files
+        run: |
+          mkdir -p _site/scripts _site/styles
+          cp *.html CNAME favicon.ico robots.txt sitemap.xml _site/
+          cp -r assets data admin _site/
+          cp scripts/*.js _site/scripts/
+          cp styles/main.css _site/styles/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

@@ -15,11 +15,15 @@ async function loadProject() {
       return;
     }
 
-    const mdResponse = await fetch(`data/projects/${projectId}.md`);
-    if (!mdResponse.ok) {
-      showDetailMessage(mainContent, 'Project Not Found',
-        `<p>The project ID "${projectId}" does not exist.</p><p>Available projects: ${summaries.map(p => p.id).join(', ')}</p><a href="/">Return to homepage</a>.`);
-      document.title = 'Project Not Found';
+    const mdResponse = summaryEntry ? await fetch(`data/projects/${projectId}.md`) : null;
+    if (!mdResponse || !mdResponse.ok) {
+      // Suggest the projects that are actually listed, in home page order
+      const visible = summaries.filter(p => p.hidden !== true && p.locked !== true);
+      const links = groupProjectsForDisplay(visible).groups.flatMap(g => g.projects).map(p => ({
+        href: p.detailPageUrl || `/project.html?id=${encodeURIComponent(p.id)}`,
+        label: p.navTitle || p.title || p.id
+      }));
+      showNotFoundPage('project', projectId, links);
       return;
     }
 

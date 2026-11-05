@@ -1,6 +1,5 @@
 // styles/scss/_components.scss
 @use 'variables';
-@use 'sass:color';
 
 /* ============================================= */
 /* == Reusable Components == */
@@ -20,7 +19,7 @@
   font-weight: 500;
   font-size: var(--step-0);
   text-align: center;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
   position: relative;
   overflow: hidden;
 
@@ -43,23 +42,23 @@
   &--secondary {
     background: linear-gradient(135deg, var(--theme-accent) 0%, var(--theme-accent-soft) 100%);
     color: var(--theme-text-inverted);
-    box-shadow: 0 2px 8px rgba(var(--theme-accent), 0.25);
+    box-shadow: 0 2px 8px rgba(var(--theme-accent-rgb), 0.25);
 
     &:hover {
       background: linear-gradient(135deg, var(--theme-accent-hover) 0%, var(--theme-accent) 100%);
-      box-shadow: 0 4px 12px rgba(var(--theme-accent), 0.3);
+      box-shadow: 0 4px 12px rgba(var(--theme-accent-rgb), 0.3);
     }
   }
 
   &--ghost {
     background: transparent;
-    border: 2px solid variables.$color-accent;
-    color: variables.$color-accent;
+    border: 2px solid var(--theme-accent);
+    color: var(--theme-accent);
     box-shadow: none;
 
     &:hover {
-      background: variables.$color-accent;
-      color: variables.$color-text-primary;
+      background: var(--theme-accent);
+      color: var(--theme-ink);
     }
   }
 }
@@ -103,7 +102,7 @@ section#hero {
     margin-bottom: var(--space-l);
     padding-bottom: 0.2em;
     line-height: 1.2;
-    background: linear-gradient(135deg, variables.$color-text-inverted 0%, variables.$color-accent-soft 100%);
+    background: linear-gradient(135deg, var(--theme-text-primary) 0%, var(--theme-accent-soft) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -139,6 +138,12 @@ section#hero {
 .skill-tag {
   display: inline-flex;
   align-items: center;
+
+  // Logo before the tag name (home hero and project/experience heroes)
+  > img {
+    margin-right: 8px;
+  }
+
   padding: 4px 12px;
   background: var(--theme-flair-bg);
   color: var(--theme-flair-text);
@@ -146,7 +151,7 @@ section#hero {
   border-radius: 16px;
   font-size: 0.85rem;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
     background: var(--theme-accent);
@@ -221,7 +226,7 @@ section#hero {
   height: 40px;
   background: rgba(var(--theme-hero-text-primary-rgb), 0.1);
   border-radius: 50%;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   border: 1px solid rgba(var(--theme-hero-text-primary-rgb), 0.2);
 
   &:hover {
@@ -232,7 +237,7 @@ section#hero {
 
   img {
     opacity: 0.9;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease;
     filter: var(--theme-social-icon-filter);
   }
 
@@ -241,7 +246,7 @@ section#hero {
     height: 20px;
     fill: var(--theme-hero-text-primary);
     opacity: 0.9;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease;
   }
 
   &:hover svg {
@@ -282,8 +287,8 @@ section#hero {
       bottom: 0;
       // Dark scrim above the hero video/image so the text stays readable
       background:
-        radial-gradient(circle at 30% 70%, rgba(variables.$color-accent, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 70% 30%, rgba(variables.$color-accent, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(var(--theme-accent-rgb), 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(var(--theme-accent-rgb), 0.04) 0%, transparent 50%),
         linear-gradient(
           rgba(var(--theme-bg-primary-rgb), 0.7) 0%,
           rgba(var(--theme-bg-primary-rgb), 0.78) 75%,
@@ -347,9 +352,9 @@ section#work {
 
 .code-dropdown {
   margin: 20px 0;
-  border: 1px solid rgba(variables.$color-white, 0.12);
+  border: 1px solid rgba(var(--theme-text-primary-rgb), 0.12);
   border-radius: 10px;
-  background: rgba(variables.$color-black, 0.2);
+  background: rgba(var(--theme-bg-primary-rgb), 0.2);
   overflow: hidden;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 
@@ -357,8 +362,8 @@ section#work {
     list-style: none;
     cursor: pointer;
     padding: 12px 16px;
-    background: rgba(variables.$color-black, 0.35);
-    color: variables.$color-text-inverted;
+    background: rgba(var(--theme-bg-primary-rgb), 0.35);
+    color: var(--theme-text-primary);
     font-weight: 600;
     letter-spacing: 0.02em;
     display: flex;
@@ -379,8 +384,8 @@ section#work {
     }
 
     &:hover {
-      background: rgba(variables.$color-black, 0.5);
-      color: variables.$color-white;
+      background: rgba(var(--theme-bg-primary-rgb), 0.5);
+      color: var(--theme-text-primary);
     }
   }
 
@@ -403,9 +408,6 @@ section#work {
     }
   }
 
-  pre {
-    margin: 0 !important;
-  }
 }
 
 // Clear break between article sections (each section starts with its own h2)
@@ -426,7 +428,7 @@ section#work {
   h3 {
     margin-top: var(--space-l);
     margin-bottom: var(--space-m);
-    color: variables.$color-accent;
+    color: var(--theme-accent);
     font-size: var(--step-1);
     font-weight: 500;
   }
@@ -479,7 +481,7 @@ section#work {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(variables.$color-black, 0.15);
+    box-shadow: 0 4px 12px rgba(var(--theme-bg-primary-rgb), 0.15);
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: block; // Ensure image is block level
@@ -487,14 +489,14 @@ section#work {
     
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(variables.$color-black, 0.2);
+      box-shadow: 0 6px 20px rgba(var(--theme-bg-primary-rgb), 0.2);
     }
   }
   
   .image-caption {
     margin-top: var(--space-s);
     font-style: italic;
-    color: rgba(variables.$color-text-inverted, 0.8);
+    color: rgba(var(--theme-text-primary-rgb), 0.8);
     font-size: var(--step--1);
     text-align: center; // Explicitly center the caption
   }
@@ -557,7 +559,7 @@ section#work {
   margin: var(--space-l) 0;
   
   .gallery-title {
-    color: variables.$color-text-inverted;
+    color: var(--theme-text-primary);
     font-size: var(--step-0);
     font-weight: 600;
     margin-bottom: var(--space-m);
@@ -574,13 +576,13 @@ section#work {
       height: 200px;
       object-fit: cover;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(variables.$color-black, 0.1);
+      box-shadow: 0 2px 8px rgba(var(--theme-bg-primary-rgb), 0.1);
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(variables.$color-black, 0.2);
+        box-shadow: 0 4px 12px rgba(var(--theme-bg-primary-rgb), 0.2);
       }
     }
   }
@@ -594,13 +596,13 @@ section#work {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(variables.$color-black, 0.15);
+    box-shadow: 0 4px 12px rgba(var(--theme-bg-primary-rgb), 0.15);
   }
   
   .video-caption {
     margin-top: var(--space-s);
     font-style: italic;
-    color: rgba(variables.$color-text-inverted, 0.8);
+    color: rgba(var(--theme-text-primary-rgb), 0.8);
     font-size: var(--step--1);
   }
 }
@@ -644,12 +646,12 @@ section#work {
 
 // Override project-gallery styles when it contains our new gallery structure
 .project-gallery.new-gallery-layout {
-  display: block !important; // Override the grid display
-  grid-template-columns: none !important; // Remove grid columns
+  display: block; // Override the grid display
+  grid-template-columns: none; // Remove grid columns
 }
 
 .gallery-section-header {
-  color: variables.$color-text-inverted;
+  color: var(--theme-text-primary);
   font-size: var(--step-3); // Larger header to match other section headers
   font-weight: 600;
   margin-bottom: var(--space-l);
@@ -678,11 +680,11 @@ section#work {
       object-fit: cover;
       border-radius: 8px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 8px rgba(variables.$color-black, 0.1);
+      box-shadow: 0 2px 8px rgba(var(--theme-bg-primary-rgb), 0.1);
       
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(variables.$color-black, 0.2);
+        box-shadow: 0 4px 12px rgba(var(--theme-bg-primary-rgb), 0.2);
       }
     }
   }
@@ -752,7 +754,7 @@ section#work {
 }
 
 // Locked page: nothing else in the hero, so center the notice and the way home
-.hero_intro--locked {
+.hero_intro--message {
   text-align: center;
 
   .hidden-notice {
@@ -764,5 +766,31 @@ section#work {
   .project-actions {
     display: flex;
     justify-content: center;
+  }
+}
+
+// Pages that do exist (not-found message), as pills like "On This Page"
+.hidden-notice__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2xs);
+  margin-top: var(--space-s);
+
+  a {
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--theme-border);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--theme-text-primary);
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--theme-accent);
+      border-color: var(--theme-accent);
+      background: rgba(var(--theme-accent-rgb), 0.1);
+    }
   }
 }

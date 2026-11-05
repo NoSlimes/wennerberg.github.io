@@ -47,26 +47,22 @@ input, button, textarea, select {
   font: inherit;
 }
 
-// /* Focus styles */
-// :focus {
-//   outline: 2px dashed variables.$color-outline;
-//   outline-offset: 0.25rem;
-// }
-
-/* Code block styling with Prism.js */
-pre {
+/* Code blocks (always inside a code dropdown). The Prism theme stylesheet loads
+   after main.css, so these selectors are one element more specific than its
+   pre[class*="language-"] / code[class*="language-"] instead of using !important. */
+main pre,
+main pre[class*="language-"] {
   background: #2d2d2d;
-  padding: 16px !important;
+  padding: 16px;
   border-radius: 8px;
-  overflow-x: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  margin: 20px 0 !important;
-  font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Consolas', monospace !important;
-  font-size: 0.85rem !important;
-  line-height: 1.5 !important;
-  color: #f8f8f2 !important;
-  white-space: pre !important;
-  overflow-x: auto !important;
+  margin: 0;
+  font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #f8f8f2;
+  white-space: pre;
+  overflow-x: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -78,13 +74,14 @@ code {
   font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
 }
 
-pre code {
-  background: none !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  color: inherit !important;
-  border: none !important;
-  box-shadow: none !important;
+main pre code,
+main pre code[class*="language-"] {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  border: none;
+  box-shadow: none;
 }
 
 /* Prism syntax highlighting token styles */

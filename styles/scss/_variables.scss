@@ -1,66 +1,15 @@
 // =============================================
 // == SCSS Variables ==
-// (These exist only during compilation)
+// (Compile-time only. Colours live in the CSS custom properties below.)
 // =============================================
 
-@use 'sass:color';
-
-// --- Typography ---
 $font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-$font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-// --- Refined Color Palette ---
-$color-accent: #83c114;
-$color-accent-primary: #83c114;
-$color-accent-hover: #a0d142;
-$color-accent-soft: #a0d142;
-$color-white: #c8b6aa;
-$color-foreground-light: #f8f8f8;
-$color-black: #170d0b;
-// $color-outline: #00ff19;  // Unused - bright green conflicts with theme
-// $color-dark-gray: #002a32;  // Unused
-// $color-green: #43B581;  // Unused - conflicts with accent
-$color-light-gray: #e5e5e5;
-// $color-mid-gray: #888888;  // Unused
-
-$gradient-white-light: #ddd5ca;
-$gradient-white-dark: #c8b6aa;
-
-$color-block-1: #39447c;
-$color-block-2: #3b4b71;
-$color-block-3: #3e5461;
-
-$gradient-white: linear-gradient(to bottom,
-        rgba($gradient-white-light, 0.8),
-        rgba($gradient-white-dark, 0.5));
-
-$gradient-blue: linear-gradient(to bottom,
-        rgba($color-block-1, 0.8),
-        rgba($color-block-2, 0.5),
-        rgba($color-block-3, 0.3));
-
-// --- Add these new variables for buttons ---
-$color-primary: $color-accent;
-$color-primary-dark: color.adjust($color-primary, $lightness: -10%); // Modern SASS color function
-
-// Semantic SCSS Variables
-$color-text-primary: $color-black;
-$color-text-secondary: color.adjust($color-text-primary, $lightness: 15%);
-$color-mid-gray: #52525b;
-$color-text-inverted: $color-white;
-
-$color-background-light: #6b4923;
-$color-background-medium: #584934;
-$color-background-medium-1: #5d5639;
-$color-background-dark: #170d0b;
-
-$header-height: 70px;
 $sidebar-width: 280px;
 
 
 // =============================================
 // == CSS Custom Properties ==
-// (These will exist in the final CSS file for the browser to use)
+// (The single source for colours, type and spacing)
 // =============================================
 :root {
     // Typography scale
@@ -72,7 +21,7 @@ $sidebar-width: 280px;
     --step-3: clamp(1.944rem, 1.771rem + 0.8651vw, 2.4414rem);
     --step-4: clamp(2.3328rem, 2.0827rem + 1.2504vw, 3.0518rem);
     --step-5: clamp(2.7994rem, 2.4462rem + 1.7658vw, 3.8147rem);
-    
+
     // Spacing scale
     --space-3xs: clamp(0.3125rem, 0.3125rem + 0vw, 0.3125rem);
     --space-2xs: clamp(0.5625rem, 0.5408rem + 0.1087vw, 0.625rem);
@@ -84,36 +33,47 @@ $sidebar-width: 280px;
     --space-2xl: clamp(4.5rem, 4.3261rem + 0.8696vw, 5rem);
     --space-3xl: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
 
-    // Theme Colors - Dark Mode (Default)
+    // Page background (dark brown) and slightly lifted variants of it
     --theme-bg-primary: #170d0b;
     --theme-bg-primary-rgb: 23, 13, 11;
+    --theme-bg-lift-3: rgb(13.0784313725%, 7.3921568627%, 6.2549019608%);
+    --theme-bg-lift-6: rgb(17.137254902%, 9.6862745098%, 8.1960784314%);
     --theme-bg-secondary: #584934;
     --theme-bg-tertiary: #6b4923;
+    --theme-footer-bg: linear-gradient(135deg, #170d0b 0%, #1a0f0d 100%);
+
+    // Text on the dark background (warm beige)
     --theme-text-primary: #c8b6aa;
+    --theme-text-primary-rgb: 200, 182, 170;
     --theme-text-secondary: rgba(200, 182, 170, 0.7);
-    --theme-text-inverted: #170d0b;
+
+    // Light surfaces (home page cards) and the dark "ink" text used on them
+    --theme-card-bg: #c8b6aa;
+    --theme-card-bg-end: rgb(80.7885154062%, 74.5011204482%, 70.3095238095%);
+    --theme-ink: #170d0b;
+    --theme-ink-secondary: rgb(29.3137254902%, 16.568627451%, 14.0196078431%);
+    --theme-text-inverted: var(--theme-ink);
+
+    // Accent green
     --theme-accent: #83c114;
+    --theme-accent-rgb: 131, 193, 20;
     --theme-accent-hover: #a0d142;
     --theme-accent-soft: #a0d142;
     --theme-border: rgba(131, 193, 20, 0.2);
-    --theme-footer-bg: linear-gradient(135deg, #170d0b 0%, #1a0f0d 100%);
-    
-    // Hero overlay for dark mode (earlier fade works fine)
-    --theme-hero-overlay-start: rgba(23, 13, 11, 0.6); // same tone as --theme-bg-primary so hero and page match
+
+    // Hero overlay: same tone as --theme-bg-primary so hero and page match
+    --theme-hero-overlay-start: rgba(23, 13, 11, 0.6);
     --theme-hero-overlay-end: rgba(23, 13, 11, 1.0);
-    
-    // Hero text colors for dark mode
-    --theme-hero-text-primary: #c8b6aa; // Light text on dark hero
+
+    // Hero text
+    --theme-hero-text-primary: #c8b6aa;
     --theme-hero-text-primary-rgb: 200, 182, 170;
-    --theme-accent-rgb: 131, 193, 20;
-    
-    // Flair colors for dark mode
+
+    // Tag ("flair") pills
     --theme-flair-bg: rgba(131, 193, 20, 0.15);
     --theme-flair-border: rgba(131, 193, 20, 0.3);
     --theme-flair-text: #83c114;
-    
-    // Social icon filter for dark mode (no inversion needed - icons are light)
-    --theme-social-icon-filter: none;
-    
-}
 
+    // Social icons are light already, so no filter
+    --theme-social-icon-filter: none;
+}

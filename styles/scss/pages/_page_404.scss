@@ -1,9 +1,90 @@
-@use "../variables";
+// 404: centered "level not found" screen over the out-of-bounds Slime Murderer clip
 
-.error-code {
-    font-size: clamp(6rem, 25vw, 12rem);
-    font-weight: bold;
-    line-height: 1;
-    color: var(--color-accent, variables.$color-text-inverted);
-    margin: 0;
+.error-404 {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: var(--space-2xl) var(--space-m);
+  overflow: hidden;
+  text-align: center;
+  background: var(--hero-bg-image) center / cover no-repeat;
+
+  // Vignette: the clip reads as atmosphere, the text stays readable
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+      rgba(var(--theme-bg-primary-rgb), 0.78) 0%,
+      rgba(var(--theme-bg-primary-rgb), 0.92) 60%,
+      rgb(var(--theme-bg-primary-rgb)) 100%);
+  }
+
+  .project-card-section__label {
+    margin-top: var(--space-xs);
+  }
+}
+
+.error-404__content {
+  position: relative;
+  max-width: 40rem;
+}
+
+// Big 404 in the site gradient, with a slight red/blue offset like a glitched frame
+.error-404__code {
+  margin: 0;
+  font-size: clamp(6rem, 22vw, 11rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--theme-text-primary) 0%, var(--theme-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter:
+    drop-shadow(-3px 0 0 rgba(255, 70, 100, 0.45))
+    drop-shadow(3px 0 0 rgba(70, 200, 255, 0.45));
+}
+
+.error-404__title {
+  margin: 0.25rem 0 0;
+  font-size: var(--step-3);
+  line-height: 1.2;
+}
+
+.error-404__text {
+  margin: var(--space-s) auto 0;
+  max-width: 32rem;
+  color: var(--theme-text-secondary);
+}
+
+// Fake console output with the path that was requested
+.error-404__log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: var(--space-m) auto 0;
+  max-width: 32rem;
+  padding: var(--space-xs) var(--space-s);
+  border: 1px solid var(--theme-border);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  text-align: left;
+  font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--theme-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.error-404__log-line--error {
+  color: #ff6b6b;
+}
+
+.error-404__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-l);
 }

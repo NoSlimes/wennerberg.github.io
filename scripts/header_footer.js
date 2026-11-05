@@ -205,29 +205,70 @@ const LOCKED_NOTICE_TEXT = {
   experience: "Sadly this one is locked, so you're not actually allowed to see it. Could be NDA stuff, could be that it's just not ready yet. Either way, nothing to see here (for now)."
 };
 
-function showLockedPage(kind) {
+// A page that has nothing to show (locked, not found): only the hero stays,
+// with a centered notice, optional links and a way home. Kept out of search results.
+function showHeroMessage({ pageTitle, variant, badge, title, text, links = [] }) {
   const intro = document.querySelector('#hero .hero_intro');
   if (!intro) return;
 
-  document.title = 'Locked | Elias Wennerberg';
+  document.title = pageTitle;
   const robots = document.querySelector('meta[name="robots"]') || document.head.appendChild(document.createElement('meta'));
   robots.setAttribute('name', 'robots');
   robots.setAttribute('content', 'noindex, nofollow');
 
-  // Only the hero stays; everything below it belongs to the locked page
   document.querySelectorAll('main > article').forEach(el => { el.style.display = 'none'; });
 
-  intro.classList.add('hero_intro--locked');
+  intro.classList.add('hero_intro--message');
   intro.innerHTML = `
-    <div class="hidden-notice hidden-notice--locked" role="note">
-      <span class="hidden-notice__badge">Locked area</span>
-      <p class="hidden-notice__title">Huh, you found something hidden... and it's locked x.x</p>
+    <div class="hidden-notice hidden-notice--${variant}" role="note">
+      <span class="hidden-notice__badge"></span>
+      <p class="hidden-notice__title"></p>
       <p class="hidden-notice__text"></p>
     </div>
     <div class="project-actions"><a class="button" href="/">Return to Home</a></div>
   `;
-  intro.querySelector('.hidden-notice__text').textContent =
-    LOCKED_NOTICE_TEXT[kind] || LOCKED_NOTICE_TEXT.project;
+  // textContent: the text can contain the id from the URL
+  intro.querySelector('.hidden-notice__badge').textContent = badge;
+  intro.querySelector('.hidden-notice__title').textContent = title;
+  intro.querySelector('.hidden-notice__text').textContent = text;
+
+  if (links.length) {
+    const nav = document.createElement('nav');
+    nav.className = 'hidden-notice__links';
+    nav.setAttribute('aria-label', 'Pages that do exist');
+    links.forEach(({ href, label }) => {
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = label;
+      nav.appendChild(a);
+    });
+    intro.querySelector('.hidden-notice').appendChild(nav);
+  }
+}
+
+function showLockedPage(kind) {
+  showHeroMessage({
+    pageTitle: 'Locked | Elias Wennerberg',
+    variant: 'locked',
+    badge: 'Locked area',
+    title: "Huh, you found something hidden... and it's locked x.x",
+    text: LOCKED_NOTICE_TEXT[kind] || LOCKED_NOTICE_TEXT.project
+  });
+}
+
+// Bad or old ?id= link: say so, and offer the pages that actually exist
+function showNotFoundPage(kind, id, links) {
+  const what = kind === 'experience' ? 'experience' : 'project';
+  showHeroMessage({
+    pageTitle: `${what === 'project' ? 'Project' : 'Experience'} not found | Elias Wennerberg`,
+    variant: 'missing',
+    badge: 'Not found',
+    title: `This ${what} doesn't exist o.O`,
+    text: id
+      ? `There's no ${what} called "${id}". Maybe a typo, maybe it got renamed. Here's what actually exists:`
+      : `This link is missing which ${what} to show. Here's what actually exists:`,
+    links
+  });
 }
 
 const JS_YAML_URL = 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js';
@@ -496,32 +537,48 @@ function setupMenuToggle() {
   const toggle = document.querySelector(".menu-toggle");
   const sidebar = document.querySelector(".site_sidebar");
   const overlay = document.querySelector(".sidebar_overlay");
+  const mobile = window.matchMedia("(max-width: 900px)");
+  if (!toggle || !sidebar) return;
 
-  function toggleSidebar() {
-    const isOpen = document.body.classList.toggle("sidebar-open");
-    sidebar?.classList.toggle("sidebar-open", isOpen);
+  // On mobile the closed sidebar is off-screen; inert keeps keyboard focus out of it
+  const syncInert = () => {
+    const hidden = mobile.matches && !sidebar.classList.contains("sidebar-open");
+    sidebar.toggleAttribute("inert", hidden);
+  };
+
+  function setOpen(isOpen, { returnFocus = false } = {}) {
+    // Focus must not stay inside the sidebar once it turns inert
+    if (!isOpen && sidebar.contains(document.activeElement)) returnFocus = true;
+    document.body.classList.toggle("sidebar-open", isOpen);
+    sidebar.classList.toggle("sidebar-open", isOpen);
     overlay?.classList.toggle("sidebar-open", isOpen);
     document.body.style.overflow = isOpen ? "hidden" : "";
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+    syncInert();
+    if (isOpen) sidebar.querySelector("a")?.focus();
+    else if (returnFocus) toggle.focus();
   }
 
-  if (toggle) {
-    toggle.addEventListener("click", toggleSidebar);
-  }
+  toggle.addEventListener("click", () => setOpen(!sidebar.classList.contains("sidebar-open")));
+  overlay?.addEventListener("click", () => setOpen(false));
 
-  if (overlay) {
-    overlay.addEventListener("click", toggleSidebar);
-  }
-
-  // Close sidebar when any nav link is clicked (delegated: links are added later)
-  sidebar?.addEventListener("click", (event) => {
-    if (!event.target.closest(".sidebar_link")) return;
-    if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
-      document.body.classList.remove("sidebar-open");
-      sidebar.classList.remove("sidebar-open");
-      overlay?.classList.remove("sidebar-open");
-      document.body.style.overflow = "";
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && sidebar.classList.contains("sidebar-open")) {
+      setOpen(false, { returnFocus: true });
     }
   });
+
+  // Close sidebar when any nav link is clicked (delegated: links are added later)
+  sidebar.addEventListener("click", (event) => {
+    if (event.target.closest(".sidebar_link") && mobile.matches) setOpen(false);
+  });
+
+  mobile.addEventListener("change", () => {
+    if (!mobile.matches) setOpen(false);
+    syncInert();
+  });
+  syncInert();
 }
 
 
@@ -529,16 +586,42 @@ function setupMenuToggle() {
 // so YouTube's start-up play button, pause overlay and end-screen suggestions never show.
 const BACKGROUND_VIDEO_SELECTOR = '.hero-video iframe, .hero-video video, .card-media iframe, .card-media video';
 
+// Background videos stop decoding while scrolled out of view (cheaper scrolling,
+// less battery) and pick up again when they come back.
+const offscreenObserver = ('IntersectionObserver' in window)
+  ? new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.target._onVisibility?.(entry.isIntersecting));
+    }, { rootMargin: '200px 0px' })
+  : null;
+
+function pauseWhileOffscreen(el, onVisibility) {
+  if (!offscreenObserver) return;
+  let first = true;
+  el._onVisibility = (visible) => {
+    // The first report only matters if it starts out of view
+    if (first) { first = false; if (visible) return; }
+    onVisibility(visible);
+  };
+  offscreenObserver.observe(el);
+}
+
 function setupBackgroundVideo(el) {
   if (el.dataset.bgVideo) return;
   el.dataset.bgVideo = 'true';
   el.classList.add('bg-video');
   const setPlaying = (playing) => el.classList.toggle('is-playing', playing);
+  // Paused only because it scrolled out of view: keep it visible, it resumes on return
+  let offscreen = false;
 
   if (el.tagName === 'VIDEO') {
     el.addEventListener('playing', () => setPlaying(true));
-    el.addEventListener('pause', () => setPlaying(false));
+    el.addEventListener('pause', () => { if (!offscreen) setPlaying(false); });
     if (!el.paused && el.readyState > 2) setPlaying(true);
+    pauseWhileOffscreen(el, (visible) => {
+      offscreen = !visible;
+      if (visible) el.play().catch(() => {});
+      else el.pause();
+    });
     return;
   }
 
@@ -586,10 +669,15 @@ function setupBackgroundVideo(el) {
       command('unloadModule', ['captions']);
       command('unloadModule', ['cc']);
       setPlaying(true);
-    } else {
+    } else if (!(state === 2 && offscreen)) {
       setPlaying(false);
       if (state === 0) restart();
     }
+  });
+
+  pauseWhileOffscreen(el, (visible) => {
+    offscreen = !visible;
+    command(visible ? 'playVideo' : 'pauseVideo');
   });
 
   // The player only reports back after it has heard "listening", so keep asking until it answers

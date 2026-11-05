@@ -12,14 +12,14 @@ links:
   github: https://github.com/noslimes
   linkedin: https://www.linkedin.com/in/elias-wennerberg/
 ---
-I'm Elias, a game programmer from Växjö. I'm in the last stretch of the Game Programming programme at Futuregames, and right now I'm interning at Evergreen IT, writing C++ for a custom game engine. What I enjoy most is the systems side of games: networking, tools, and the gameplay code that holds it all together.
+I'm Elias, a game programmer from Växjö. I'm in the last stretch of the Game Programming programme at Futuregames, and right now I'm interning at Evergreen IT, writing C++ for Iterum and the custom engine it runs on. What I enjoy most is the systems side of games: networking, tools, and the gameplay code that holds it all together.
 
 ## Experience
 
 ### Evergreen IT AB · Game Programming Intern
 *May 2026 – Dec 2026 · Remote*
 
-- Engine systems and gameplay features in C++ on the Evergreen Game Engine, a custom-built engine.
+- Engine systems and gameplay features in C++ for [Iterum](https://iterum.gg/), on the Evergreen Game Engine, a custom-built engine.
 - C# bot tools that automate GitHub and Azure DevOps workflows for the team.
 - Day-to-day team workflow in Azure DevOps and GitHub: work items, pull requests and code reviews.
 
@@ -55,3 +55,7 @@ I'm Elias, a game programmer from Växjö. I'm in the last stretch of the Game P
 ## How I got here
 
 I started out making small games in GameMaker Studio as a teenager, took a break for a while, and came back to it a few years later. Since then I've gone from Unity and C# towards C++ and engine work, and somewhere along the way networking became my favourite kind of problem: getting separate systems to talk to each other properly.
+
+## Outside of code
+
+I play a lot of games, and a lot of different ones; my Steam library is closing in on 400. I keep ending up in big open worlds like Skyrim, Fallout, The Elder Scrolls Online and No Man's Sky, survival games like ARK and Barotrauma, and anything with automation: Factorio and Satisfactory, which probably explains PlanetFactory. Civilization V and VI alone are past 650 hours. Away from the screen I ride my bike quite a bit, and a few years back I even entered some amateur mountain bike races. I also like to sing, mostly just because it's fun.

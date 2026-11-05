@@ -18,11 +18,13 @@ async function loadExperience() {
       history.replaceState(null, '', `?id=${encodeURIComponent(experienceId)}`);
     }
 
-    const mdResponse = await fetch(`data/experience/${experienceId}.md`);
+    const mdResponse = await fetch(`data/experience/${encodeURIComponent(experienceId)}.md`);
     if (!mdResponse.ok) {
-      showDetailMessage(mainContent, 'Experience Not Found',
-        `<p>The experience ID "${experienceId}" does not exist.</p><a href="/">Return to homepage</a>.`);
-      document.title = 'Experience Not Found';
+      const index = await fetchYaml('/data/experiences.yml').catch(() => ({}));
+      const links = (index.experiences || [])
+        .filter(e => e.hidden !== true && e.locked !== true)
+        .map(e => ({ href: `/experience.html?id=${encodeURIComponent(e.id)}`, label: e.navTitle || e.id }));
+      showNotFoundPage('experience', experienceId, links);
       return;
     }
 

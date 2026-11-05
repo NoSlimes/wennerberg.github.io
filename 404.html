@@ -16,27 +16,37 @@
     <header id="header-container"></header>
 
     <main>
+        <section class="error-404" style="--hero-bg-image: url('/assets/uploads/slime-murderer-oob.webp');">
+            <div class="error-404__content">
+                <p class="error-404__code" aria-hidden="true">404</p>
+                <p class="project-card-section__label">Level not found</p>
+                <h1 class="error-404__title">URL out of range exception or something</h1>
+                <p class="error-404__text">
+                    Looks like you've clipped out of bounds or tried to load an asset that doesn't exist.
+                </p>
 
-        <section id="hero" style="--hero-bg-image: url('/assets/uploads/slime-murderer-oob.webp');">
-            <div class="wrapper">
-                <div class="hero_content text_center">
-                    <div class="error-code">404</div>
-                    <h2 class="h2">URL out of range exception or something</h2>
+                <div class="error-404__log" aria-label="Error details">
+                    <span class="error-404__log-line">&gt; LoadLevel("<span id="missing-path">/</span>")</span>
+                    <span class="error-404__log-line error-404__log-line--error">NullReferenceException: level not found</span>
+                </div>
 
-                    <p class="h5">
-                        Looks like you've clipped out of bounds or tried to load an asset that doesn't exist.
-                    </p>
-                    <br>
-                    <a href="/" class="button">Return to Home</a>
+                <div class="error-404__actions">
+                    <a href="/" class="button button--secondary">Return to Home</a>
+                    <a href="/#work" class="button button--ghost">Browse projects</a>
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- Footer will be injected here -->
     <footer id="footer-container"></footer>
 
+    <script>
+        // Show which path the visitor tried to load (as text, never as HTML)
+        let missingPath = window.location.pathname;
+        try { missingPath = decodeURIComponent(missingPath); } catch (e) { /* malformed URL: show it raw */ }
+        document.getElementById('missing-path').textContent = missingPath;
+    </script>
     <script src="/scripts/header_footer.js" defer></script>
 </body>
 

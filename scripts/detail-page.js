@@ -286,7 +286,6 @@ function renderSkillTags(container, flairs) {
       img.alt = `${name} logo`;
       img.width = 18;
       img.height = 18;
-      img.style.marginRight = '8px';
       el.appendChild(img);
     }
     el.appendChild(document.createTextNode(name));

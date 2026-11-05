@@ -1,5 +1,4 @@
 @use 'variables';
-@use 'sass:color';
 
 /* ============================================= /
 / == Enhanced Project Summaries == /
@@ -11,13 +10,13 @@
   /* reduce the per-card bottom margin when in a grid - grid gap controls spacing */
   margin-bottom: var(--space-s);
 
-  background: linear-gradient(135deg, variables.$color-white 0%, color.adjust(variables.$color-white, $lightness: 3%) 100%);
-  color: variables.$color-text-primary;
+  background: linear-gradient(135deg, var(--theme-card-bg) 0%, var(--theme-card-bg-end) 100%);
+  color: var(--theme-ink);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(variables.$color-black, 0.08);
+  box-shadow: 0 8px 32px rgba(var(--theme-bg-primary-rgb), 0.08);
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(variables.$color-accent, 0.1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(var(--theme-accent-rgb), 0.1);
   position: relative;
 
   cursor: pointer;
@@ -37,13 +36,13 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, variables.$color-accent 0%, variables.$color-accent-soft 100%);
+    background: linear-gradient(90deg, var(--theme-accent) 0%, var(--theme-accent-soft) 100%);
     opacity: 0.8;
   }
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 16px 48px rgba(variables.$color-black, 0.15);
+    box-shadow: 0 16px 48px rgba(var(--theme-bg-primary-rgb), 0.15);
     
     &::before {
       opacity: 1;
@@ -58,7 +57,7 @@
   }
 
   h2 {
-    color: variables.$color-text-primary;
+    color: var(--theme-ink);
     padding: var(--space-l) var(--space-l) 0;
     font-weight: 600;
     letter-spacing: -0.01em;
@@ -212,7 +211,7 @@
 .project-card__description {
   font-size: 0.95rem;
   line-height: 1.35;
-  color: variables.$color-text-secondary;
+  color: var(--theme-ink-secondary);
   margin: 0;
   /* keep description concise — clamp to three lines */
   display: -webkit-box;
@@ -227,7 +226,7 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: variables.$color-text-primary;
+  color: var(--theme-ink);
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -258,9 +257,9 @@
   border-radius: 14px;
   font-size: 0.75rem;
   font-weight: 500;
-  color: variables.$color-text-primary;
-  background: linear-gradient(135deg, variables.$color-background-dark 0%, color.adjust(variables.$color-background-dark, $lightness: 6%) 100%);
-  border: 1px solid rgba(variables.$color-accent, 0.06);
+  color: var(--theme-ink);
+  background: linear-gradient(135deg, var(--theme-bg-primary) 0%, var(--theme-bg-lift-6) 100%);
+  border: 1px solid rgba(var(--theme-accent-rgb), 0.06);
 }
 
 /* Circular icon variant for flairs */
@@ -291,8 +290,8 @@
   /* add inner padding and include it in the width/height so the logo doesn't overflow */
   padding: 4px;
   box-sizing: border-box;
-  background: transparent !important;
-  border: none !important;
+  background: transparent;
+  border: none;
   box-shadow: 0 4px 10px rgba(0,0,0,0.12);
 }
 
@@ -338,7 +337,7 @@
 /* Inline duration shown to the right of the project title */
 .project-card__duration {
   font-size: 0.85rem;
-  color: variables.$color-text-secondary;
+  color: var(--theme-ink-secondary);
   font-weight: 500;
 }
 
@@ -443,7 +442,7 @@ section#work {
   grid-column: 1 / -1;
   margin: 0; /* spacing is handled by grid gap */
   border: 2px solid var(--theme-accent);
-  box-shadow: 0 20px 40px rgba(variables.$color-black, 0.18);
+  box-shadow: 0 20px 40px rgba(var(--theme-bg-primary-rgb), 0.18);
   transform: translateY(-12px);
   position: relative;
   z-index: 10;

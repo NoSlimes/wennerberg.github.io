@@ -20,6 +20,8 @@ experienceInfo:
   value: Game Programming Intern
 - label: Company
   value: Evergreen IT AB
+- label: Game
+  value: Iterum
 - label: Duration
   value: May - Dec 2026
 - label: Location
@@ -27,6 +29,7 @@ experienceInfo:
 - label: Engine
   value: Evergreen Game Engine (custom-built)
 highlights:
+- Engine systems and gameplay features in C++ for Iterum, on the Evergreen Game Engine.
 - Used Azure DevOps and GitHub for collaborative development, work item tracking, version control, and pull request reviews.
 - Built GitHub and Azure DevOps bot tools in C# to automate workflows and streamline team processes.
 links:

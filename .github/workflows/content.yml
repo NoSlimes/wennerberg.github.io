@@ -1,7 +1,7 @@
 name: Build content data
 
-# Combine content/ fragments into data/projects.yml and index data/experience/
-# into data/experiences.yml (both read by the site).
+# Combine content/ fragments into data/projects.yml, index data/experience/
+# into data/experiences.yml (both read by the site), and rebuild sitemap.xml.
 
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/projects.yml data/experiences.yml
+          git add data/projects.yml data/experiences.yml sitemap.xml
           if git diff --staged --quiet; then
             echo 'No changes to commit'
           else

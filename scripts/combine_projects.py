@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
-"""Combine content/ fragments into data/projects.yml, and index
-data/experience/*.md into data/experiences.yml for the sidebar.
+"""Combine content/ fragments into data/projects.yml, index
+data/experience/*.md into data/experiences.yml for the sidebar, and write
+sitemap.xml from both.
 
 Source of truth: content/. Run locally or via .github/workflows/content.yml.
 "order" sets sort order (lowest first) and is stripped from output.
 """
 
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content"
 DATA = ROOT / "data"
+SITE_URL = "https://wennerberg.dev"
+# Fixed pages; projects and experiences are added from the data
+SITEMAP_PAGES = ["/", "/about.html", "/resume.html"]
 HEADER = (
     "# GENERATED FILE – do not edit.\n"
     "# Source: content/. Built by scripts/combine_projects.py\n"
@@ -68,7 +73,8 @@ def main():
         )
     print(f"projects.yml: {len(summaries)} summaries, {len(sections)} sections")
 
-    build_experiences()
+    experiences = build_experiences()
+    build_sitemap(summaries, experiences)
 
 
 def read_frontmatter(path):
@@ -107,6 +113,28 @@ def build_experiences():
             default_flow_style=False,
         )
     print(f"experiences.yml: {len(experiences)} experiences")
+    return experiences
+
+
+def build_sitemap(projects, experiences):
+    """Fixed pages plus every project and experience that isn't hidden or locked."""
+    def visible(item):
+        return item.get("hidden") is not True and item.get("locked") is not True
+
+    paths = list(SITEMAP_PAGES)
+    paths += [f"/experience.html?id={e['id']}" for e in experiences if visible(e)]
+    paths += [f"/project.html?id={p['id']}" for p in projects if visible(p) and p.get("id")]
+
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        "<!-- GENERATED FILE – do not edit. Built by scripts/combine_projects.py;",
+        "     hidden and locked projects and experiences are left out. -->",
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    lines += [f"  <url><loc>{escape(SITE_URL + path)}</loc></url>" for path in paths]
+    lines.append("</urlset>")
+    (ROOT / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    print(f"sitemap.xml: {len(paths)} urls")
 
 
 if __name__ == "__main__":

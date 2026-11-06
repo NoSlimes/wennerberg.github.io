@@ -1,63 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Visible pages only: hidden/locked projects and experiences are left out on purpose. -->
+<!-- GENERATED FILE – do not edit. Built by scripts/combine_projects.py;
+     hidden and locked projects and experiences are left out. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://wennerberg.dev/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/about.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/resume.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Experience -->
-  <url>
-    <loc>https://wennerberg.dev/experience.html?id=evergreen-internship</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/experience.html?id=futuregames</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Projects -->
-  <url>
-    <loc>https://wennerberg.dev/project.html?id=planetfactory</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/project.html?id=uniterminal</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/project.html?id=cat-survival-craft</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/project.html?id=tamashii</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/project.html?id=slaylien</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://wennerberg.dev/project.html?id=dead_sector</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+  <url><loc>https://wennerberg.dev/</loc></url>
+  <url><loc>https://wennerberg.dev/about.html</loc></url>
+  <url><loc>https://wennerberg.dev/resume.html</loc></url>
+  <url><loc>https://wennerberg.dev/experience.html?id=evergreen-internship</loc></url>
+  <url><loc>https://wennerberg.dev/experience.html?id=futuregames</loc></url>
+  <url><loc>https://wennerberg.dev/project.html?id=planetfactory</loc></url>
+  <url><loc>https://wennerberg.dev/project.html?id=uniterminal</loc></url>
+  <url><loc>https://wennerberg.dev/project.html?id=cat-survival-craft</loc></url>
+  <url><loc>https://wennerberg.dev/project.html?id=slaylien</loc></url>
+  <url><loc>https://wennerberg.dev/project.html?id=dead_sector</loc></url>
+  <url><loc>https://wennerberg.dev/project.html?id=tamashii</loc></url>
 </urlset>

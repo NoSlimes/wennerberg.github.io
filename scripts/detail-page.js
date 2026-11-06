@@ -224,7 +224,7 @@ function processInlineImages(text, pageName) {
     }[(actualPosition || '').toLowerCase().trim()] || '';
 
     return `<div class="inline-image-container${positionClass}">
-              <img src="${uploadPath(imagePath)}" alt="${caption || `${pageName} image`}" class="inline-image">
+              <img src="${uploadPath(imagePath)}" alt="${caption || `${pageName} image`}" class="inline-image" loading="lazy" decoding="async">
               ${actualCaption ? `<p class="image-caption">${actualCaption}</p>` : ''}
             </div>`;
   });
@@ -233,7 +233,7 @@ function processInlineImages(text, pageName) {
     const images = imageList.split(',').map(img => img.trim());
     const galleryId = 'gallery-' + Math.random().toString(36).substr(2, 9);
     const imgs = images.map((imagePath, index) =>
-      `<img src="${uploadPath(imagePath)}" alt="${pageName} gallery image ${index + 1}" class="gallery-image">`
+      `<img src="${uploadPath(imagePath)}" alt="${pageName} screenshot ${index + 1}" class="gallery-image" loading="lazy" decoding="async">`
     ).join('');
     return `<div class="inline-gallery-container">${caption ? `<h4 class="gallery-title">${caption}</h4>` : ''}<div class="inline-gallery" id="${galleryId}">${imgs}</div></div>`;
   });
@@ -453,12 +453,14 @@ function renderGallery(container, images, pageName, headerText) {
 
   const grid = document.createElement('div');
   grid.className = 'gallery-grid';
-  images.forEach(imageUrl => {
+  images.forEach((imageUrl, index) => {
     const link = document.createElement('a');
     link.href = imageUrl;
     const img = document.createElement('img');
     img.src = imageUrl;
-    img.alt = `${pageName} gallery image`;
+    img.alt = `${pageName} screenshot ${index + 1}`;
+    img.loading = 'lazy';
+    img.decoding = 'async';
     link.appendChild(img);
     grid.appendChild(link);
   });

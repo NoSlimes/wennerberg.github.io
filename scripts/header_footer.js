@@ -39,8 +39,8 @@ const FLAIR_ICONS = {
   'networkingngo': 'logo-network.svg',
   'tooling': 'wrench_hammer.svg',
   'unrealengine': 'unreal-engine.svg',
-  'github': 'logo-github.png',
-  'linkedin': 'logo-linkedin.png',
+  'github': 'logo-github.svg',
+  'linkedin': 'logo-linkedin.svg',
   'azure': 'azure-devops.svg',
   'azuredevops': 'azure-devops.svg',
   'futuregames': 'fg_logo.png'
@@ -436,8 +436,13 @@ function ensureImageModal() {
   const modal = document.createElement('div');
   modal.id = 'image-modal';
   modal.className = 'modal-overlay';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-label', 'Image viewer');
   modal.innerHTML = `
-    <span class="modal-close">&times;</span>
+    <button type="button" class="modal-close" aria-label="Close image">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
     <div class="modal-content">
       <img id="modal-image-content" src="" alt="Expanded image">
     </div>
@@ -446,6 +451,9 @@ function ensureImageModal() {
   document.body.appendChild(modal);
 }
 
+// Element that had focus before the viewer opened
+let modalReturnFocus = null;
+
 function openImageModal(imageSrc, altText) {
   const modal = document.getElementById('image-modal');
   const modalImage = document.getElementById('modal-image-content');
@@ -453,12 +461,18 @@ function openImageModal(imageSrc, altText) {
 
   modalImage.src = imageSrc;
   modalImage.alt = altText || 'Expanded image';
+  // Focus moves into the viewer and comes back to where it was on close
+  modalReturnFocus = document.activeElement;
   modal.classList.add('show-modal');
+  modal.querySelector('.modal-close')?.focus();
 }
 
 function closeImageModal() {
   const modal = document.getElementById('image-modal');
-  if (modal) modal.classList.remove('show-modal');
+  if (!modal || !modal.classList.contains('show-modal')) return;
+  modal.classList.remove('show-modal');
+  modalReturnFocus?.focus?.();
+  modalReturnFocus = null;
 }
 
 function setupImageModal() {
@@ -478,8 +492,12 @@ function setupImageModal() {
   }
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal && modal.classList.contains('show-modal')) {
-      closeImageModal();
+    if (!modal || !modal.classList.contains('show-modal')) return;
+    if (event.key === 'Escape') closeImageModal();
+    // The close button is the only control, so Tab stays on it while open
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      closeBtn?.focus();
     }
   });
 

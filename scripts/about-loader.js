@@ -75,8 +75,8 @@ function renderAboutFacts(list, about) {
 // Resume as the main button, then icon links (GitHub, LinkedIn, email)
 function renderAboutLinks(container, links) {
   const icons = {
-    github: '<img src="/assets/images/logos/logo-github.png" alt="" width="18" height="18" />',
-    linkedin: '<img src="/assets/images/logos/logo-linkedin.png" alt="" width="18" height="18" />'
+    github: '<svg width="20" height="20" aria-hidden="true"><use href="/assets/images/icons.svg#github"/></svg>',
+    linkedin: '<svg width="20" height="20" aria-hidden="true"><use href="/assets/images/icons.svg#linkedin"/></svg>'
   };
   const labels = { github: 'GitHub', linkedin: 'LinkedIn' };
   let html = links.resume ? `<a class="button about-card__resume" href="${links.resume}">View resume</a>` : '';
@@ -85,7 +85,7 @@ function renderAboutLinks(container, links) {
     if (links[key]) html += `<a class="social_link" href="${links[key]}" target="_blank" rel="noopener noreferrer" aria-label="${labels[key]}">${icon}</a>`;
   });
   // Same hidden-address email link as the rest of the site (handled in header_footer.js)
-  html += '<a href="#" class="social_link email-link" aria-label="Email Elias Wennerberg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>';
+  html += '<a href="#" class="social_link email-link" aria-label="Email Elias Wennerberg"><svg width="20" height="20" aria-hidden="true"><use href="/assets/images/icons.svg#email"/></svg></a>';
   html += '</div>';
   container.innerHTML = html;
 }

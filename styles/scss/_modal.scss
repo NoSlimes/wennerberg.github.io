@@ -1,4 +1,5 @@
 @use "variables";
+@use "mixins";
 
 .modal-overlay {
   // Initially hidden but still in the layout so animations can work
@@ -57,15 +58,32 @@
   position: absolute;
   top: 1rem;
   right: 2rem;
+  // Above the image: .modal-content's transform gives it its own layer
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
-  font-size: 2.5rem;
-  font-weight: bold;
   cursor: pointer;
   transition: color 0.2s ease;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+
+  // Same cross as the mobile menu's close icon
+  svg {
+    @include mixins.line-icon;
+  }
 
   &:hover {
     color: #bbb;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--theme-accent);
+    outline-offset: 2px;
   }
 }
 

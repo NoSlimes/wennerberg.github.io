@@ -250,12 +250,7 @@ section#hero {
     transform: translateY(-2px);
   }
 
-  img {
-    opacity: 0.9;
-    transition: opacity 0.2s ease;
-    filter: var(--theme-social-icon-filter);
-  }
-
+  // Icons come from /assets/images/icons.svg and take this fill
   svg {
     width: 20px;
     height: 20px;
@@ -265,10 +260,6 @@ section#hero {
   }
 
   &:hover svg {
-    opacity: 1;
-  }
-
-  &:hover img {
     opacity: 1;
   }
 }

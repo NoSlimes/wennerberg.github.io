@@ -1,5 +1,6 @@
 // styles/scss/_layout.scss
 @use 'variables';
+@use 'mixins';
 
 /* Enhanced section styling */
 section {
@@ -51,32 +52,8 @@ main {
   z-index: 1;
 }
 
-/* Reusable Scrollbar Mixin */
-@mixin custom-scrollbar($track-bg: transparent) {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) $track-bg;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $track-bg;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3);
-    border-radius: 4px;
-    transition: background 0.2s ease;
-
-    &:hover {
-      background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.6);
-    }
-  }
-}
-
 html {
-  @include custom-scrollbar(var(--theme-bg-primary));
+  @include mixins.custom-scrollbar(var(--theme-bg-primary));
 }
 
 /* Enhanced Wrappers */
@@ -221,7 +198,7 @@ html {
         }
       }
     }
-    @include custom-scrollbar(transparent); // transparent track for sidebar
+    @include mixins.custom-scrollbar(transparent); // transparent track for sidebar
   }
 
   // Brand: portrait, name and role, with the hero's faded green line underneath
@@ -332,18 +309,14 @@ html {
             transform: translateY(-2px);
           }
 
-          img,
+          // Icons come from /assets/images/icons.svg and take this fill
           svg {
             width: 20px;
             height: 20px;
             opacity: 0.9;
-          }
-
-          svg {
             fill: var(--theme-hero-text-primary);
           }
 
-          &:hover img,
           &:hover svg {
             opacity: 1;
           }
@@ -388,10 +361,7 @@ html {
 
     // Hamburger while closed, X while open
     .menu-toggle__icon {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
+      @include mixins.line-icon;
     }
 
     .menu-toggle__icon--close,

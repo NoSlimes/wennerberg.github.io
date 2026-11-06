@@ -44,7 +44,6 @@
   --theme-flair-bg: rgba(131, 193, 20, 0.15);
   --theme-flair-border: rgba(131, 193, 20, 0.3);
   --theme-flair-text: #83c114;
-  --theme-social-icon-filter: none;
 }
 
 *,
@@ -831,7 +830,6 @@ main {
   z-index: 1;
 }
 
-/* Reusable Scrollbar Mixin */
 html {
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3) var(--theme-bg-primary);
@@ -1089,16 +1087,13 @@ html::-webkit-scrollbar-thumb:hover {
   border-color: var(--theme-accent);
   transform: translateY(-2px);
 }
-.site_sidebar .sidebar_socials .social_list > li > a img,
 .site_sidebar .sidebar_socials .social_list > li > a svg {
   width: 20px;
   height: 20px;
   opacity: 0.9;
-}
-.site_sidebar .sidebar_socials .social_list > li > a svg {
   fill: var(--theme-hero-text-primary);
 }
-.site_sidebar .sidebar_socials .social_list > li > a:hover img, .site_sidebar .sidebar_socials .social_list > li > a:hover svg {
+.site_sidebar .sidebar_socials .social_list > li > a:hover svg {
   opacity: 1;
 }
 
@@ -1777,11 +1772,6 @@ section#hero {
   border-color: var(--theme-accent);
   transform: translateY(-2px);
 }
-.social_link img {
-  opacity: 0.9;
-  transition: opacity 0.2s ease;
-  filter: var(--theme-social-icon-filter);
-}
 .social_link svg {
   width: 20px;
   height: 20px;
@@ -1790,9 +1780,6 @@ section#hero {
   transition: opacity 0.2s ease;
 }
 .social_link:hover svg {
-  opacity: 1;
-}
-.social_link:hover img {
   opacity: 1;
 }
 
@@ -2702,15 +2689,31 @@ section#work .text_center p {
   position: absolute;
   top: 1rem;
   right: 2rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
-  font-size: 2.5rem;
-  font-weight: bold;
   cursor: pointer;
   transition: color 0.2s ease;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.modal-close svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
 }
 .modal-close:hover {
   color: #bbb;
+}
+.modal-close:focus-visible {
+  outline: 2px solid var(--theme-accent);
+  outline-offset: 2px;
 }
 
 .image-modal-trigger {

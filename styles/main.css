@@ -420,7 +420,8 @@ section#hero.hero_wide .hero_portrait {
   max-width: 420px;
   height: auto;
   aspect-ratio: 1;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
   border: 3px solid rgba(255, 255, 255, 0.06);
@@ -497,7 +498,8 @@ section#showreel .showreel-frame video {
   width: 100%;
   display: block;
   aspect-ratio: 16/9;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   background: #000;
 }
 section#showreel .showreel-notes {
@@ -525,7 +527,8 @@ section#showreel .showreel-clip {
   counter-increment: clip;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  column-gap: var(--space-xs);
+  -moz-column-gap: var(--space-xs);
+       column-gap: var(--space-xs);
   row-gap: 0.1rem;
   align-items: center;
 }
@@ -550,6 +553,7 @@ section#showreel .showreel-clip__name {
   text-decoration: none;
 }
 section#showreel a.showreel-clip__name {
+  width: -moz-fit-content;
   width: fit-content;
   transition: color 0.2s ease;
 }
@@ -616,8 +620,10 @@ section#about-page {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center 20%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center 20%;
+     object-position: center 20%;
   box-shadow: 0 0 0 3px rgba(var(--theme-accent-rgb), 0.6), 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
@@ -843,6 +849,7 @@ html::-webkit-scrollbar-track {
 html::-webkit-scrollbar-thumb {
   background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3);
   border-radius: 4px;
+  -webkit-transition: background 0.2s ease;
   transition: background 0.2s ease;
 }
 html::-webkit-scrollbar-thumb:hover {
@@ -991,6 +998,7 @@ html::-webkit-scrollbar-thumb:hover {
 .site_sidebar .sidebar_nav::-webkit-scrollbar-thumb {
   background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.3);
   border-radius: 4px;
+  -webkit-transition: background 0.2s ease;
   transition: background 0.2s ease;
 }
 .site_sidebar .sidebar_nav::-webkit-scrollbar-thumb:hover {
@@ -1031,8 +1039,10 @@ html::-webkit-scrollbar-thumb:hover {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center 20%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center 20%;
+     object-position: center 20%;
   box-shadow: 0 0 0 2px rgba(var(--theme-accent-rgb), 0.6);
   transition: box-shadow 0.2s ease;
 }
@@ -1520,7 +1530,8 @@ section#footer .footer-links a:hover {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 main.experience-detail-page section#hero {
@@ -1826,7 +1837,8 @@ section#hero {
   pointer-events: none;
 }
 .project-detail-page section#hero .hero-video video {
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .project-detail-page section#hero .wrapper {
   position: relative;
@@ -2034,7 +2046,8 @@ section#work {
 .inline-gallery-container .inline-gallery .gallery-image {
   width: 100%;
   height: 200px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(var(--theme-bg-primary-rgb), 0.1);
   cursor: pointer;
@@ -2123,7 +2136,8 @@ section#work {
 .gallery-grid a img {
   width: 100%;
   height: 200px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   border-radius: 8px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 2px 8px rgba(var(--theme-bg-primary-rgb), 0.1);
@@ -2353,7 +2367,8 @@ section#work {
   width: 102%;
   height: 102%;
   transform: translate(-50%, -50%);
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   border: 0;
   display: block;
   pointer-events: none;
@@ -2483,7 +2498,8 @@ section#work {
 .project-flair--icon img {
   width: 60%;
   height: 60%;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   display: block;
 }
 
@@ -2500,7 +2516,8 @@ section#work {
 .project-flair--logo img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   border-radius: 0;
   display: block;
 }
@@ -2679,7 +2696,8 @@ section#work .text_center p {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
   max-width: 95vw;
   max-height: 95vh;
@@ -2723,6 +2741,4 @@ section#work .text_center p {
 .image-modal-trigger:hover {
   transform: scale(1.01);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-}
-
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */

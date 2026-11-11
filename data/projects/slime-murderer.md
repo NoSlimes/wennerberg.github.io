@@ -44,17 +44,3 @@ I implemented a custom status effect system that supports various effects like b
 
 With hundreds of enemies and projectiles on screen, performance was crucial. I implemented a comprehensive object pooling system to avoid constant instantiation and destruction of GameObjects. This system uses a centralized manager with utility methods for easy spawning and includes proper cleanup mechanisms.
 
-
-## Testimonials
-
-> "This project is overengineered compared to the expectations—thousands of lines of cohesively written, robust systems. I have nothing bad to say."
->
-> — **Course Instructor**, C# Programming Course - Futuregames
-
-> "You worked very autonomously and put in a lot of effort in so many areas. The game is fun to play, I never once ran into an obvious bug or issue, and all features are there with extra polish."
->
-> — **Course Instructor**, C# Programming Course - Futuregames
-
-> "Your coding skills are excellent. You're at the stage where you can focus on overall system architecture and a specialization path—gameplay, tools, or engine development. I see you having no issue succeeding in any of them."
->
-> — **Course Instructor**, C# Programming Course - Futuregames

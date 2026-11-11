@@ -43,7 +43,9 @@ const FLAIR_ICONS = {
   'linkedin': 'logo-linkedin.svg',
   'azure': 'azure-devops.svg',
   'azuredevops': 'azure-devops.svg',
-  'futuregames': 'fg_logo.png'
+  'futuregames': 'fg_logo.png',
+  'claude': 'claude-code.svg',
+  'claudecode': 'claude-code.svg'
 };
 
 function flairIconFile(name) {

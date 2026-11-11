@@ -14,7 +14,6 @@ summaries:
   duration: ''
   teamSize: 1
   hidden: true
-  locked: true
   detailPageUrl: /project.html?id=slime-murderer
   imageSrc: /assets/uploads/slime-murderer-00.webp
   imageCaption: SLIME MURDERER gameplay

@@ -15,6 +15,7 @@ flairs:
 - Azure DevOps
 - GitHub
 - Evergreen Game Engine
+- Claude Code
 experienceInfo:
 - label: Role
   value: Game Programming Intern
@@ -25,7 +26,7 @@ experienceInfo:
 - label: Duration
   value: May - Dec 2026
 - label: Location
-  value: Remote (Company based in Stockholm)
+  value: Remote (company based in Stockholm)
 - label: Engine
   value: Evergreen Game Engine (custom-built)
 highlights:

@@ -2,7 +2,6 @@
 # Generated/updated: 2025-10-03
 
 User-agent: *
-Disallow: /assets/code/
 Disallow: /admin/
 
 Sitemap: https://wennerberg.dev/sitemap.xml

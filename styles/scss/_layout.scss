@@ -653,151 +653,135 @@ section#footer {
     }
   }
 
+  // Info above the article (renderInfoBoxes in detail-page.js), laid out like a game's
+  // store page: the highlights lead on the left, and the facts (Team size, Engine, ...)
+  // sit in a column beside them. No card frames, just a thin line between the two.
   .project-info {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 1800px;
-    flex-wrap: wrap;
-    gap: var(--space-s);
-    // No side padding: the boxes share the left edge with the section text and TOC
-    padding: var(--space-l) 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(13rem, 1fr);
+    gap: var(--space-l);
+    align-items: start;
+    padding: var(--space-l) 0 var(--space-xl);
 
-    // Highlights / Info boxes: dark cards like the About profile card
-    .project-info__box {
-      flex: 1 1 320px;
-      min-width: 0;
+    &:empty {
+      display: none;
+    }
+
+    // Only one of the two (some pages have no highlights): use the full width
+    > :only-child {
+      grid-column: 1 / -1;
+    }
+
+    // Narrow screens: highlights first, the facts underneath
+    @media (max-width: 760px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  // Facts: a small label above each value, stacked, with a line on the left
+  .project-specs dl {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    margin: 0;
+    padding: var(--space-2xs) 0 var(--space-2xs) var(--space-m);
+    border-left: 1px solid var(--theme-border);
+  }
+
+  // Facts across the full width (no highlights beside them): even columns between
+  // two thin lines, so long values wrap inside their own column
+  .project-specs:only-child dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
+    gap: var(--space-m);
+    padding: var(--space-m) 0;
+    border-left: none;
+    border-block: 1px solid var(--theme-border);
+  }
+
+  @media (max-width: 760px) {
+    .project-specs dl {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(9rem, 100%), 1fr));
+      gap: var(--space-s);
+      padding: var(--space-s) 0 0;
+      border-left: none;
+      border-top: 1px solid var(--theme-border);
+    }
+  }
+
+  .project-spec {
+    min-width: 0;
+
+    dt {
+      margin-bottom: 0.15rem;
+      font-size: var(--step--1);
+      font-weight: 500;
+      color: var(--theme-text-secondary);
+    }
+
+    dd {
+      margin: 0;
+      font-size: var(--step-0);
+      font-weight: 650;
+      line-height: 1.35;
+      color: var(--theme-text-primary);
+      overflow-wrap: break-word; // only breaks a single word too long for the line
+
+      a {
+        color: var(--theme-accent);
+        text-decoration: underline;
+        text-decoration-color: rgba(var(--theme-accent-rgb), 0.35);
+        text-underline-offset: 3px;
+
+        &:hover,
+        &:focus-visible {
+          text-decoration-color: currentColor;
+        }
+      }
+    }
+  }
+
+  // Highlights: the lead of the page, at body size in the main text colour
+  .project-highlights {
+    &:only-child {
+      max-width: 68ch;
+    }
+
+    // Quiet label, like "On this page"
+    h3 {
+      margin: 0 0 var(--space-xs);
+      font-size: var(--step--1);
+      font-weight: 600;
+      font-stretch: 100%;
+      color: var(--theme-text-secondary);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      padding: var(--space-m);
-      border: 1px solid var(--theme-border);
-      border-radius: 14px;
-      background:
-        radial-gradient(120% 70% at 0% 0%, rgba(var(--theme-accent-rgb), 0.08), transparent 70%),
-        rgba(var(--theme-bg-primary-rgb), 0.6);
+      gap: var(--space-xs);
+    }
+
+    li {
+      position: relative;
+      padding-left: 1.1rem;
+      font-size: var(--step-0);
+      line-height: 1.5;
       color: var(--theme-text-primary);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
 
-      // Box title ("Project info"): quiet beige, so the box's content leads
-      h3 {
-        margin: 0 0 var(--space-s);
-        width: 100%;
-        font-size: var(--step--1);
-        font-weight: 600;
-        font-stretch: 100%; // a quiet label, not a wide heading
-        color: var(--theme-text-secondary);
-      }
-
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xs);
-
-        li {
-          position: relative;
-          padding-left: 1.1rem;
-          font-size: 0.95rem;
-          line-height: 1.55;
-
-          &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.6em;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--theme-accent);
-          }
-
-          strong {
-            font-weight: 600;
-          }
-        }
-      }
-
-      .project-info-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 0;
-
-        tbody tr {
-          border-bottom: 1px solid var(--theme-border);
-
-          &:last-child {
-            border-bottom: none;
-          }
-        }
-
-        td {
-          padding: var(--space-xs) 0;
-          font-size: 0.95rem;
-          line-height: 1.5;
-          vertical-align: top;
-        }
-
-        .project-info-table__key {
-          width: 40%;
-          padding-right: var(--space-s);
-          font-size: 0.8rem;
-          font-weight: 600;
-          letter-spacing: 0.04em;
-          color: var(--theme-text-secondary);
-        }
-
-        .project-info-table__value {
-          width: 60%;
-          color: var(--theme-text-primary);
-        }
-      }
-    }
-
-    @media(max-width: 1050px) {
-      flex-direction: column;
-      align-items: stretch;
-      text-align: left;
-
-      .project-info__box {
-        // Stacked: the 320px flex-basis would otherwise become a minimum height
-        flex: none;
-        min-width: 100%;
-        width: 100%;
-
-        .project-info-table {
-          .project-info-table__key {
-            width: 35%;
-          }
-
-          .project-info-table__value {
-            width: 65%;
-          }
-        }
-      }
-    }
-
-    @media(max-width: 600px) {
-      .project-info__box {
-        .project-info-table {
-          td {
-            font-size: 0.9rem;
-          }
-
-          .project-info-table__key {
-            width: 30%;
-          }
-
-          .project-info-table__value {
-            width: 70%;
-          }
-        }
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.65em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--theme-accent);
       }
     }
   }

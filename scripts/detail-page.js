@@ -331,24 +331,26 @@ function renderActionButtons(container, links) {
 }
 
 // Info boxes beside the content: a list (highlights) or a key/value table (info)
+// Info above the article, laid out like a game's store page: lists ("Project
+// highlights") lead, and key/value info ("Project info": Team size, Engine, ...)
+// becomes a column of facts beside them (styles in _layout.scss).
 function renderInfoBoxes(container, boxes) {
-  const box = ({ title, data, table }) => {
+  const isSpecs = ({ data }) => data && !Array.isArray(data) && typeof data === 'object';
+  const block = ({ title, data }) => {
     if (!data) return '';
-    let content;
     if (Array.isArray(data)) {
       if (!data.length) return '';
-      content = `<ul>${data.map(item => `<li>${item}</li>`).join('')}</ul>`;
-    } else if (typeof data === 'object' && Object.keys(data).length > 0) {
-      content = table
-        ? `<table class="project-info-table"><tbody>${Object.entries(data).map(([key, value]) =>
-            `<tr><td class="project-info-table__key">${key}</td><td class="project-info-table__value">${value}</td></tr>`).join('')}</tbody></table>`
-        : `<ul>${Object.entries(data).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}</ul>`;
-    } else {
-      return '';
+      return `<div class="project-highlights"><h3>${title}</h3><ul>${data.map(item => `<li>${item}</li>`).join('')}</ul></div>`;
     }
-    return `<div class="project-info__box"><h3>${title}</h3>${content}</div>`;
+    // Skip info rows left empty in the project file (e.g. "Duration: ''")
+    const entries = Object.entries(data).filter(([, value]) => String(value ?? '').trim() !== '');
+    if (!entries.length) return '';
+    // divs, not sections: the site gives every <section> page-section padding
+    return `<div class="project-specs" role="group" aria-label="${title}"><dl>${entries.map(([key, value]) =>
+      `<div class="project-spec"><dt>${key}</dt><dd>${value}</dd></div>`).join('')}</dl></div>`;
   };
-  container.innerHTML = boxes.map(box).join('');
+  const ordered = [...boxes.filter(b => !isSpecs(b)), ...boxes.filter(isSpecs)];
+  container.innerHTML = ordered.map(block).join('');
 }
 
 // Article sections plus the "On This Page" table of contents

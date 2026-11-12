@@ -50,7 +50,7 @@ collections:
         label: "Section"
         widget: "string"
         required: false
-        hint: "Existing: 'Featured projects - Network and tools', 'Game projects - Collaborative'. Empty = ungrouped."
+        hint: "Existing: 'Network and tools', 'Collaborative game projects'. Empty = ungrouped."
       - name: "flairs"
         label: "Flairs"
         widget: "list"

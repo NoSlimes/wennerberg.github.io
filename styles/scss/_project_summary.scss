@@ -345,20 +345,20 @@
   gap: var(--space-s);
 }
 
-// Section header: small green label, heading with an accent bar, muted description.
+// Section header: heading with an accent bar and a muted description (optional small label above).
 // Left-aligned with the cards (like the project/experience heroes).
 .project-card-section__header {
   max-width: 48rem;
   margin-bottom: var(--space-s);
 }
 
+// Small line above a heading ("Level not found" on the 404 page, "Resume"):
+// quiet sentence-case beige rather than spaced green capitals
 .project-card-section__label {
   margin: 0 0 0.35rem;
-  font-size: var(--step--2);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--theme-accent);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--theme-text-secondary);
 }
 
 .project-card-section__title {

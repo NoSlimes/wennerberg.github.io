@@ -1,8 +1,8 @@
 # GENERATED FILE – do not edit.
 # Source: content/. Built by scripts/combine_projects.py
 sectionDescriptions:
-  Featured projects - Network and tools: Networking systems, tooling, and technical solo work.
-  Game projects - Collaborative: Team-based game projects built during my time at Futuregames. These projects were made in groups of up to 16 people over the course of 4-7 weeks, with varying scopes and themes.
+  Network and tools: Networking systems, tooling, and technical solo work.
+  Collaborative game projects: Team-based game projects built during my time at Futuregames. These projects were made in groups of up to 16 people over the course of 4-7 weeks, with varying scopes and themes.
 summaries:
 - id: slime-murderer
   title: SLIME MURDERER
@@ -27,7 +27,7 @@ summaries:
   title: PlanetFactory [Working Title]
   navTitle: PlanetFactory
   highlighted: true
-  section: Featured projects - Network and tools
+  section: Network and tools
   flairs:
   - Unity 6
   - C#
@@ -45,7 +45,7 @@ summaries:
 - id: uniterminal
   title: UNITERMINAL
   navTitle: UniTerminal
-  section: Featured projects - Network and tools
+  section: Network and tools
   flairs:
   - Unity
   - C#
@@ -64,7 +64,7 @@ summaries:
   title: CAT SURVIVAL CRAFT
   navTitle: Cat Survival Craft
   stub: true
-  section: Featured projects - Network and tools
+  section: Network and tools
   flairs:
   - Unity 6
   - C#
@@ -83,7 +83,7 @@ summaries:
   title: SLAYLIEN
   navTitle: Slaylien
   hidden: false
-  section: Game projects - Collaborative
+  section: Collaborative game projects
   flairs:
   - Unreal Engine 5
   - Blueprints
@@ -106,7 +106,7 @@ summaries:
   navTitle: Dead Sector
   hidden: false
   stub: true
-  section: Game projects - Collaborative
+  section: Collaborative game projects
   flairs:
   - Unity 6
   - C#
@@ -128,7 +128,7 @@ summaries:
   navTitle: Tamashii
   highlighted: true
   hidden: false
-  section: Game projects - Collaborative
+  section: Collaborative game projects
   flairs:
   - Unreal Engine 5
   - Blueprints

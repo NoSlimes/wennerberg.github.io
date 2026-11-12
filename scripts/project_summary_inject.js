@@ -273,7 +273,7 @@ async function injectProjectSummaries() {
                 const header = document.createElement('header');
                 header.classList.add('project-card-section__header');
 
-                // "Featured projects - Network and tools" -> small label + heading
+                // "Label - Heading" -> small label + heading; a plain name is just the heading
                 const [labelText, titleText] = group.sectionName.includes(' - ')
                     ? group.sectionName.split(/ - (.+)/)
                     : ['', group.sectionName];

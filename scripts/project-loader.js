@@ -53,8 +53,8 @@ async function loadProject() {
     renderActionButtons(document.getElementById('project-actions'), links);
 
     renderInfoBoxes(document.getElementById('project-details-container'), [
-      { title: 'Project Highlights', data: Array.isArray(frontmatter.highlights) ? frontmatter.highlights : [] },
-      { title: 'Project Info', data: normalizeInfo(frontmatter.projectInfo) || {}, table: true }
+      { title: 'Project highlights', data: Array.isArray(frontmatter.highlights) ? frontmatter.highlights : [] },
+      { title: 'Project info', data: normalizeInfo(frontmatter.projectInfo) || {}, table: true }
     ]);
 
     renderSections(document.getElementById('project-detailed-sections'), sections, name);

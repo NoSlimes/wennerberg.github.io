@@ -1331,10 +1331,8 @@ section#footer .footer-links a:hover {
 .project-article .table-of-contents h3 {
   margin: 0 0 var(--space-xs);
   padding-left: var(--space-s);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: var(--step--1);
+  font-weight: 600;
   color: var(--theme-text-secondary);
 }
 .project-article .table-of-contents nav {
@@ -1434,11 +1432,9 @@ section#footer .footer-links a:hover {
 .project-article .project-info .project-info__box h3 {
   margin: 0 0 var(--space-s);
   width: 100%;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--theme-accent);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--theme-text-secondary);
 }
 .project-article .project-info .project-info__box ul {
   list-style: none;
@@ -2590,11 +2586,9 @@ section#work {
 
 .project-card-section__label {
   margin: 0 0 0.35rem;
-  font-size: var(--step--2);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--theme-accent);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--theme-text-secondary);
 }
 
 .project-card-section__title {

@@ -2,7 +2,7 @@ order: 30
 id: uniterminal
 title: UNITERMINAL
 navTitle: UniTerminal
-section: Featured projects - Network and tools
+section: Network and tools
 flairs:
 - Unity
 - C#

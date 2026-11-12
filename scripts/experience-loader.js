@@ -52,7 +52,7 @@ async function loadExperience() {
 
     renderInfoBoxes(document.getElementById('experience-details-container'), [
       { title: 'Highlights', data: Array.isArray(frontmatter.highlights) ? frontmatter.highlights : [] },
-      { title: 'Experience Info', data: normalizeInfo(frontmatter.experienceInfo) || {}, table: true }
+      { title: 'Experience info', data: normalizeInfo(frontmatter.experienceInfo) || {}, table: true }
     ]);
 
     renderSections(document.getElementById('experience-detailed-sections'), sections, name);

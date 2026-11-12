@@ -199,12 +199,10 @@ function markdownToHtml(markdown) {
   return html;
 }
 
-// Custom content tags inside section bodies:
+// Custom content tags inside section bodies (already rendered by markdownToHtml):
 //   {{image:path|Caption|position}}  {{gallery:a.jpg,b.jpg|Caption}}  {{video:path.mp4|Caption}}
 function processInlineImages(text, pageName) {
   if (!text) return text;
-  const containsPre = /<pre[\s>]/i.test(text);
-  const containsList = /<ul[\s>]|<ol[\s>]/i.test(text);
   const uploadPath = (p) => (/^(https?:)?\//.test(p) ? p : `/assets/uploads/${p}`);
 
   text = text.replace(/\{\{image:([^|}]+)(?:\|([^|}]*))?(?:\|([^}]*))?\}\}/g, (match, imagePath, caption, position) => {
@@ -247,12 +245,6 @@ function processInlineImages(text, pageName) {
               ${caption ? `<p class="video-caption">${caption}</p>` : ''}
             </div>`;
   });
-
-  // Rendered markdown already has its own paragraphs/lists; plain text gets <p>/<br>
-  if (!containsPre && !containsList) {
-    text = text.replace(/\n\s*\n/g, '</p><p>').replace(/\n/g, '<br>');
-    if (text && !text.trim().startsWith('<p>')) text = `<p>${text}</p>`;
-  }
 
   return text;
 }

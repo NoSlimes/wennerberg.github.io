@@ -59,10 +59,15 @@
   }
 }
 
-// Caption under an enlarged image (openImageModal)
+// Caption under an enlarged image (openImageModal). Its own dark backing keeps it
+// readable: page text shows faintly through the overlay behind it.
 .modal-caption {
+  width: fit-content;
   max-width: min(95vw, 60rem);
   margin: var(--space-xs) auto 0;
+  padding: 0.4em 0.9em;
+  border-radius: 6px;
+  background: rgba(var(--theme-bg-primary-rgb), 0.95);
   font-size: var(--step--1);
   line-height: 1.45;
   text-align: center;

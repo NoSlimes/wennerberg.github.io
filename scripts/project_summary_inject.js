@@ -21,17 +21,13 @@ async function injectProjectSummaries() {
 
         contentContainer.innerHTML = '';
 
-        // Round tag icons on the cards: the shared logo (flairIconFile in header_footer.js)
-        // when there is one, otherwise the tag's initials
+        // Round tag icons on the cards: the shared logo (flairIconFile in header_footer.js).
+        // Flairs without a logo are left off the cards; the project page still lists them.
         function renderFlair(flair) {
             const name = (flair || '').toString();
             const file = flairIconFile(name);
-            if (file) {
-                return `<span class="project-flair project-flair--icon project-flair--logo" title="${name}"><img src="/assets/images/logos/${file}" alt="${name} logo" loading="lazy"/></span>`;
-            }
-
-            const initials = name.split(' ').map(s => s[0]).join('').slice(0,2).toUpperCase();
-            return `<span class="project-flair project-flair--icon" title="${name}">${initials}</span>`;
+            if (!file) return '';
+            return `<span class="project-flair project-flair--icon project-flair--logo" title="${name}"><img src="/assets/images/logos/${file}" alt="${name} logo" loading="lazy"/></span>`;
         }
 
         function renderToolbar(links) {
@@ -227,7 +223,7 @@ async function injectProjectSummaries() {
             projectDiv.classList.add('summary_container');
             if (project.highlighted) projectDiv.classList.add('highlighted');
 
-            const flairsHTML = (project.flairs || []).map(renderFlair).join(' ');
+            const flairsHTML = (project.flairs || []).map(renderFlair).filter(Boolean).join(' ');
 
             const mediaHtml = getCardMediaHtml(project.cardVideoUrl, project.title, project.imageSrc);
             const metaLabel = formatProjectMeta(project);

@@ -201,9 +201,29 @@ function markdownToHtml(markdown) {
 
 // Custom content tags inside section bodies (already rendered by markdownToHtml):
 //   {{image:path|Caption|position}}  {{gallery:a.jpg,b.jpg|Caption}}  {{video:path.mp4|Caption}}
+//   {{compare:before.webp|Before caption|after.webp|After caption}}  (two or more image|caption pairs)
 function processInlineImages(text, pageName) {
   if (!text) return text;
   const uploadPath = (p) => (/^(https?:)?\//.test(p) ? p : `/assets/uploads/${p}`);
+
+  // Images side by side at the column's full width, uncropped, each with its own caption,
+  // which is also its alt text (so it shows in the image viewer). Stacks on narrow screens.
+  // The surrounding <p> that markdown wraps a lone tag in is dropped (a div can't sit in a p).
+  text = text.replace(/(?:<p>\s*)?\{\{compare:([^}]+)\}\}(?:\s*<\/p>)?/g, (match, inner) => {
+    const parts = inner.split('|').map(part => part.trim());
+    const figures = [];
+    for (let i = 0; i < parts.length; i += 2) {
+      if (!parts[i]) continue;
+      const caption = parts[i + 1] || '';
+      const alt = caption.replace(/<[^>]*>/g, '').replace(/"/g, '&quot;') || `${pageName} image`;
+      figures.push(`<figure>
+              <img src="${uploadPath(parts[i])}" alt="${alt}" loading="lazy" decoding="async">
+              ${caption ? `<figcaption>${caption}</figcaption>` : ''}
+            </figure>`);
+    }
+    if (!figures.length) return match;
+    return `<div class="image-compare" style="--compare-count: ${figures.length}">${figures.join('')}</div>`;
+  });
 
   text = text.replace(/\{\{image:([^|}]+)(?:\|([^|}]*))?(?:\|([^}]*))?\}\}/g, (match, imagePath, caption, position) => {
     let actualCaption = caption;

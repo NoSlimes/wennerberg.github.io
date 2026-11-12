@@ -620,6 +620,41 @@ section#work {
   }
 }
 
+// {{compare:a|Caption A|b|Caption B}} (processInlineImages): images side by side at
+// equal width, uncropped, each with its caption underneath. Stacked on narrow screens.
+.image-compare {
+  display: grid;
+  grid-template-columns: repeat(var(--compare-count, 2), minmax(0, 1fr));
+  gap: var(--space-s);
+  align-items: start;
+  margin: var(--space-l) 0;
+  clear: both;
+
+  figure {
+    margin: 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    cursor: zoom-in;
+  }
+
+  figcaption {
+    margin-top: var(--space-2xs);
+    font-size: var(--step--1);
+    line-height: 1.45;
+    color: var(--theme-text-secondary);
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+  }
+}
+
 // Ensure galleries and other major sections clear floats
 .inline-gallery-container,
 .gallery-grid,

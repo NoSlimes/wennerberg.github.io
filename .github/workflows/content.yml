@@ -7,7 +7,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'content/**'
+      - 'data/sections.yml'
       - 'data/projects/**'
       - 'data/experience/**'
       - 'scripts/combine_projects.py'

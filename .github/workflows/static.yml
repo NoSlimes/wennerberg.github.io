@@ -1,6 +1,6 @@
 # Deploys the site to GitHub Pages.
 # Only the files the site actually serves are published (see "Collect site files");
-# SCSS sources, content/ (CMS source), build scripts and docs stay in the repo only.
+# SCSS sources, build scripts and docs stay in the repo only.
 name: Deploy static content to Pages
 
 on:

@@ -119,7 +119,7 @@ collections:
     files:
       - name: "sections"
         label: "Sections"
-        file: "content/meta.yml"
+        file: "data/sections.yml"
         fields:
           - name: "sections"
             label: "Sections"

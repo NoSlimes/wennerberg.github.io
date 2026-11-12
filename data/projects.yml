@@ -1,5 +1,5 @@
 # GENERATED FILE – do not edit.
-# Source: data/projects/*.md + content/meta.yml. Built by scripts/combine_projects.py
+# Source: data/projects/*.md + data/sections.yml. Built by scripts/combine_projects.py
 sectionDescriptions:
   Network and tools: Networking systems, tooling, and technical solo work.
   Collaborative game projects: Team-based game projects built during my time at Futuregames. These projects were made in groups of up to 16 people over the course of 4-7 weeks, with varying scopes and themes.

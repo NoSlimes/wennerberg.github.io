@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Index data/projects/*.md into data/projects.yml (cards + section texts from
-content/meta.yml), index data/experience/*.md into data/experiences.yml for the
+data/sections.yml), index data/experience/*.md into data/experiences.yml for the
 sidebar, and write sitemap.xml from both.
 
 Source of truth: the .md frontmatter. Run locally or via .github/workflows/content.yml.
@@ -14,7 +14,6 @@ from xml.sax.saxutils import escape
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTENT = ROOT / "content"
 DATA = ROOT / "data"
 SITE_URL = "https://wennerberg.dev"
 # Fixed pages; projects and experiences are added from the data
@@ -39,7 +38,7 @@ def ordered(items):
 
 def main():
     summaries = build_project_summaries()
-    with open(CONTENT / "meta.yml", encoding="utf-8") as fh:
+    with open(DATA / "sections.yml", encoding="utf-8") as fh:
         meta = yaml.safe_load(fh) or {}
     sections = {
         row["section"]: row.get("text", "")
@@ -48,7 +47,7 @@ def main():
     }
     out = DATA / "projects.yml"
     with open(out, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(HEADER.format(source="data/projects/*.md + content/meta.yml"))
+        fh.write(HEADER.format(source="data/projects/*.md + data/sections.yml"))
         yaml.safe_dump(
             {"sectionDescriptions": sections, "summaries": summaries},
             fh,

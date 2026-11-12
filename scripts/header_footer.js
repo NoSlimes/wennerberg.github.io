@@ -101,9 +101,9 @@ function parseYouTubeStart(raw) {
 // Embed URL for a muted, chrome-free YouTube background video.
 // No loop/playlist params: a one-item playlist makes YouTube show prev/next buttons,
 // so setupBackgroundVideo() loops it instead (enablejsapi lets it control the player).
-function youTubeBackgroundSrc(videoId, start = 0, autoplay = true) {
+function youTubeBackgroundSrc(videoId, start = 0) {
   const params = new URLSearchParams({
-    autoplay: autoplay ? 1 : 0, mute: 1, controls: 0, rel: 0,
+    autoplay: 1, mute: 1, controls: 0, rel: 0,
     playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3, cc_load_policy: 0,
     modestbranding: 1, enablejsapi: 1, origin: window.location.origin
   });
@@ -693,8 +693,15 @@ function setupBackgroundVideo(el) {
     if (!held) command('playVideo');
   };
 
+  // YouTube flashes a big pause/play icon over the video whenever code pauses or
+  // resumes it, even with controls off. So hover never pauses or plays a YouTube clip:
+  // it keeps playing (muted) whenever it's on screen, and hovering the card only
+  // decides whether it's shown. That also makes it appear instantly.
+  let ytPlaying = false;
+  const show = () => setPlaying(ytPlaying && hovered);
+
   const sync = () => {
-    held = !wanted();
+    held = !onScreen;
     command(held ? 'pauseVideo' : 'playVideo');
   };
 
@@ -702,8 +709,6 @@ function setupBackgroundVideo(el) {
     if (event.source !== el.contentWindow || typeof event.data !== 'string') return;
     let data;
     try { data = JSON.parse(event.data); } catch { return; }
-    // Commands sent before the player was ready were lost: catch up with a hover that already started
-    if (!heard && hoverGated) { heard = true; sync(); }
     heard = true;
     const info = data.info || {};
     if (info.duration) duration = info.duration;
@@ -722,15 +727,17 @@ function setupBackgroundVideo(el) {
       // Captions follow the viewer's YouTube settings, so drop them once playing
       command('unloadModule', ['captions']);
       command('unloadModule', ['cc']);
-      setPlaying(true);
+      ytPlaying = true;
+      show();
     } else if (!(state === 2 && held)) {
+      ytPlaying = false;
       setPlaying(false);
       if (state === 0) restart();
     }
   });
 
   pauseWhileOffscreen(el, (visible) => { onScreen = visible; sync(); });
-  if (hoverGated) watchCardHover(card, (active) => { hovered = active; sync(); });
+  if (hoverGated) watchCardHover(card, (active) => { hovered = active; show(); });
 
   // The player only reports back after it has heard "listening", so keep asking until it answers
   const startListening = () => {

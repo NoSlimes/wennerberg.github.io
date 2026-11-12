@@ -1371,6 +1371,7 @@ section#footer .footer-links a:hover {
   padding-left: var(--space-s);
   font-size: var(--step--1);
   font-weight: 600;
+  font-stretch: 100%;
   color: var(--theme-text-secondary);
 }
 .project-article .table-of-contents nav {
@@ -1472,6 +1473,7 @@ section#footer .footer-links a:hover {
   width: 100%;
   font-size: var(--step--1);
   font-weight: 600;
+  font-stretch: 100%;
   color: var(--theme-text-secondary);
 }
 .project-article .project-info .project-info__box ul {
@@ -1719,6 +1721,7 @@ section#hero {
   font-size: var(--step-2);
   color: var(--theme-accent);
   font-weight: 600;
+  font-stretch: 112%;
   margin-bottom: var(--space-m);
 }
 
@@ -2359,7 +2362,11 @@ section#work {
   background-position: center center;
   filter: blur(5px) brightness(0.72) saturate(0.85);
   transform: scale(1.06);
-  transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+  transition: filter 0.2s ease, transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.card-media .bg-video {
+  transition-duration: 0.1s;
 }
 
 .summary_container:hover .card-bg,

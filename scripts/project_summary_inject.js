@@ -88,8 +88,9 @@ async function injectProjectSummaries() {
             }
 
             if (!videoId) return '';
-            // With a mouse, card clips wait for a hover instead of starting on their own
-            return youTubeBackgroundSrc(videoId, start, !cardClipsWaitForHover());
+            // Autoplays muted but stays hidden until the card is hovered (setupBackgroundVideo):
+            // pausing a YouTube clip from code flashes YouTube's pause icon over it
+            return youTubeBackgroundSrc(videoId, start);
         }
 
         function getDirectVideoMimeType(url) {

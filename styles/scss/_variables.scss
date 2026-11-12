@@ -3,7 +3,8 @@
 // (Compile-time only. Colours live in the CSS custom properties below.)
 // =============================================
 
-$font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+// Archivo is self-hosted (@font-face in _typography.scss); system fonts while it loads
+$font-family-primary: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $sidebar-width: 280px;
 
 

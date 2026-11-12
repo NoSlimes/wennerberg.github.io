@@ -564,6 +564,7 @@ section#footer {
       padding-left: var(--space-s);
       font-size: var(--step--1);
       font-weight: 600;
+      font-stretch: 100%; // a quiet label, not a wide heading
       color: var(--theme-text-secondary);
     }
 
@@ -687,6 +688,7 @@ section#footer {
         width: 100%;
         font-size: var(--step--1);
         font-weight: 600;
+        font-stretch: 100%; // a quiet label, not a wide heading
         color: var(--theme-text-secondary);
       }
 

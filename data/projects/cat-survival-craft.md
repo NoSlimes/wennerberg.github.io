@@ -1,4 +1,18 @@
 ---
+id: cat-survival-craft
+order: 40
+navTitle: Cat Survival Craft
+section: Network and tools
+stub: true
+links:
+  github: ''
+card:
+  type: Survival Craft Prototype
+  description: My Futuregames graduation project, a solo prototype focused on survival-crafting systems, inventory flow, and cats.
+  image: /assets/uploads/cat-survival-00.webp
+  imageCaption: Cat Survival Craft prototype
+  duration: ''
+  teamSize: 1
 pageTitle: Project - Cat Survival Craft
 heroImage: /assets/uploads/cat-survival.webp
 heroVideoUrl: ''
@@ -7,7 +21,7 @@ projectType: 'Survival Craft Prototype · Futuregames Graduation Project'
 flairs:
 - Unity 6
 - C#
-- Networking NGO
+- Networking (NGO)
 - Systems Architecture
 - Futuregames
 projectInfo:

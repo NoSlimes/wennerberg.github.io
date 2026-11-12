@@ -1,4 +1,18 @@
 ---
+id: tamashii
+order: 70
+navTitle: Tamashii
+section: Collaborative game projects
+highlighted: true
+hidden: false
+links:
+  github: ''
+  demo: https://futuregames.itch.io/tamashii
+card:
+  description: 2.5D two player side scroller in Unreal Engine 5 where players control 2 characters tethered together. I primarily worked on the tether mechanic and player movement.
+  imageCaption: Splash screen for Tamashii
+  duration: 4 weeks
+  teamSize: 11
 pageTitle: Project - TAMASHII
 heroImage: /assets/uploads/tamashii.webp
 heroVideoUrl: https://download.noslimes.com/Futuregames/GP4/Trailer_Tamashii_1min.mp4

@@ -1,4 +1,18 @@
 ---
+id: dead_sector
+order: 60
+navTitle: Dead Sector
+section: Collaborative game projects
+hidden: false
+stub: true
+links:
+  github: ''
+  demo: https://futuregames.itch.io/dead-sector
+card:
+  description: Top-down sci-fi shooter in Unity. I implemented most UI and the quest system.
+  imageCaption: Splash screen for Dead Sector
+  duration: 4 weeks
+  teamSize: 16
 pageTitle: Project - DEAD SECTOR
 heroImage: /assets/uploads/dead_sector.jpg
 heroVideoUrl: https://youtu.be/NRYq1QncCZc?t=12
@@ -8,6 +22,7 @@ flairs:
 - Unity
 - C#
 - Group Project
+- Futuregames
 projectInfo:
 - label: Team Size
   value: 16

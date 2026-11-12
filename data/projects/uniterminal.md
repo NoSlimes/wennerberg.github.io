@@ -1,4 +1,17 @@
 ---
+id: uniterminal
+order: 30
+navTitle: UniTerminal
+section: Network and tools
+links:
+  github: https://github.com/NoSlimes/uniterminal
+card:
+  type: In-Game Command Console
+  description: Attribute-based in-game command terminal for Unity. Supports static & instance methods, custom argument parsing, and context-aware auto-completion.
+  imageCaption: UniTerminal — in-game developer console
+  duration: 30/9-2025 -
+  teamSize: 1
+  status: intermittent development
 pageTitle: Project - UniTerminal
 heroImage: /assets/uploads/hero.webp
 heroVideoUrl: ''

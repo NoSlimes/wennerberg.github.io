@@ -1,13 +1,14 @@
 name: Build content data
 
-# Combine content/ fragments into data/projects.yml, index data/experience/
-# into data/experiences.yml (both read by the site), and rebuild sitemap.xml.
+# Index data/projects/ into data/projects.yml and data/experience/ into
+# data/experiences.yml (both read by the site), and rebuild sitemap.xml.
 
 on:
   push:
     branches: [ main ]
     paths:
       - 'content/**'
+      - 'data/projects/**'
       - 'data/experience/**'
       - 'scripts/combine_projects.py'
   workflow_dispatch: {}

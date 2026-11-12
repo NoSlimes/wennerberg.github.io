@@ -1,9 +1,9 @@
 # Decap CMS content editor (wennerberg.dev/admin).
-# Project cards: one file per project under content/projects/.
-# Saving triggers a GitHub Action rebuilding data/projects.yml (generated).
-# Detail pages (data/projects/*.md) are edited in place (frontmatter + body).
+# Projects: one file per project, data/projects/<id>.md (card under "card:",
+# page in the rest of the frontmatter + body). Saving triggers a GitHub Action
+# rebuilding data/projects.yml (generated index the site reads).
 # Keep all fields listed here or they get wiped on save.
-# Never change an existing "id".
+# Never change an existing "id" (it is the file name).
 
 backend:
   name: github
@@ -24,71 +24,63 @@ public_folder: "/assets/uploads"
 
 collections:
   - name: "projects"
-    label: "Project cards"
+    label: "Projects"
     label_singular: "Project"
-    description: "Cards on the front page. Rebuilt into data/projects.yml on save."
-    folder: "content/projects"
-    extension: "yml"
-    format: "yml"
+    description: "One file per project: its front page card and its page (project.html). Saving rebuilds data/projects.yml."
+    folder: "data/projects"
+    extension: "md"
+    format: "yaml-frontmatter"
     create: true
-    slug: "{{slug}}"
-    summary: "{{title}}"
-    sortable_fields: ["order", "title"]
+    slug: "{{id}}"
+    summary: "{{projectName}}"
+    sortable_fields: ["order", "projectName"]
     fields:
-      - { name: "title", label: "Title", widget: "string" }
-      - { name: "navTitle", label: "Sidebar name", widget: "string", required: false, hint: "Short name in the sidebar. Defaults to Title." }
-      - name: "order"
-        label: "Order"
-        widget: "number"
-        default: 100
-        hint: "Lower shows first."
+      - { name: "projectName", label: "Project name", widget: "string" }
       - name: "id"
         label: "ID"
         widget: "string"
-        hint: "NEVER change on existing projects! Links cards to detail pages."
+        pattern: ['^[a-z0-9_-]+$', "Lowercase letters, digits, - and _ only"]
+        hint: "Becomes the file name and the page link (project.html?id=...). NEVER change on existing projects!"
+      - { name: "order", label: "Order", widget: "number", default: 100, hint: "Lower shows first." }
+      - { name: "navTitle", label: "Sidebar name", widget: "string", required: false, hint: "Short name in the sidebar. Defaults to the card title." }
       - name: "section"
         label: "Section"
         widget: "string"
         required: false
         hint: "Existing: 'Network and tools', 'Collaborative game projects'. Empty = ungrouped."
-      - name: "flairs"
-        label: "Flairs"
-        widget: "list"
-        required: false
-        field: { name: "flair", label: "Flair", widget: "string" }
-      - { name: "projectType", label: "Type line", widget: "string", required: false }
-      - { name: "description", label: "Card text", widget: "text", required: false }
-      - { name: "imageSrc", label: "Card image", widget: "image", required: false, allow_multiple: false }
-      - { name: "imageCaption", label: "Image caption", widget: "string", required: false }
-      - { name: "cardVideoUrl", label: "Card video URL", widget: "string", required: false }
-      - { name: "duration", label: "Duration", widget: "string", required: false }
-      - { name: "teamSize", label: "Team size", widget: "number", required: false }
-      - { name: "status", label: "Status line", widget: "string", required: false }
-      - { name: "detailPageUrl", label: "Detail page URL", widget: "string", required: false }
-      - name: "links"
-        label: "Links"
-        widget: "object"
-        required: false
-        fields:
-          - { name: "github", label: "GitHub URL", widget: "string", required: false }
-          - { name: "demo", label: "Demo URL", widget: "string", required: false }
       - { name: "highlighted", label: "Highlighted", widget: "boolean", required: false, default: false }
       - { name: "hidden", label: "Hidden", widget: "boolean", required: false, default: false }
       - { name: "locked", label: "Locked", widget: "boolean", required: false, default: false, hint: "Hides it everywhere AND blocks the page: visitors only see a locked notice. The data files stay public." }
       - { name: "stub", label: "Stub / work in progress", widget: "boolean", required: false, default: false, hint: "Still listed everywhere, but the page shows a note that it's a work in progress and might be bare-bones." }
-
-  - name: "project-pages"
-    label: "Project pages"
-    label_singular: "Page"
-    description: "Detail pages (project.html). Saved in place, no build step."
-    folder: "data/projects"
-    extension: "md"
-    format: "yaml-frontmatter"
-    create: true
-    slug: "{{projectName}}"
-    summary: "{{projectName}}"
-    fields:
-      - { name: "projectName", label: "Project name", widget: "string" }
+      - name: "links"
+        label: "Links"
+        widget: "object"
+        required: false
+        hint: "Shown on both the card and the page."
+        fields:
+          - { name: "github", label: "GitHub URL", widget: "string", required: false }
+          - { name: "demo", label: "Demo URL", widget: "string", required: false }
+      - name: "card"
+        label: "Front page card"
+        widget: "object"
+        required: false
+        collapsed: true
+        hint: "Empty fields use the page's own value (name, type line, flairs, hero image, hero video)."
+        fields:
+          - { name: "title", label: "Card title", widget: "string", required: false }
+          - { name: "type", label: "Card type line", widget: "string", required: false }
+          - name: "flairs"
+            label: "Card flairs"
+            widget: "list"
+            required: false
+            field: { name: "flair", label: "Flair", widget: "string" }
+          - { name: "description", label: "Card text", widget: "text", required: false }
+          - { name: "image", label: "Card image", widget: "image", required: false, allow_multiple: false }
+          - { name: "imageCaption", label: "Image caption", widget: "string", required: false }
+          - { name: "videoUrl", label: "Card video URL", widget: "string", required: false }
+          - { name: "duration", label: "Duration", widget: "string", required: false }
+          - { name: "teamSize", label: "Team size", widget: "number", required: false }
+          - { name: "status", label: "Status line", widget: "string", required: false }
       - { name: "pageTitle", label: "Page title", widget: "string", required: false }
       - { name: "projectType", label: "Type line", widget: "string", required: false }
       - name: "flairs"

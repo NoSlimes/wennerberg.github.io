@@ -1,4 +1,19 @@
 ---
+id: planetfactory
+order: 20
+navTitle: PlanetFactory
+section: Network and tools
+highlighted: true
+links:
+  github: ''
+  demo: ''
+card:
+  type: PvP Factory Builder
+  description: A networked RTS factory builder set on a spherical hex-grid. Fully server authoritative.
+  image: /assets/uploads/nuke_command.webp
+  imageCaption: In-progress image
+  duration: 13/11-2025 - 5/3-2026
+  teamSize: 1
 pageTitle: Project - PlanetFactory
 heroImage: /assets/uploads/planetfactoryplanets.webp
 heroVideoUrl: ''

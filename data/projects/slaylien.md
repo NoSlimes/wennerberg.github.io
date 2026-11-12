@@ -1,4 +1,17 @@
 ---
+id: slaylien
+order: 50
+navTitle: Slaylien
+section: Collaborative game projects
+hidden: false
+links:
+  github: ''
+  demo: https://futuregames.itch.io/slaylien
+card:
+  description: Third-person wave-defense game in Unreal Engine 5 with real-time character switching. I implemented the character switching system, enemy AI, and core gameplay mechanics.
+  imageCaption: Slaylien
+  duration: 7 weeks
+  teamSize: 11
 pageTitle: Project - SLAYLIEN
 heroImage: /assets/uploads/slaylien.png
 heroVideoUrl: https://youtu.be/BY15e9aDYMk?t=3
@@ -9,6 +22,7 @@ flairs:
 - Blueprints
 - C++
 - Group Project
+- Futuregames
 projectInfo:
 - label: Team Size
   value: 11

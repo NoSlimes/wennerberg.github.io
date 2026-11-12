@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Combine content/ fragments into data/projects.yml, index
-data/experience/*.md into data/experiences.yml for the sidebar, and write
-sitemap.xml from both.
+"""Index data/projects/*.md into data/projects.yml (cards + section texts from
+content/meta.yml), index data/experience/*.md into data/experiences.yml for the
+sidebar, and write sitemap.xml from both.
 
-Source of truth: content/. Run locally or via .github/workflows/content.yml.
+Source of truth: the .md frontmatter. Run locally or via .github/workflows/content.yml.
 "order" sets sort order (lowest first) and is stripped from output.
+A project's id is its file name. Empty card fields fall back to the page's own.
 """
 
 from pathlib import Path
@@ -20,20 +21,8 @@ SITE_URL = "https://wennerberg.dev"
 SITEMAP_PAGES = ["/", "/about.html", "/resume.html"]
 HEADER = (
     "# GENERATED FILE – do not edit.\n"
-    "# Source: content/. Built by scripts/combine_projects.py\n"
+    "# Source: {source}. Built by scripts/combine_projects.py\n"
 )
-
-
-def load_fragments(subdir):
-    items = []
-    folder = CONTENT / subdir
-    if not folder.is_dir():
-        return items
-    for path in sorted(folder.glob("*.yml")):
-        with open(path, encoding="utf-8") as fh:
-            obj = yaml.safe_load(fh) or {}
-        items.append((path.name, obj))
-    return items
 
 
 def ordered(items):
@@ -49,10 +38,7 @@ def ordered(items):
 
 
 def main():
-    summaries = [
-        {k: v for k, v in item.items() if k != "order"}
-        for item in ordered(load_fragments("projects"))
-    ]
+    summaries = build_project_summaries()
     with open(CONTENT / "meta.yml", encoding="utf-8") as fh:
         meta = yaml.safe_load(fh) or {}
     sections = {
@@ -62,7 +48,7 @@ def main():
     }
     out = DATA / "projects.yml"
     with open(out, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(HEADER)
+        fh.write(HEADER.format(source="data/projects/*.md + content/meta.yml"))
         yaml.safe_dump(
             {"sectionDescriptions": sections, "summaries": summaries},
             fh,
@@ -75,6 +61,50 @@ def main():
 
     experiences = build_experiences()
     build_sitemap(summaries, experiences)
+
+
+def card_summary(path, meta):
+    """Card fields for the front page, in the shape the site's scripts read."""
+    card = meta.get("card") or {}
+
+    def pick(card_key, page_key):
+        value = card.get(card_key)
+        return value if value not in (None, "", []) else meta.get(page_key)
+
+    declared = meta.get("id")
+    if declared and declared != path.stem:
+        raise SystemExit(f"{path.name}: id '{declared}' must match the file name")
+    summary = {
+        "order": meta.get("order", 9999),
+        "id": path.stem,
+        "title": pick("title", "projectName"),
+        "navTitle": meta.get("navTitle"),
+        "section": meta.get("section"),
+        "projectType": pick("type", "projectType"),
+        "flairs": pick("flairs", "flairs"),
+        "description": card.get("description"),
+        "imageSrc": pick("image", "heroImage"),
+        "imageCaption": card.get("imageCaption"),
+        "cardVideoUrl": pick("videoUrl", "heroVideoUrl"),
+        "duration": card.get("duration"),
+        "teamSize": card.get("teamSize"),
+        "status": card.get("status"),
+        "detailPageUrl": f"/project.html?id={path.stem}",
+        "links": meta.get("links"),
+        "highlighted": meta.get("highlighted"),
+        "hidden": meta.get("hidden"),
+        "locked": meta.get("locked"),
+        "stub": meta.get("stub"),
+    }
+    return {k: v for k, v in summary.items() if v is not None}
+
+
+def build_project_summaries():
+    items = [
+        (path.name, card_summary(path, read_frontmatter(path)))
+        for path in sorted((DATA / "projects").glob("*.md"))
+    ]
+    return [{k: v for k, v in item.items() if k != "order"} for item in ordered(items)]
 
 
 def read_frontmatter(path):
@@ -103,7 +133,7 @@ def build_experiences():
     ]
     out = DATA / "experiences.yml"
     with open(out, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(HEADER.replace("Source: content/.", "Source: data/experience/."))
+        fh.write(HEADER.format(source="data/experience/"))
         yaml.safe_dump(
             {"experiences": experiences},
             fh,

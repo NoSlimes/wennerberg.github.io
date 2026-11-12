@@ -146,16 +146,24 @@ const CODE_LANGUAGE_LOGOS = {
   c: 'ISO_C++_Logo.svg'
 };
 
+const CODE_LANGUAGE_NAMES = {
+  cpp: 'C++', cplusplus: 'C++', c: 'C', csharp: 'C#', cs: 'C#',
+  js: 'JavaScript', javascript: 'JavaScript', ts: 'TypeScript', typescript: 'TypeScript',
+  py: 'Python', python: 'Python', glsl: 'GLSL', hlsl: 'HLSL', json: 'JSON', yaml: 'YAML',
+  bash: 'Bash', powershell: 'PowerShell', lua: 'Lua', gdscript: 'GDScript'
+};
+
 // Markdown -> HTML via marked. Fenced code blocks become collapsible,
-// Prism-highlighted <details> dropdowns.
+// Prism-highlighted <details> dropdowns. Text after the language names the
+// dropdown: ```cpp Name cache lookup
 function markdownToHtml(markdown) {
   if (!markdown) return '';
 
   // Pull code blocks out before marked sees them
   const codeBlocks = [];
-  let processedMarkdown = markdown.replace(/```(\w+)\n([\s\S]*?)```/g, (match, lang, code) => {
+  let processedMarkdown = markdown.replace(/```(\w+)[ \t]*([^\n]*)\n([\s\S]*?)```/g, (match, lang, title, code) => {
     const placeholder = `\n::CODEBLOCK_${codeBlocks.length}::\n`;
-    codeBlocks.push({ lang, code });
+    codeBlocks.push({ lang, title: title.trim(), code });
     return placeholder;
   });
 
@@ -176,7 +184,8 @@ function markdownToHtml(markdown) {
     }
 
     const placeholder = `::CODEBLOCK_${i}::`;
-    const langLabel = block.lang ? `Code (${block.lang.toUpperCase()})` : 'Code';
+    const langName = CODE_LANGUAGE_NAMES[block.lang.toLowerCase()] || block.lang.toUpperCase();
+    const langLabel = block.title ? `${escapeHtml(block.title)} (${langName})` : `Code (${langName})`;
     const logoFile = CODE_LANGUAGE_LOGOS[(block.lang || '').toLowerCase()];
     const summaryInner = logoFile
       ? `<span class="code-dropdown__icon" aria-hidden="true"><img src="/assets/images/logos/${logoFile}" alt=""></span>${langLabel}`

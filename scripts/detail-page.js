@@ -401,6 +401,7 @@ function trackActiveSection(tocNav) {
 
   let ticking = false;
   let clickJump = null; // a clicked link stays active while the page scrolls to it
+  let pendingJump = false; // opened with a #section in the URL, still waiting to scroll there
   const setActive = (active) => links.forEach((link, i) => link.classList.toggle('is-active', i === active));
 
   const update = () => {
@@ -408,14 +409,27 @@ function trackActiveSection(tocNav) {
     if (clickJump !== null) return;
     const line = window.innerHeight / 3;
     let active = 0;
+    let reached = false; // has the reader scrolled down to the first section yet?
     sections.forEach((section, i) => {
-      if (section && section.getBoundingClientRect().top <= line) active = i;
+      if (section && section.getBoundingClientRect().top <= line) {
+        active = i;
+        reached = true;
+      }
     });
     // At the very bottom the last section may never reach the line
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
       active = sections.length - 1;
+      reached = true;
     }
     setActive(active);
+    updateHash(reached ? links[active].getAttribute('href') : '');
+  };
+
+  // Keep the #section in the address bar in step with what's being read.
+  // replaceState swaps the URL without jumping the page or adding a Back-button step per section.
+  const updateHash = (hash) => {
+    if (pendingJump || hash === location.hash) return; // don't wipe a shared #link before we've jumped to it
+    history.replaceState(history.state, '', location.pathname + location.search + hash);
   };
   const onScroll = () => {
     if (!ticking) {
@@ -438,6 +452,20 @@ function trackActiveSection(tocNav) {
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
+
+  // Sections are built by script, so the browser can't jump to a shared #section link itself.
+  // Wait for images and the gallery to load (they push the sections down), then jump there.
+  const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) {
+    pendingJump = true;
+    const jump = () => {
+      target.scrollIntoView({ behavior: 'instant' });
+      pendingJump = false;
+      update();
+    };
+    if (document.readyState === 'complete') setTimeout(jump);
+    else window.addEventListener('load', jump, { once: true });
+  }
   update();
 }
 

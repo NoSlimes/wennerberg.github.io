@@ -16,6 +16,20 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script>
+    // Arriving from a project card (launchCard in project_summary_inject.js): show the card's
+    // art in the hero from the first frame and give the hero the card's transition name,
+    // so the card grows into it. The loader swaps in the real hero image once it's loaded.
+    try {
+      const art = JSON.parse(sessionStorage.getItem('cardArt') || 'null');
+      sessionStorage.removeItem('cardArt');
+      if (art && art.page === location.pathname + location.search) {
+        const style = document.createElement('style');
+        style.textContent = `.project-detail-page section#hero { view-transition-name: project-art; --hero-bg-image: url("${art.image}"); }`;
+        document.head.append(style);
+      }
+    } catch (e) { /* storage blocked: the page just loads without the morph */ }
+  </script>
   <title>Project | Elias Wennerberg</title>
 </head>
 

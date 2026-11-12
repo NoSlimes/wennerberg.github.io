@@ -54,6 +54,37 @@ main {
 
 html {
   @include mixins.custom-scrollbar(var(--theme-bg-primary));
+  // In-page links (like "On This Page") glide to their section instead of jumping
+  scroll-behavior: smooth;
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+// Page-to-page transitions (Chrome, Edge, Safari 18.2+; other browsers just load the page).
+// Pages cross-fade, and a clicked project card's art grows into the project page's hero
+// (named "project-art" on both sides, see .is-launching and project.html).
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-group(project-art) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  // Wide cards (the full-width featured ones) are scaled up a lot to cover the tall hero;
+  // without this the overflow spills across the whole window, over the sidebar
+  overflow: clip;
+}
+
+// Card and hero have different shapes: crop both to the moving frame instead of stretching
+::view-transition-old(project-art),
+::view-transition-new(project-art) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Enhanced Wrappers */

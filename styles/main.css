@@ -112,6 +112,11 @@ main pre[class*=language-] {
 
 :not(pre) > code {
   overflow-wrap: anywhere;
+  font-size: 0.85em;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  background: rgba(var(--theme-text-primary-rgb), 0.08);
+  border: 1px solid rgba(var(--theme-text-primary-rgb), 0.14);
 }
 
 code {
@@ -854,6 +859,33 @@ html::-webkit-scrollbar-thumb {
 }
 html::-webkit-scrollbar-thumb:hover {
   background: rgba(var(--theme-accent-rgb, 131, 193, 20), 0.6);
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+::view-transition-group(project-art) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  overflow: clip;
+}
+
+::view-transition-old(project-art),
+::view-transition-new(project-art) {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 /* Enhanced Wrappers */
@@ -2246,109 +2278,76 @@ section#work {
   margin: 0 auto;
   /* reduce the per-card bottom margin when in a grid - grid gap controls spacing */
   margin-bottom: var(--space-s);
-  background: linear-gradient(135deg, var(--theme-card-bg) 0%, var(--theme-card-bg-end) 100%);
-  color: var(--theme-ink);
+  background: var(--theme-bg-lift-6);
+  color: var(--theme-text-primary);
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(var(--theme-bg-primary-rgb), 0.08);
   overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(var(--theme-accent-rgb), 0.1);
+  border: 1px solid rgba(var(--theme-text-primary-rgb), 0.08);
   position: relative;
   cursor: pointer;
-  /* make the container a column flexbox so internal content can stretch
-    to match height with other cards in the same grid row */
   display: flex;
   flex-direction: column;
   container-type: inline-size;
+  isolation: isolate;
 }
-.summary_container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--theme-accent) 0%, var(--theme-accent-soft) 100%);
-  opacity: 0.8;
-}
-.summary_container:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 48px rgba(var(--theme-bg-primary-rgb), 0.15);
-}
-.summary_container:hover::before {
-  opacity: 1;
-  height: 4px;
-}
-.summary_container:hover .card-bg {
-  filter: blur(2px);
-  transform: scale(1.03);
-  transition: filter 220ms ease, transform 220ms ease;
-}
-.summary_container h2 {
-  color: var(--theme-ink);
-  padding: var(--space-l) var(--space-l) 0;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+.summary_container:has(.project-card__link:focus-visible) {
+  outline: 2px solid var(--theme-accent);
+  outline-offset: 4px;
 }
 
 .project_summary {
-  display: grid;
-  grid-template-columns: 2.2fr 1fr;
-  gap: var(--space-l);
-  padding: var(--space-l);
-  align-items: center;
-  min-height: 260px;
-  /* allow the inner grid to grow so its parent (.summary_container)
-     can match heights with sibling cards */
-  flex: 1 1 auto;
-}
-
-@container (max-width: 720px) {
-  .project_summary {
-    grid-template-columns: minmax(0, 1fr);
-    padding: var(--space-m);
-  }
-}
-@container (max-width: 420px) {
-  .summary_container .project_summary .project-card-content {
-    padding: var(--space-s);
-  }
-}
-.project_summary > div {
-  padding: var(--space-l);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 8px;
-  z-index: 2; /* sit above blurred image */
+  flex: 1 1 auto;
+}
+.project_summary::before {
+  content: "";
+  flex: 1 0 auto;
+  min-height: 9rem;
 }
 
-/* background layer used when images are background of the whole card */
+.summary_container.highlighted .project_summary::before {
+  min-height: 15rem;
+}
+
+@media (max-width: 600px) {
+  .summary_container .project_summary::before,
+  .summary_container.highlighted .project_summary::before {
+    min-height: 8rem;
+  }
+}
+/* The game's art (image, or image + clip) covering the whole card */
 .summary_container .card-bg {
   position: absolute;
   inset: 0;
+  z-index: -1;
   background-size: cover;
   background-position: center center;
-  filter: blur(8px);
-  transform: scale(1.04);
-  transition: transform 0.3s ease, filter 0.3s ease;
-  z-index: 0;
+  filter: blur(5px) brightness(0.72) saturate(0.85);
+  transform: scale(1.06);
+  transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.2, 0, 0, 1);
 }
 
-.summary_container .card-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18));
+.summary_container:hover .card-bg,
+.summary_container:focus-within .card-bg {
+  filter: none;
+  transform: scale(1.01);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summary_container .card-bg,
+  .summary_container:hover .card-bg,
+  .summary_container:focus-within .card-bg {
+    transform: scale(1.06);
+  }
+}
+.summary_container.is-launching .card-bg {
+  view-transition-name: project-art;
+  filter: none;
 }
 
 .card-media {
-  position: absolute;
-  inset: 0;
   overflow: hidden;
-  filter: none;
-  transform: none;
 }
 .card-media iframe {
   position: absolute;
@@ -2375,61 +2374,63 @@ section#work {
 }
 
 .summary_container .project-card-content {
-  position: relative;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.88);
-  border-radius: 8px;
-  /* move the whole content panel down so the title sits fully outside
-    the box (margin, not internal padding, so the panel background is pushed) */
-  /* use a smaller offset so cards don't grow too tall */
-  /* push the subcard slightly lower to reveal more background and make it compact */
-  width: min(100%, 42rem);
-  justify-self: start;
-  padding: var(--space-s);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
+  padding: var(--space-xl) var(--space-m) var(--space-s);
+  background: linear-gradient(to top, rgba(var(--theme-bg-primary-rgb), 0.94) 0%, rgba(var(--theme-bg-primary-rgb), 0.86) 55%, rgba(var(--theme-bg-primary-rgb), 0) 100%);
 }
 
-/* Title element that sits outside the content panel in the top-left corner */
-/* Title sits relative to the summary container; use the container-qualified
-  selector so it overrides the generic `.summary_container h2` padding rule. */
+@container (max-width: 420px) {
+  .summary_container .project-card-content {
+    padding: var(--space-l) var(--space-s) var(--space-s);
+  }
+}
 .summary_container .project-card-title {
-  position: relative;
-  order: -1;
-  z-index: 20;
   margin: 0;
-  padding: var(--space-s) var(--space-s) 0;
-  /* Match the title color to the content panel background so it visually
-    relates to the text box (use same white tint as the panel) */
-  color: rgba(255, 255, 255, 0.88);
+  padding: 0;
+  color: var(--theme-text-primary);
   font-size: var(--step-1);
   font-weight: 600;
-  display: inline-block;
-  /* subtle text shadow for contrast against images; no background/panel */
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
-  pointer-events: none; /* clicks should go through to the card */
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .summary_container.highlighted .project-card-title {
   font-weight: 700;
 }
 
-/* slightly reduce overlay for highlighted card so content pops more */
-.summary_container.highlighted .project-card-content {
-  background: rgba(255, 255, 255, 0.95);
+.project-card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--theme-text-primary);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
 }
 
-@media (max-width: 900px) {
-  .summary_container .project-card-content {
-    padding: var(--space-l);
-  }
+.project-card__link {
+  color: inherit;
+  text-decoration: none;
 }
+.project-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.project-card__link:focus-visible {
+  outline: none;
+}
+
 .project-card__description {
   font-size: 0.95rem;
-  line-height: 1.35;
-  color: var(--theme-ink-secondary);
+  line-height: 1.4;
+  color: var(--theme-text-secondary);
   margin: 0;
+  max-width: 65ch;
   /* keep description concise — clamp to three lines */
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -2437,31 +2438,16 @@ section#work {
   overflow: hidden;
 }
 
-.project-card__title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--theme-ink);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.15rem 0.6rem;
-}
-
-.project-meta {
-  gap: 6px;
-}
-
-.project-card__description strong {
-  display: block;
-  margin-bottom: 0rem;
+.summary_container .project-links {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--space-3xs);
 }
 
 .project-flairs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.4rem;
   align-items: center;
 }
 
@@ -2470,7 +2456,6 @@ section#work {
   align-items: center;
   justify-content: center;
   padding: 6px 10px;
-  margin: 0 6px 8px 0;
   border-radius: 14px;
   font-size: 0.75rem;
   font-weight: 500;
@@ -2481,18 +2466,19 @@ section#work {
 
 /* Circular icon variant for flairs */
 .project-flair--icon {
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
   padding: 0;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.85rem;
-  color: #fff;
+  font-size: 0.75rem;
+  color: var(--theme-ink);
+  background: var(--theme-text-primary);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: none;
 }
 
 .project-flair--icon img {
@@ -2508,7 +2494,7 @@ section#work {
   /* add inner padding and include it in the width/height so the logo doesn't overflow */
   padding: 4px;
   box-sizing: border-box;
-  background: transparent;
+  background: var(--theme-text-primary);
   border: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
@@ -2559,7 +2545,7 @@ section#work {
 /* Inline duration shown to the right of the project title */
 .project-card__duration {
   font-size: 0.85rem;
-  color: var(--theme-ink-secondary);
+  color: var(--theme-text-secondary);
   font-weight: 500;
 }
 
@@ -2582,7 +2568,7 @@ section#work {
   /* let grid items stretch to the height of the tallest item in the row */
   align-items: stretch;
   width: 100%;
-  grid-auto-rows: 1fr;
+  grid-auto-rows: auto;
 }
 
 .project-card-grid > .summary_container {

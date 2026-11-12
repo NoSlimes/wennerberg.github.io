@@ -88,7 +88,8 @@ async function injectProjectSummaries() {
             }
 
             if (!videoId) return '';
-            return youTubeBackgroundSrc(videoId, start);
+            // With a mouse, card clips wait for a hover instead of starting on their own
+            return youTubeBackgroundSrc(videoId, start, !cardClipsWaitForHover());
         }
 
         function getDirectVideoMimeType(url) {
@@ -117,7 +118,8 @@ async function injectProjectSummaries() {
 
             const mimeType = getDirectVideoMimeType(videoUrl);
             if (mimeType) {
-                return `<div class="card-bg card-media" style="background-image: url('${imageSrc}');" aria-hidden="true"><video autoplay muted loop playsinline preload="metadata" poster="${imageSrc}"><source src="${videoUrl}" type="${mimeType}"/></video></div>`;
+                const autoplay = cardClipsWaitForHover() ? '' : 'autoplay';
+                return `<div class="card-bg card-media" style="background-image: url('${imageSrc}');" aria-hidden="true"><video ${autoplay} muted loop playsinline preload="metadata" poster="${imageSrc}"><source src="${videoUrl}" type="${mimeType}"/></video></div>`;
             }
 
             return `<div class="card-bg" style="background-image: url('${imageSrc}');" aria-hidden="true"></div>`;
@@ -221,7 +223,7 @@ async function injectProjectSummaries() {
 
         function createProjectCard(project) {
             const projectDiv = document.createElement('div');
-            projectDiv.classList.add('summary_container', 'clickable-card');
+            projectDiv.classList.add('summary_container');
             if (project.highlighted) projectDiv.classList.add('highlighted');
 
             const flairsHTML = (project.flairs || []).map(renderFlair).join(' ');
@@ -229,36 +231,30 @@ async function injectProjectSummaries() {
             const mediaHtml = getCardMediaHtml(project.cardVideoUrl, project.title, project.imageSrc);
             const metaLabel = formatProjectMeta(project);
 
-            // Render project with a background image div; content sits on top
+            // The art fills the card; the text sits in a strip along the bottom.
+            // The project name is the card's link and stretches over the whole card
+            // (.project-card__link::after), so the card works with the keyboard and Ctrl+click.
+            const trello = project.links && project.links.trello;
             const projectHTML = `
             <div class="project_summary">
-            ${mediaHtml}
-
-            ${renderToolbar(project.links || {})}
-
-                        <div class="project-card-content">
-                        <p class="project-card__title"><strong>${project.title}</strong>${metaLabel ? `<span class="project-card__duration">${metaLabel}</span>` : ''}</p>
-
-                        <div class="project-meta" style="margin: 6px 0 0 0; display:flex; gap:8px; align-items:center;">
-                            <div class="project-flairs">${flairsHTML}</div>
-                        </div>
-
-            <p class="project-card__description">${project.description}</p>
-
-            <div class="project-links" style="margin-top: 12px;">
-                ${project.links.trello ? `<a href="${project.links.trello}" class="button button--secondary" target="_blank" rel="noopener noreferrer">Trello</a>` : ''}
+                ${mediaHtml}
+                ${renderToolbar(project.links || {})}
+                <div class="project-card-content">
+                    <h2 class="project-card-title">${project.projectType}</h2>
+                    <p class="project-card__title"><a class="project-card__link" href="${project.detailPageUrl}">${project.title}</a>${metaLabel ? `<span class="project-card__duration">${metaLabel}</span>` : ''}</p>
+                    <div class="project-flairs">${flairsHTML}</div>
+                    <p class="project-card__description">${project.description}</p>
+                    ${trello ? `<div class="project-links"><a href="${trello}" class="button button--secondary" target="_blank" rel="noopener noreferrer">Trello</a></div>` : ''}
+                </div>
             </div>
-            </div>
-        </div>
-        <h2 class="project-card-title">${project.projectType}</h2>
     `;
             projectDiv.innerHTML = projectHTML;
 
-            projectDiv.addEventListener('click', (e) => {
-                const isButtonOrLink = e.target.closest('a, button');
-                if (!isButtonOrLink) {
-                    window.location.href = project.detailPageUrl;
-                }
+            // Plain clicks grow the card into the project page; Ctrl/Shift/middle clicks
+            // just open the link as usual
+            projectDiv.querySelector('.project-card__link').addEventListener('click', (e) => {
+                if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+                launchCard(projectDiv, project);
             });
 
             return projectDiv;
@@ -323,5 +319,24 @@ async function injectProjectSummaries() {
         contentContainer.innerHTML = '<p>Sorry, there was an error loading projects.</p>';
     }
 }
+
+// Card-to-page transition: the clicked card's art grows into the project page's hero.
+// The card's art gets the shared transition name (.is-launching in _project_summary.scss),
+// and its image is handed to project.html so the hero shows it from the very first frame.
+function launchCard(card, project) {
+    document.querySelectorAll('.summary_container.is-launching').forEach(c => c.classList.remove('is-launching'));
+    card.classList.add('is-launching');
+    try {
+        sessionStorage.setItem('cardArt', JSON.stringify({ page: project.detailPageUrl, image: project.imageSrc }));
+    } catch (e) { /* storage blocked: the page still opens, just without the morph */ }
+}
+
+// Coming back to this page from the browser's cache, the project hero shrinks back into
+// the card it came from. Once that's done, the card goes back to normal.
+window.addEventListener('pagereveal', (e) => {
+    const reset = () => document.querySelectorAll('.summary_container.is-launching').forEach(c => c.classList.remove('is-launching'));
+    if (e.viewTransition) e.viewTransition.finished.finally(reset);
+    else reset();
+});
 
 injectProjectSummaries();

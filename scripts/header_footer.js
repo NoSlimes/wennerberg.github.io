@@ -101,9 +101,9 @@ function parseYouTubeStart(raw) {
 // Embed URL for a muted, chrome-free YouTube background video.
 // No loop/playlist params: a one-item playlist makes YouTube show prev/next buttons,
 // so setupBackgroundVideo() loops it instead (enablejsapi lets it control the player).
-function youTubeBackgroundSrc(videoId, start = 0) {
+function youTubeBackgroundSrc(videoId, start = 0, autoplay = true) {
   const params = new URLSearchParams({
-    autoplay: 1, mute: 1, controls: 0, rel: 0,
+    autoplay: autoplay ? 1 : 0, mute: 1, controls: 0, rel: 0,
     playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3, cc_load_policy: 0,
     modestbranding: 1, enablejsapi: 1, origin: window.location.origin
   });
@@ -625,23 +625,50 @@ function pauseWhileOffscreen(el, onVisibility) {
   offscreenObserver.observe(el);
 }
 
+// With a mouse, home page card clips stay still until their card is hovered or
+// focused. Touch screens can't hover, so there they play while on screen as before.
+function cardClipsWaitForHover() {
+  return window.matchMedia('(hover: hover)').matches;
+}
+
+// Plays while the card is hovered or has keyboard focus; calls onChange(active)
+function watchCardHover(card, onChange) {
+  const isActive = () => card.matches(':hover') || card.contains(document.activeElement);
+  const update = () => onChange(isActive());
+  card.addEventListener('mouseenter', update);
+  card.addEventListener('mouseleave', update);
+  card.addEventListener('focusin', update);
+  // focusout fires before focus lands somewhere else, so check once it has
+  card.addEventListener('focusout', () => setTimeout(update));
+}
+
 function setupBackgroundVideo(el) {
   if (el.dataset.bgVideo) return;
   el.dataset.bgVideo = 'true';
   el.classList.add('bg-video');
   const setPlaying = (playing) => el.classList.toggle('is-playing', playing);
-  // Paused only because it scrolled out of view: keep it visible, it resumes on return
-  let offscreen = false;
+
+  // Plays only while on screen and, for hover-gated card clips, while its card is hovered
+  const card = el.closest('.summary_container');
+  const hoverGated = !!card && cardClipsWaitForHover();
+  let onScreen = true;
+  let hovered = !hoverGated;
+  const wanted = () => onScreen && hovered;
+  // Paused on purpose (scrolled away, or the mouse left its card): keep the last frame
+  // showing instead of fading back to the poster, and resume from there
+  let held = false;
 
   if (el.tagName === 'VIDEO') {
+    const sync = () => {
+      held = !wanted();
+      if (held) el.pause();
+      else el.play().catch(() => {});
+    };
     el.addEventListener('playing', () => setPlaying(true));
-    el.addEventListener('pause', () => { if (!offscreen) setPlaying(false); });
+    el.addEventListener('pause', () => { if (!held) setPlaying(false); });
     if (!el.paused && el.readyState > 2) setPlaying(true);
-    pauseWhileOffscreen(el, (visible) => {
-      offscreen = !visible;
-      if (visible) el.play().catch(() => {});
-      else el.pause();
-    });
+    pauseWhileOffscreen(el, (visible) => { onScreen = visible; sync(); });
+    if (hoverGated) watchCardHover(card, (active) => { hovered = active; sync(); });
     return;
   }
 
@@ -663,13 +690,20 @@ function setupBackgroundVideo(el) {
     if (Date.now() - lastRestart < 2000) return;
     lastRestart = Date.now();
     command('seekTo', [start, true]);
-    command('playVideo');
+    if (!held) command('playVideo');
+  };
+
+  const sync = () => {
+    held = !wanted();
+    command(held ? 'pauseVideo' : 'playVideo');
   };
 
   window.addEventListener('message', (event) => {
     if (event.source !== el.contentWindow || typeof event.data !== 'string') return;
     let data;
     try { data = JSON.parse(event.data); } catch { return; }
+    // Commands sent before the player was ready were lost: catch up with a hover that already started
+    if (!heard && hoverGated) { heard = true; sync(); }
     heard = true;
     const info = data.info || {};
     if (info.duration) duration = info.duration;
@@ -689,16 +723,14 @@ function setupBackgroundVideo(el) {
       command('unloadModule', ['captions']);
       command('unloadModule', ['cc']);
       setPlaying(true);
-    } else if (!(state === 2 && offscreen)) {
+    } else if (!(state === 2 && held)) {
       setPlaying(false);
       if (state === 0) restart();
     }
   });
 
-  pauseWhileOffscreen(el, (visible) => {
-    offscreen = !visible;
-    command(visible ? 'playVideo' : 'pauseVideo');
-  });
+  pauseWhileOffscreen(el, (visible) => { onScreen = visible; sync(); });
+  if (hoverGated) watchCardHover(card, (active) => { hovered = active; sync(); });
 
   // The player only reports back after it has heard "listening", so keep asking until it answers
   const startListening = () => {

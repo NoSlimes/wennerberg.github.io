@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Combine content fragments
+      - name: Check content and build data files
         run: python scripts/combine_projects.py
 
       - name: Commit generated data if changed

@@ -4,12 +4,20 @@
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the default branch. Pushes that only touch the
+  # build's inputs are skipped: "Build content data" runs for those, and the
+  # deploy below waits for it, so it never goes out with a stale projects.yml.
+  # Keep this list in sync with the paths in content.yml.
   push:
     branches: ["main"]
+    paths-ignore:
+      - 'data/sections.yml'
+      - 'data/projects/**'
+      - 'data/experience/**'
 
   # Pushes made by the "Build content data" workflow (CMS saves) use the built-in
   # token, which doesn't trigger other workflows; redeploy once it has finished.
+  # A failed build (e.g. a content check) means no deploy.
   workflow_run:
     workflows: ["Build content data"]
     types: [completed]

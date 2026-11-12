@@ -6,8 +6,11 @@ sidebar, and write sitemap.xml from both.
 Source of truth: the .md frontmatter. Run locally or via .github/workflows/content.yml.
 "order" sets sort order (lowest first) and is stripped from output.
 A project's id is its file name. Empty card fields fall back to the page's own.
+Content is checked first (see check_content); any problem stops the build,
+and with it the deploy.
 """
 
+import re
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -37,6 +40,7 @@ def ordered(items):
 
 
 def main():
+    check_content()
     summaries = build_project_summaries()
     with open(DATA / "sections.yml", encoding="utf-8") as fh:
         meta = yaml.safe_load(fh) or {}
@@ -70,9 +74,6 @@ def card_summary(path, meta):
         value = card.get(card_key)
         return value if value not in (None, "", []) else meta.get(page_key)
 
-    declared = meta.get("id")
-    if declared and declared != path.stem:
-        raise SystemExit(f"{path.name}: id '{declared}' must match the file name")
     summary = {
         "order": meta.get("order", 9999),
         "id": path.stem,
@@ -112,6 +113,78 @@ def read_frontmatter(path):
     if len(parts) < 3 or parts[0].strip():
         return {}
     return yaml.safe_load(parts[1]) or {}
+
+
+# Local media: "/assets/..." in frontmatter values and markdown/HTML in bodies
+ASSET_IN_TEXT = re.compile(r"""(?<![\w/.])/?assets/[^\s)'"<>]+""")
+ID_PATTERN = re.compile(r"^[a-z0-9_-]+$")
+
+
+def check_content():
+    """Stop the build (non-zero exit, nothing written) on content mistakes that
+    would otherwise only show up as broken things on the live site."""
+    problems = []
+    sections = {
+        row.get("section")
+        for row in (yaml.safe_load((DATA / "sections.yml").read_text(encoding="utf-8")) or {}).get("sections", [])
+    }
+    flair_spellings = {}  # lowercased -> {spelling: [files]}
+
+    def check_assets(rel, text):
+        for ref in sorted(set(ASSET_IN_TEXT.findall(text))):
+            if not ref.startswith("/"):
+                problems.append(f"{rel}: '{ref}' needs a leading / (it breaks on some pages)")
+            elif not (ROOT / ref.lstrip("/")).is_file():
+                problems.append(f"{rel}: '{ref}' does not exist")
+
+    def note_flairs(rel, flairs):
+        for flair in flairs or []:
+            name = str(flair).strip()
+            flair_spellings.setdefault(name.lower(), {}).setdefault(name, []).append(rel)
+
+    files = sorted((DATA / "projects").glob("*.md")) + sorted((DATA / "experience").glob("*.md"))
+    for path in files + [DATA / "about.md"]:
+        rel = path.relative_to(ROOT).as_posix()
+        text = path.read_text(encoding="utf-8")
+        parts = text.split("---", 2)
+        if len(parts) < 3 or parts[0].strip():
+            problems.append(f"{rel}: missing --- frontmatter at the top")
+            continue
+        try:
+            meta = yaml.safe_load(parts[1]) or {}
+        except yaml.YAMLError as err:
+            problems.append(f"{rel}: frontmatter is not valid YAML ({err})")
+            continue
+        check_assets(rel, text)
+        if path.parent.name not in ("projects", "experience"):
+            continue
+
+        if not ID_PATTERN.match(path.stem):
+            problems.append(f"{rel}: file name must be lowercase letters, digits, - or _ (it is the page's id)")
+        note_flairs(rel, meta.get("flairs"))
+        if path.parent.name == "projects":
+            if meta.get("id") and meta["id"] != path.stem:
+                problems.append(f"{rel}: id '{meta['id']}' must match the file name")
+            if not meta.get("projectName"):
+                problems.append(f"{rel}: projectName is empty")
+            section = meta.get("section")
+            if section and section not in sections:
+                problems.append(f"{rel}: section '{section}' is not in data/sections.yml")
+            note_flairs(rel, (meta.get("card") or {}).get("flairs"))
+        elif not meta.get("experienceName"):
+            problems.append(f"{rel}: experienceName is empty")
+
+    for spellings in flair_spellings.values():
+        if len(spellings) > 1:
+            listed = "; ".join(f"'{name}' in {', '.join(sorted(set(where)))}" for name, where in spellings.items())
+            problems.append(f"flair spelled differently: {listed}")
+
+    if problems:
+        print("Content check failed:")
+        for problem in problems:
+            print(f"  - {problem}")
+        raise SystemExit(1)
+    print(f"content check: {len(files)} pages ok")
 
 
 def build_experiences():

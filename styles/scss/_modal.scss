@@ -52,6 +52,21 @@
     max-width: 95vw;
     max-height: 95vh;
   }
+
+  // Leave room for the caption line under the image
+  &.has-caption img {
+    max-height: calc(95vh - 4.5rem);
+  }
+}
+
+// Caption under an enlarged image (openImageModal)
+.modal-caption {
+  max-width: min(95vw, 60rem);
+  margin: var(--space-xs) auto 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  text-align: center;
+  color: #e8ddd5;
 }
 
 .modal-close {

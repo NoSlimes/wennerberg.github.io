@@ -234,6 +234,17 @@ function processInlineImages(text, pageName) {
     return `<div class="image-compare" style="--compare-count: ${figures.length}">${figures.join('')}</div>`;
   });
 
+  // A markdown image (![alt](src)) alone in a paragraph, or on its own last line of one
+  // ("Here's the result:" then the image), becomes a figure with its alt text shown as a
+  // caption underneath; any lead-in text stays a paragraph. An empty alt means no caption.
+  const figure = (img) => {
+    const alt = (img.match(/\balt="([^"]*)"/) || [])[1] || '';
+    return `<figure class="content-figure">${img}${alt.trim() ? `<figcaption>${alt}</figcaption>` : ''}</figure>`;
+  };
+  text = text.replace(/<p>\s*(<img\b[^>]*>)\s*<\/p>/g, (match, img) => figure(img));
+  text = text.replace(/<p>((?:(?!<\/?p>|<img\b)[\s\S])+?)\n(<img\b[^>]*>)\s*<\/p>/g,
+    (match, lead, img) => `<p>${lead.trim()}</p>${figure(img)}`);
+
   text = text.replace(/\{\{image:([^|}]+)(?:\|([^|}]*))?(?:\|([^}]*))?\}\}/g, (match, imagePath, caption, position) => {
     let actualCaption = caption;
     let actualPosition = position;
@@ -415,8 +426,9 @@ function renderSections(container, sections, pageName) {
   }
 }
 
-// Highlight the "On This Page" link for the section being read: the last section
-// whose top has passed a line a third of the way down the screen.
+// Highlight the "On This Page" link for the section being read: the one taking up the
+// most of the screen. (A "last heading past a line" rule lags on short sections: the
+// end of the previous one keeps the highlight while you read the next.)
 function trackActiveSection(tocNav) {
   const links = [...tocNav.querySelectorAll('a')];
   const sections = links.map(link => document.getElementById(link.getAttribute('href').slice(1)));
@@ -430,16 +442,28 @@ function trackActiveSection(tocNav) {
   const update = () => {
     ticking = false;
     if (clickJump !== null) return;
-    const line = window.innerHeight / 3;
+    const viewH = window.innerHeight;
     let active = 0;
-    let reached = false; // has the reader scrolled down to the first section yet?
+    let mostVisible = -1;
     sections.forEach((section, i) => {
-      if (section && section.getBoundingClientRect().top <= line) {
+      if (!section) return;
+      const { top, bottom } = section.getBoundingClientRect();
+      const visible = Math.min(bottom, viewH) - Math.max(top, 0);
+      if (visible > 0 && visible >= mostVisible) { // ties go to the later section
+        mostVisible = visible;
         active = i;
-        reached = true;
       }
     });
-    // At the very bottom the last section may never reach the line
+    // None on screen (e.g. down at the gallery): the last section scrolled past
+    if (mostVisible < 0) {
+      sections.forEach((section, i) => {
+        if (section && section.getBoundingClientRect().top < 0) active = i;
+      });
+    }
+    // Has the reader scrolled down to the first section yet? (above it, no #hash)
+    const first = sections.find(Boolean);
+    let reached = !!first && first.getBoundingClientRect().top <= viewH / 3;
+    // At the very bottom a short last section may never fill the most of the screen
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
       active = sections.length - 1;
       reached = true;

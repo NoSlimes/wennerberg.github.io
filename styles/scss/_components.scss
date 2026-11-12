@@ -123,6 +123,12 @@ section#hero {
   margin-bottom: var(--space-l);
   opacity: 0.9;
 
+  // Project/experience summaries run many lines; centred (as the hero is on phones)
+  // they're hard to read, so they stay left-aligned
+  .project-detail-page & {
+    text-align: left;
+  }
+
   // Links in the intro, styled like article links
   a {
     color: var(--theme-accent);
@@ -642,17 +648,33 @@ section#work {
     cursor: zoom-in;
   }
 
-  figcaption {
-    margin-top: var(--space-2xs);
-    font-size: var(--step--1);
-    line-height: 1.45;
-    color: var(--theme-text-secondary);
-  }
-
   @media (max-width: 760px) {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-m);
   }
+}
+
+// A markdown image on its own line (processInlineImages): the image with its alt text
+// as a caption underneath
+.content-figure {
+  margin: var(--space-l) 0;
+  clear: both;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+}
+
+// Captions under content images (compare pairs and single figures)
+.image-compare figcaption,
+.content-figure figcaption {
+  margin-top: var(--space-2xs);
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--theme-text-secondary);
 }
 
 // Ensure galleries and other major sections clear floats

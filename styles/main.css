@@ -1705,6 +1705,9 @@ section#hero {
   margin-bottom: var(--space-l);
   opacity: 0.9;
 }
+.project-detail-page .hero_description {
+  text-align: left;
+}
 .hero_description a {
   color: var(--theme-accent);
   font-weight: 600;
@@ -2137,17 +2140,30 @@ section#work {
   border-radius: 8px;
   cursor: zoom-in;
 }
-.image-compare figcaption {
-  margin-top: var(--space-2xs);
-  font-size: var(--step--1);
-  line-height: 1.45;
-  color: var(--theme-text-secondary);
-}
 @media (max-width: 760px) {
   .image-compare {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-m);
   }
+}
+
+.content-figure {
+  margin: var(--space-l) 0;
+  clear: both;
+}
+.content-figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.image-compare figcaption,
+.content-figure figcaption {
+  margin-top: var(--space-2xs);
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--theme-text-secondary);
 }
 
 .inline-gallery-container,
@@ -2725,6 +2741,18 @@ section#work .text_center p {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
   max-width: 95vw;
   max-height: 95vh;
+}
+.modal-content.has-caption img {
+  max-height: calc(95vh - 4.5rem);
+}
+
+.modal-caption {
+  max-width: min(95vw, 60rem);
+  margin: var(--space-xs) auto 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  text-align: center;
+  color: #e8ddd5;
 }
 
 .modal-close {

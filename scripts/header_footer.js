@@ -447,6 +447,7 @@ function ensureImageModal() {
     </button>
     <div class="modal-content">
       <img id="modal-image-content" src="" alt="Expanded image">
+      <p id="modal-image-caption" class="modal-caption" hidden></p>
     </div>
   `;
 
@@ -456,13 +457,20 @@ function ensureImageModal() {
 // Element that had focus before the viewer opened
 let modalReturnFocus = null;
 
-function openImageModal(imageSrc, altText) {
+// caption: shown under the enlarged image (e.g. "Before: ..." on a compare pair); none if empty
+function openImageModal(imageSrc, altText, caption = '') {
   const modal = document.getElementById('image-modal');
   const modalImage = document.getElementById('modal-image-content');
   if (!modal || !modalImage) return;
 
   modalImage.src = imageSrc;
   modalImage.alt = altText || 'Expanded image';
+  const captionEl = document.getElementById('modal-image-caption');
+  if (captionEl) {
+    captionEl.textContent = caption;
+    captionEl.hidden = !caption;
+    modal.querySelector('.modal-content')?.classList.toggle('has-caption', !!caption);
+  }
   // Focus moves into the viewer and comes back to where it was on close
   modalReturnFocus = document.activeElement;
   modal.classList.add('show-modal');
@@ -521,7 +529,11 @@ function setupImageModal() {
 
     event.preventDefault();
     img.classList.add('image-modal-trigger');
-    openImageModal(img.currentSrc || img.src, img.alt || 'Expanded image');
+    // Caption: the image's own figcaption, else its alt text when it sits in an article
+    // section (gallery thumbnails only have generic "X screenshot 1" alts)
+    const figcaption = img.closest('figure')?.querySelector('figcaption')?.textContent.trim();
+    const caption = figcaption || (img.closest('.project-detailed-section') ? img.alt : '');
+    openImageModal(img.currentSrc || img.src, img.alt || 'Expanded image', caption);
   });
 
   const markTriggers = (root = document) => {
